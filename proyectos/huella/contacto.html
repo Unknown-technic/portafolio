@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <title>Contacto | Huella Sneakers</title>
+  <link rel="icon" href="imagenes/logo-huella.svg">
+  <link rel="stylesheet" href="estilos/estilos.css">
+  <link rel="stylesheet" href="estilos/contacto.css">
+</head>
+
+<body>
+
+  <!-- Encabezado fijo -->
+  <header class="encabezado">
+    <div class="contenedor">
+      <a class="logo" href="index.html">
+        <img src="imagenes/logo-huella.svg" alt="Logo de Huella">
+        <span>HUELLA</span>
+      </a>
+
+      <!-- Botones de perfil y carrito (el carrito cuenta productos con carrito.js) -->
+      <div class="acciones">
+        <button class="icono-boton" type="button" aria-label="Mi perfil">
+          <img src="imagenes/icono-perfil.svg" alt="">
+        </button>
+        <button class="icono-boton carrito" type="button" aria-label="Carrito de compras">
+          <img src="imagenes/icono-carrito.svg" alt="">
+          <span>0</span>
+        </button>
+      </div>
+
+      <nav class="menu">
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="catalogo.html">Catálogo</a></li>
+          <li><a class="activo" href="contacto.html">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+
+  <main class="contenedor">
+
+    <section class="titulo-pagina">
+      <h1>Contáctanos</h1>
+      <p>¿Dudas sobre tallas, envíos o disponibilidad? Escríbenos y te respondemos en menos de 24 horas.</p>
+    </section>
+
+    <!-- Tarjeta: informacion a la izquierda y formulario a la derecha -->
+    <section class="tarjeta-contacto">
+
+      <aside class="info-contacto">
+        <div class="avatar">
+          <img src="imagenes/icono-usuario.svg" alt="Icono de usuario">
+        </div>
+        <h2>INFORMACIÓN<br>DE CONTACTO</h2>
+
+        <ul class="datos">
+          <li>
+            <img src="imagenes/icono-correo.svg" alt="Correo">
+            <span>hola@huellasneakers.com</span>
+          </li>
+          <li>
+            <img src="imagenes/icono-telefono.svg" alt="Teléfono">
+            <span>(669) 123 4567</span>
+          </li>
+          <li>
+            <img src="imagenes/icono-horario.svg" alt="Horario">
+            <span>Lun a sáb · 10:00 a 20:00</span>
+          </li>
+        </ul>
+      </aside>
+
+      <!-- El formulario no se envia a ningun lado (no usamos backend) -->
+      <form class="formulario" action="#">
+        <h2 class="subtitulo">Envía un mensaje</h2>
+
+        <div class="campo">
+          <label for="nombre">Nombre(s) <span class="obligatorio">*</span></label>
+          <input id="nombre" type="text" required>
+        </div>
+
+        <div class="campo">
+          <label for="telefono">Teléfono / Celular</label>
+          <input id="telefono" type="tel">
+        </div>
+
+        <div class="campo">
+          <label for="correo">Correo electrónico <span class="obligatorio">*</span></label>
+          <input id="correo" type="email" required>
+        </div>
+
+        <div class="campo">
+          <label for="mensaje">Mensaje <span class="obligatorio">*</span></label>
+          <textarea id="mensaje" rows="3" required></textarea>
+        </div>
+
+        <p class="nota-obligatorios">* Campos obligatorios</p>
+        <button class="boton" type="submit">Enviar mensaje</button>
+      </form>
+
+    </section>
+  </main>
+
+  <!-- Pie de pagina -->
+  <footer class="pie">
+    <div class="contenedor">
+      <div class="pie-columna">
+        <h4>HUELLA</h4>
+        <p>Sneakers originales y ediciones limitadas en Mazatlán, Sinaloa.</p>
+        <p class="redes">
+          <a href="https://www.facebook.com/" target="_blank">Facebook</a>
+          <a href="https://www.instagram.com/" target="_blank">Instagram</a>
+          <a href="https://www.tiktok.com/" target="_blank">TikTok</a>
+        </p>
+      </div>
+      <div class="pie-columna">
+        <h4>Tienda</h4>
+        <ul>
+          <li><a href="catalogo.html#colaboraciones">Colaboraciones</a></li>
+          <li><a href="catalogo.html#esenciales">Esenciales</a></li>
+          <li><a href="catalogo.html">Novedades</a></li>
+        </ul>
+      </div>
+      <div class="pie-columna">
+        <h4>Ayuda</h4>
+        <ul>
+          <li><a href="contacto.html">Envíos y cambios</a></li>
+          <li><a href="contacto.html">Guía de tallas</a></li>
+          <li><a href="contacto.html">Disponibilidad</a></li>
+        </ul>
+      </div>
+      <div class="pie-columna ultimo">
+        <h4>Contacto</h4>
+        <p>hola@huellasneakers.com</p>
+        <p>(669) 123 4567</p>
+        <p>Lunes a sábado de 10:00 a 20:00</p>
+      </div>
+      <div class="limpiar"></div>
+      <p class="pie-final">© 2026 Huella Sneakers · Maximilian Benjamin Christen Osuna</p>
+    </div>
+  </footer>
+
+  <script src="js/carrito.js"></script>
+</body>
+
+</html>

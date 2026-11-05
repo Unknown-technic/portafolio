@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="utf-8">
+  <title>Catálogo | Huella Sneakers</title>
+  <link rel="icon" href="imagenes/logo-huella.svg">
+  <link rel="stylesheet" href="estilos/estilos.css">
+  <link rel="stylesheet" href="estilos/catalogo.css">
+</head>
+
+<body>
+
+  <!-- Encabezado fijo -->
+  <header class="encabezado">
+    <div class="contenedor">
+      <a class="logo" href="index.html">
+        <img src="imagenes/logo-huella.svg" alt="Logo de Huella">
+        <span>HUELLA</span>
+      </a>
+
+      <!-- Botones de perfil y carrito (el carrito cuenta productos con carrito.js no entendi un carajo pero se logro) -->
+      <div class="acciones">
+        <button class="icono-boton" type="button" aria-label="Mi perfil">
+          <img src="imagenes/icono-perfil.svg" alt="">
+        </button>
+        <button class="icono-boton carrito" type="button" aria-label="Carrito de compras">
+          <img src="imagenes/icono-carrito.svg" alt="">
+          <span>0</span>
+        </button>
+      </div>
+
+      <nav class="menu">
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a class="activo" href="catalogo.html">Catálogo</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+
+  <main class="contenedor">
+
+    <section class="titulo-pagina">
+      <h1>Catálogo</h1>
+      <p>Colaboraciones de edición limitada y sneakers para todos los días. Todos los pares son originales y los precios incluyen IVA.</p>
+    </section>
+
+    <!-- Pestañas para ir a cada categoria -->
+    <nav class="pestanas">
+      <ul>
+        <li><a href="#colaboraciones">Colaboraciones</a></li>
+        <li><a href="#esenciales">Esenciales</a></li>
+      </ul>
+    </nav>
+
+    <section class="categoria-catalogo" id="colaboraciones">
+      <h2>Colaboraciones</h2>
+      <div class="tarjetas">
+        <article class="producto">
+          <img src="imagenes/productos/jordan-1-chicago-off-white.jpg" alt="Tenis Jordan 1 Chicago">
+          <div class="producto-info">
+            <p class="marca">Jordan x Off-White <span class="insignia limitada">Limitada</span></p>
+            <h3>Jordan 1 "Chicago"</h3>
+            <p class="color">Blanco / Rojo / Negro</p>
+            <p class="descripcion">Diseño de Virgil Abloh con costuras a la vista y la etiqueta "AIR" en la suela.</p>
+            <p class="precio">$79,999 <span>MXN</span></p>
+            <button class="boton boton-carrito" type="button">Añadir al carrito</button>
+          </div>
+        </article>
+        <article class="producto">
+          <img src="imagenes/productos/jordan-1-dior.jpg" alt="Tenis Jordan 1 High Dior">
+          <div class="producto-info">
+            <p class="marca">Jordan x Dior <span class="insignia limitada">Limitada</span></p>
+            <h3>Jordan 1 High Dior</h3>
+            <p class="color">Gris / Blanco</p>
+            <p class="descripcion">Piel gris con el logo Dior Oblique dentro del swoosh.</p>
+            <p class="precio">$169,999 <span>MXN</span></p>
+            <button class="boton boton-carrito" type="button">Añadir al carrito</button>
+          </div>
+        </article>
+        <article class="producto">
+          <img src="imagenes/productos/jordan-1-unc-off-white.jpg" alt="Tenis Jordan 1 UNC">
+          <div class="producto-info">
+            <p class="marca">Jordan x Off-White <span class="insignia limitada">Limitada</span></p>
+            <h3>Jordan 1 "UNC"</h3>
+            <p class="color">Azul / Blanco</p>
+            <p class="descripcion">El azul University con los detalles de Off-White.</p>
+            <p class="precio">$34,999 <span>MXN</span></p>
+            <button class="boton boton-carrito" type="button">Añadir al carrito</button>
+          </div>
+        </article>
+        <article class="producto">
+          <img src="imagenes/productos/jordan-1-white-off-white.jpg" alt="Tenis Jordan 1 White">
+          <div class="producto-info">
+            <p class="marca">Jordan x Off-White <span class="insignia limitada">Limitada</span></p>
+            <h3>Jordan 1 "White"</h3>
+            <p class="color">Blanco</p>
+            <p class="descripcion">Versión totalmente blanca con el cinturón naranja de Off-White.</p>
+            <p class="precio">$54,999 <span>MXN</span></p>
+            <button class="boton boton-carrito" type="button">Añadir al carrito</button>
+          </div>
+        </article>
+      </div>
+      <div class="limpiar"></div>
+    </section>
+
+    <section class="categoria-catalogo" id="esenciales">
+      <h2>Esenciales</h2>
+      <div class="tarjetas">
+        <article class="producto">
+          <img src="imagenes/productos/jordan-1-unc.jpg" alt="Tenis Jordan 1 High UNC">
+          <div class="producto-info">
+            <p class="marca">Jordan <span class="insignia nuevo">Nuevo</span></p>
+            <h3>Jordan 1 High "UNC"</h3>
+            <p class="color">Azul / Blanco</p>
+            <p class="descripcion">El clásico azul y blanco inspirado en la universidad de Michael Jordan.</p>
+            <p class="precio">$5,999 <span>MXN</span></p>
+            <button class="boton boton-carrito" type="button">Añadir al carrito</button>
+          </div>
+        </article>
+        <article class="producto">
+          <img src="imagenes/productos/nike-air-max-90.jpg" alt="Tenis Air Max 90">
+          <div class="producto-info">
+            <p class="marca">Nike <span class="insignia oferta">Oferta</span></p>
+            <h3>Air Max 90</h3>
+            <p class="color">Gris / Negro</p>
+            <p class="descripcion">La cámara de aire visible que se volvió un ícono.</p>
+            <p class="precio"><del>$3,299</del> $2,999 <span>MXN</span></p>
+            <button class="boton boton-carrito" type="button">Añadir al carrito</button>
+          </div>
+        </article>
+        <article class="producto">
+          <img src="imagenes/productos/adidas-ultraboost.jpg" alt="Tenis Ultraboost">
+          <div class="producto-info">
+            <p class="marca">adidas </p>
+            <h3>Ultraboost</h3>
+            <p class="color">Negro</p>
+            <p class="descripcion">Suela Boost que te regresa energía en cada zancada.</p>
+            <p class="precio">$3,799 <span>MXN</span></p>
+            <button class="boton boton-carrito" type="button">Añadir al carrito</button>
+          </div>
+        </article>
+        <article class="producto">
+          <img src="imagenes/productos/nike-pegasus.jpg" alt="Tenis Pegasus">
+          <div class="producto-info">
+            <p class="marca">Nike </p>
+            <h3>Pegasus</h3>
+            <p class="color">Negro / Blanco</p>
+            <p class="descripcion">Amortiguación suave para entrenar todos los días.</p>
+            <p class="precio">$2,999 <span>MXN</span></p>
+            <button class="boton boton-carrito" type="button">Añadir al carrito</button>
+          </div>
+        </article>
+      </div>
+      <div class="limpiar"></div>
+    </section>
+
+  </main>
+
+  <!-- Pie de pagina -->
+  <footer class="pie">
+    <div class="contenedor">
+      <div class="pie-columna">
+        <h4>HUELLA</h4>
+        <p>Sneakers originales y ediciones limitadas en Mazatlán, Sinaloa.</p>
+        <p class="redes">
+          <a href="https://www.facebook.com/" target="_blank">Facebook</a>
+          <a href="https://www.instagram.com/" target="_blank">Instagram</a>
+          <a href="https://www.tiktok.com/" target="_blank">TikTok</a>
+        </p>
+      </div>
+      <div class="pie-columna">
+        <h4>Tienda</h4>
+        <ul>
+          <li><a href="catalogo.html#colaboraciones">Colaboraciones</a></li>
+          <li><a href="catalogo.html#esenciales">Esenciales</a></li>
+          <li><a href="catalogo.html">Novedades</a></li>
+        </ul>
+      </div>
+      <div class="pie-columna">
+        <h4>Ayuda</h4>
+        <ul>
+          <li><a href="contacto.html">Envíos y cambios</a></li>
+          <li><a href="contacto.html">Guía de tallas</a></li>
+          <li><a href="contacto.html">Disponibilidad</a></li>
+        </ul>
+      </div>
+      <div class="pie-columna ultimo">
+        <h4>Contacto</h4>
+        <p>hola@huellasneakers.com</p>
+        <p>(669) 123 4567</p>
+        <p>Lunes a sábado de 10:00 a 20:00</p>
+      </div>
+      <div class="limpiar"></div>
+      <p class="pie-final">© 2026 Huella Sneakers · Maximilian Benjamin Christen Osuna</p>
+    </div>
+  </footer>
+
+  <script src="js/carrito.js"></script>
+</body>
+
+</html>

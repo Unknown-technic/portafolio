@@ -1,0 +1,393 @@
+/* estilos que comparten todas las paginas */
+
+/* fuentes locales */
+@font-face {
+  font-family: "Barlow";
+  src: url("../fuentes/barlow-regular.ttf");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Barlow";
+  src: url("../fuentes/barlow-semibold.ttf");
+  font-weight: bold;
+}
+
+/* fuente para los titulos */
+@font-face {
+  font-family: "Barlow Condensed";
+  src: url("../fuentes/barlow-condensed-bold.ttf");
+  font-weight: bold;
+}
+
+/* paleta:
+   #f3efe6 crema (fondo)    #ffffff blanco      #2e4a3b verde bosque
+   #1c1c1a casi negro       #6b6a64 gris        #e4dccb arena
+   #d8d2c4 lineas           #b8572f terracota (ofertas) */
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* el body es una columna (flex) de minimo el alto de la ventana (100vh).
+   main crece (flex: 1) y empuja el pie de pagina hasta abajo aunque la pagina sea corta */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  box-sizing: border-box; /* para que el padding-top no sume altura extra */
+  padding-top: 73px; /* espacio del encabezado fijo (72px + 1px de borde) */
+  font-family: "Barlow", Arial, sans-serif;
+  font-size: 17px;
+  background-color: #f3efe6;
+  color: #1c1c1a;
+}
+
+h1,
+h2 {
+  font-family: "Barlow Condensed", Arial, sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.contenedor {
+  width: 1200px;
+  margin: 0 auto;
+}
+
+main {
+  flex: 1;
+}
+
+.limpiar {
+  clear: both;
+}
+
+/* encabezado fijo */
+.encabezado {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 72px;
+  border-bottom: 1px solid #d8d2c4;
+  background-color: #ffffff;
+  z-index: 10;
+}
+
+.logo {
+  float: left;
+  margin-top: 20px;
+  color: #1c1c1a;
+  text-decoration: none;
+  font-family: "Barlow Condensed", Arial, sans-serif;
+  font-size: 30px;
+  font-weight: bold;
+  letter-spacing: 3px;
+}
+
+.logo img {
+  float: left;
+  margin-right: 6px;
+}
+
+/* el menu va centrado: los li son inline-block y el ul tiene text-align center */
+.menu ul {
+  list-style: none;
+  text-align: center;
+}
+
+.menu li {
+  display: inline-block;
+  margin: 26px 18px 0;
+}
+
+.menu a {
+  padding-bottom: 4px;
+  border-bottom: 2px solid transparent;
+  color: #1c1c1a;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.menu a:hover {
+  border-bottom-color: #1c1c1a;
+}
+
+.menu a.activo {
+  border-bottom-color: #2e4a3b;
+  color: #2e4a3b;
+}
+
+/* botones de perfil y carrito */
+.acciones {
+  float: right;
+  margin-top: 15px;
+}
+
+.icono-boton {
+  float: left;
+  width: 42px;
+  height: 42px;
+  margin-left: 6px;
+  border: none;
+  border-radius: 21px;
+  background-color: transparent;
+  color: #1c1c1a;
+  font-family: "Barlow", Arial, sans-serif;
+  font-size: 15px;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+}
+
+.icono-boton:hover {
+  background-color: #f3efe6;
+}
+
+.icono-boton img {
+  vertical-align: middle;
+}
+
+.carrito {
+  width: 62px;
+}
+
+.carrito span {
+  margin-left: 2px;
+  vertical-align: middle;
+}
+
+/* barra de avisos */
+.avisos {
+  padding: 9px 0;
+  background-color: #2e4a3b;
+  color: #f3efe6;
+  font-size: 15px;
+  text-align: center;
+}
+
+/* botones */
+.boton {
+  padding: 13px 30px;
+  border: 2px solid #1c1c1a;
+  border-radius: 0;
+  background-color: #1c1c1a;
+  color: #ffffff;
+  font-family: "Barlow", Arial, sans-serif;
+  font-size: 15px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.boton:hover {
+  border-color: #2e4a3b;
+  background-color: #2e4a3b;
+}
+
+a.boton {
+  display: inline-block;
+  margin-right: 10px;
+  text-decoration: none;
+}
+
+.boton-secundario {
+  background-color: transparent;
+  color: #1c1c1a;
+}
+
+.boton-secundario:hover {
+  color: #ffffff;
+}
+
+/* titulo de catalogo y contacto */
+.titulo-pagina {
+  padding: 48px 0 28px;
+}
+
+.titulo-pagina h1 {
+  font-size: 56px;
+  line-height: 60px;
+}
+
+.titulo-pagina p {
+  width: 640px;
+  margin-top: 6px;
+  color: #6b6a64;
+  font-size: 19px;
+}
+
+/* tarjetas de producto */
+.tarjetas {
+  width: 1224px; /* le sobran 24px por el margen derecho de la ultima tarjeta */
+}
+
+.producto {
+  float: left;
+  width: 282px;
+  height: 500px;
+  margin: 0 24px 32px 0;
+  background-color: #ffffff;
+}
+
+.producto img {
+  display: block;
+  width: 282px;
+  height: 212px;
+}
+
+/* al pasar el cursor la foto se aclara un poco */
+.producto:hover img {
+  opacity: 0.85;
+}
+
+.producto-info {
+  padding: 16px;
+}
+
+.marca {
+  height: 22px;
+  color: #6b6a64;
+  font-size: 13px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.insignia {
+  float: right;
+  padding: 1px 8px;
+  font-size: 12px;
+  letter-spacing: 0;
+}
+
+.nuevo {
+  background-color: #2e4a3b;
+  color: #ffffff;
+}
+
+.limitada {
+  background-color: #1c1c1a;
+  color: #ffffff;
+}
+
+.oferta {
+  background-color: #b8572f;
+  color: #ffffff;
+}
+
+.producto h3 {
+  font-size: 22px;
+}
+
+.color {
+  color: #6b6a64;
+  font-size: 15px;
+}
+
+.descripcion {
+  height: 66px;
+  margin-top: 8px;
+  font-size: 15px;
+  line-height: 22px;
+}
+
+.precio {
+  margin: 10px 0 14px;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.precio del {
+  color: #6b6a64;
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.precio span {
+  color: #6b6a64;
+  font-size: 13px;
+}
+
+.boton-carrito {
+  width: 250px;
+  padding: 11px 0;
+  background-color: transparent;
+  color: #1c1c1a;
+}
+
+.boton-carrito:hover {
+  color: #ffffff;
+}
+
+/* la clase "agregado" la pone carrito.js */
+.boton-carrito.agregado {
+  border-color: #2e4a3b;
+  background-color: #2e4a3b;
+  color: #ffffff;
+}
+
+/* pie de pagina */
+.pie {
+  clear: both;
+  padding: 48px 0 24px;
+  background-color: #1c1c1a;
+  color: #d8d2c4;
+  font-size: 15px;
+}
+
+.pie-columna {
+  float: left;
+  width: 270px;
+  margin-right: 40px;
+}
+
+.pie-columna.ultimo {
+  margin-right: 0;
+}
+
+.pie h4 {
+  margin-bottom: 10px;
+  color: #ffffff;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.pie ul {
+  list-style: none;
+}
+
+.pie li,
+.pie p {
+  margin-bottom: 4px;
+}
+
+.pie a {
+  color: #d8d2c4;
+  text-decoration: none;
+}
+
+.pie a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.redes a {
+  margin-right: 12px;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.pie-final {
+  margin-top: 32px;
+  padding-top: 16px;
+  border-top: 1px solid #3a3a36;
+  font-size: 13px;
+}

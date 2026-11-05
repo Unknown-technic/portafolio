@@ -1,0 +1,173 @@
+/*  Estilos generales  */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(135deg, #1e2a3a, #3b4a5e);
+    color: #ffffff;
+}
+
+header {
+    text-align: center;
+}
+
+h1 {
+    font-size: 1.8rem;
+    transition: color 0.4s ease, letter-spacing 0.4s ease;
+}
+
+h1:hover {
+    color: #00d1e0;
+    letter-spacing: 1px;
+}
+
+header p {
+    opacity: 0.8;
+}
+
+/* Contenedor del laberinto */
+.laberinto {
+    position: relative;
+    width: 626px;
+    height: 626px;
+    background: #ffffff url("../imagenes/laberinto.png") no-repeat center / 626px 626px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transition: box-shadow 0.4s ease;
+}
+
+.laberinto:hover {
+    box-shadow: 0 10px 40px rgba(0, 209, 224, 0.6);
+}
+
+/* Figura animada
+   Posición inicial: cuadrado de 60 x 60 px justo arriba de la entrada superior.
+   El clip-path del cuadrado usa 10 puntos (igual que la estrella) para que la
+   transformación cuadrado <-> estrella sea fluida. */
+.figura {
+    position: absolute;
+    left: 246px;
+    top: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #00d1e0;
+    border-radius: 0;
+    clip-path: polygon(50% 0%, 100% 0%, 100% 35%, 100% 57%, 100% 100%, 50% 100%, 0% 100%, 0% 57%, 0% 35%, 0% 0%);
+    animation: recorrido 24s linear infinite;
+}
+
+/* Recorrido completo 
+   Pasillos de 75 px; el círculo mide 50 px para no tocar las paredes.
+   Centro de la celda (columna c, fila r): left = 101 + 75c, top = 101 + 75r */
+@keyframes recorrido {
+    /*  Inicio: cuadrado en la entrada  */
+    0%, 4% {
+        left: 246px;
+        top: 20px;
+        width: 60px;
+        height: 60px;
+        border-radius: 0;
+        background-color: #00d1e0;
+        transform: rotate(0deg);
+        clip-path: polygon(50% 0%, 100% 0%, 100% 35%, 100% 57%, 100% 100%, 50% 100%, 0% 100%, 0% 57%, 0% 35%, 0% 0%);
+    }
+
+    /*  Se convierte en círculo de 50 px  */
+    8% {
+        left: 251px;
+        top: 25px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #00d1e0;
+    }
+
+    /*  Solución del laberinto  */
+    10.5% { left: 251px; top: 101px; }
+    15.4% { left: 401px; top: 101px; }
+    17.9% { left: 401px; top: 176px; }
+    20.3% { left: 326px; top: 176px; }
+    25.2% { left: 326px; top: 326px; }
+    30.2% { left: 476px; top: 326px; }
+    35.1% { left: 476px; top: 476px; }
+    40%   { left: 326px; top: 476px; }
+    42.5% { left: 326px; top: 401px; }
+    44.9% { left: 251px; top: 401px; }
+    47.4% { left: 251px; top: 476px; }
+    49.8% { left: 176px; top: 476px; }
+    54.8% { left: 176px; top: 326px; }
+    57.2% { left: 101px; top: 326px; }
+    59.7% { left: 101px; top: 401px; }
+
+    /* Sale del laberinto por el lado izquierdo  */
+    62% {
+        left: 30px;
+        top: 401px;
+        border-radius: 50%;
+        background-color: #00d1e0;
+        transform: rotate(0deg);
+        clip-path: polygon(50% 0%, 100% 0%, 100% 35%, 100% 57%, 100% 100%, 50% 100%, 0% 100%, 0% 57%, 0% 35%, 0% 0%);
+    }
+
+    /*  Se transforma en estrella */
+    65% {
+        left: 30px;
+        top: 401px;
+        border-radius: 0;
+        background-color: #ffd700;
+        transform: rotate(0deg);
+        clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    }
+
+    /* Recorrido por la orilla, girando y cambiando de color */
+    67.8% { left: 30px;  top: 546px; background-color: #ff8c00; }
+    77.6% { left: 546px; top: 546px; background-color: #ff1493; }
+    87.4% { left: 546px; top: 30px;  background-color: #7cfc00; }
+
+    /*  Llega exactamente al punto de inicio  */
+    93% {
+        left: 251px;
+        top: 30px;
+        width: 50px;
+        height: 50px;
+        background-color: #9400d3;
+        transform: rotate(1080deg);
+        clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    }
+
+    96.5% { background-color: #ff1493; }
+
+    /* Gira y vuelve a ser el cuadrado original  */
+    100% {
+        left: 246px;
+        top: 20px;
+        width: 60px;
+        height: 60px;
+        border-radius: 0;
+        background-color: #00d1e0;
+        transform: rotate(1440deg);
+        clip-path: polygon(50% 0%, 100% 0%, 100% 35%, 100% 57%, 100% 100%, 50% 100%, 0% 100%, 0% 57%, 0% 35%, 0% 0%);
+    }
+}
+
+/*  Pantallas pequeñas: se escala el laberinto completo  */
+@media (max-width: 680px) {
+    .laberinto {
+        zoom: 0.55;
+    }
+
+    h1 {
+        font-size: 1.3rem;
+    }
+}

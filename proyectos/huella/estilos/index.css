@@ -1,0 +1,130 @@
+/* estilos de index.html */
+
+/* portada: texto a la izquierda y foto a la derecha */
+.hero {
+  height: 620px;
+  background-color: #e4dccb;
+}
+
+.hero-texto {
+  float: left;
+  width: 540px;
+  margin-top: 190px;
+}
+
+.hero-texto h1 {
+  font-size: 80px;
+  line-height: 76px;
+}
+
+.hero-texto p {
+  margin: 16px 0 28px;
+  font-size: 20px;
+}
+
+/* la foto ya viene recortada a 600 x 620 */
+.hero img {
+  float: right;
+  width: 600px;
+  height: 620px;
+}
+
+/* secciones */
+.seccion {
+  margin-top: 72px;
+}
+
+.seccion h2 {
+  margin-bottom: 20px;
+  font-size: 40px;
+}
+
+/* titulo con enlace a la derecha */
+.encabezado-seccion {
+  height: 60px;
+}
+
+.encabezado-seccion h2 {
+  float: left;
+  margin-bottom: 0;
+}
+
+.encabezado-seccion a {
+  float: right;
+  margin-top: 14px;
+  color: #1c1c1a;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.encabezado-seccion a:hover {
+  color: #2e4a3b;
+}
+
+/* dos categorias de 588px con 24px entre ellas = 1200px */
+.categoria {
+  float: left;
+  width: 588px;
+  margin-right: 24px;
+  color: #1c1c1a;
+  text-decoration: none;
+}
+
+.categoria.ultimo {
+  margin-right: 0;
+}
+
+.categoria img {
+  display: block;
+  width: 588px;
+  height: 460px;
+}
+
+.categoria span {
+  display: block;
+  margin-top: 12px;
+  font-family: "Barlow Condensed", Arial, sans-serif;
+  font-size: 28px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.categoria:hover img {
+  opacity: 0.85;
+}
+
+.categoria:hover span {
+  text-decoration: underline;
+}
+
+/* suscripcion */
+.suscripcion {
+  margin-top: 80px;
+  padding: 64px 0;
+  background-color: #e4dccb;
+  text-align: center;
+}
+
+.suscripcion h2 {
+  font-size: 40px;
+}
+
+.suscripcion p {
+  margin: 6px 0 24px;
+  font-size: 18px;
+}
+
+.suscripcion input {
+  width: 340px;
+  padding: 13px 16px;
+  border: 2px solid #1c1c1a;
+  background-color: #ffffff;
+  font-family: "Barlow", Arial, sans-serif;
+  font-size: 16px;
+  vertical-align: top;
+}
+
+.suscripcion .boton {
+  vertical-align: top;
+}

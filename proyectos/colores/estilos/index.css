@@ -1,0 +1,45 @@
+body p {
+  text-align: center;
+}
+
+.tarjetas {
+  margin: 40px 0;
+}
+
+.tarjeta {
+  display: inline-block;
+  width: 200px;
+  margin: 15px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.tarjeta div {
+  width: 100px;
+  height: 100px;
+}
+
+.nombre-rojo {
+  color: red;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.nombre-verde {
+  color: green;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.nombre-azul {
+  color: blue;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.logo {
+  height: 60px;
+}

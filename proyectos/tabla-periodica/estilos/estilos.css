@@ -1,0 +1,206 @@
+/* Tipografia local */
+@font-face {
+  font-family: "Noto Serif";
+  src: url("../fuentes/noto-serif-regular.ttf");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Noto Serif";
+  src: url("../fuentes/noto-serif-bold.ttf");
+  font-weight: bold;
+}
+
+/* Reseteo */
+* {
+  margin: 0;
+}
+
+body {
+  font-family: "Noto Serif";
+  background-color: #08110f;
+  color: #d9cfae;
+}
+
+/* Banner */
+.portada {
+  width: 1248px;
+  height: 420px;
+  margin: 20px auto 0;
+}
+
+.portada img {
+  width: 1248px;
+  height: 420px;
+  float: left;
+}
+
+/* Titulo principal */
+h1 {
+  width: 1248px;
+  margin: 20px auto 0;
+  font-size: 34px;
+  color: #e8c25a;
+}
+
+/* Frase bajo el titulo */
+.lema {
+  width: 1248px;
+  margin: 0 auto 16px;
+  font-size: 14px;
+  color: #8fa39a;
+}
+
+/* Contenedor de cada bloque de la tabla */
+.tabla {
+  width: 1248px;
+  margin: 0 auto;
+}
+
+.tabla h2 {
+  font-size: 16px;
+  color: #e8c25a;
+  margin-bottom: 6px;
+}
+
+
+.fila {
+  width: 1248px;
+  float: left;
+  clear: left;
+}
+
+/* Celda de elemento */
+.elemento {
+  width: 64px;
+  height: 74px;
+  margin: 2px;
+  float: left;
+}
+
+.elemento h3 {
+  font-size: 11px;
+  margin: 3px 0 0 5px;
+}
+
+.elemento h4 {
+  font-size: 20px;
+  margin: 0 0 0 5px;
+}
+
+.elemento h5 {
+  font-size: 8.5px;
+  margin: 0 0 0 5px;
+}
+
+.elemento h6 {
+  font-size: 9px;
+  margin: 0 0 0 5px;
+}
+
+/* Numeros (columna izquierda) */
+.etiqueta-periodo {
+  width: 24px;
+  height: 48px;
+  margin: 30px 0 0 0;
+  float: left;
+  font-size: 12px;
+}
+
+/* Numeros sobre la primera celda de cada columna */
+.etiqueta-grupo {
+  width: 64px;
+  height: 20px;
+  margin: 56px 2px 2px;
+  float: left;
+  font-size: 12px;
+}
+
+.grupo-superior {
+  width: 64px;
+  height: 20px;
+  margin: 2px;
+  float: left;
+  font-size: 12px;
+}
+
+.primera-columna {
+  margin-left: 26px;
+}
+
+.salto-10 {
+  margin-left: 682px;
+}
+
+.salto-16 {
+  margin-left: 1090px;
+}
+
+.series {
+  clear: both;
+}
+
+.series .fila:first-child {
+  margin-top: 24px;
+}
+
+.titulo-serie {
+  width: 132px;
+  height: 48px;
+  margin: 30px 2px 0 26px;
+  float: left;
+}
+
+.tabla .titulo-serie {
+  font-size: 13px;
+}
+
+
+.elemento {
+  color: #ecdfc4;
+}
+
+.no-metal {
+  background-color: #b5621f;
+}
+
+.alcalino {
+  background-color: #1c3350;
+}
+
+.alcalinoterreo {
+  background-color: #b3831c;
+}
+
+.transicion {
+  background-color: #1f5f87;
+}
+
+.metaloide {
+  background-color: #9c2238;
+}
+
+.post-transicion {
+  background-color: #5a2a60;
+}
+
+.halogeno {
+  background-color: #6f7d22;
+}
+
+.gas-noble {
+  background-color: #1d4d33;
+}
+
+.lantanido {
+  background-color: #7a7a4a;
+}
+
+.actinido {
+  background-color: #4f6f5a;
+}
+
+/* la celda o bloque brilla en dorado al pasar el cursor (esto lo agrege por la tematica)*/
+.elemento:hover {
+  background-color: #b8913a;
+}

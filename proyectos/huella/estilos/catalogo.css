@@ -1,0 +1,47 @@
+/* estilos de catalogo.html */
+
+/* pestañas para ir a cada categoria */
+.pestanas {
+  border-bottom: 1px solid #d8d2c4;
+}
+
+.pestanas ul {
+  list-style: none;
+  height: 40px;
+}
+
+.pestanas li {
+  float: left;
+  margin-right: 32px;
+}
+
+.pestanas a {
+  display: block;
+  padding-bottom: 10px;
+  border-bottom: 2px solid transparent;
+  color: #1c1c1a;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-decoration: none;
+}
+
+.pestanas a:hover {
+  border-bottom-color: #2e4a3b;
+  color: #2e4a3b;
+}
+
+/* cada categoria */
+.categoria-catalogo {
+  padding-top: 40px;
+  scroll-margin-top: 73px; /* el encabezado fijo no tapa el titulo al usar las pestañas */
+}
+
+.categoria-catalogo h2 {
+  margin-bottom: 18px;
+  font-size: 40px;
+}
+
+#esenciales {
+  padding-bottom: 40px;
+}

@@ -1,0 +1,115 @@
+/* Reseteo */
+* {
+  margin: 0;
+}
+
+
+.mario {
+  width: 480px; /*para esto conte en numero de bloques de la imagen que envio osea 12 bloques de ancho 
+                 y cada uno hice que midiera 40 pixeles ose 12 x 40 = 480 
+                 por lo tanto todo lo puse en multiplos de 40px */
+  margin: 400px auto;
+}
+
+/* Bloque = 40px)*/
+.bloque {
+  height: 40px;
+  float: left;
+}
+
+/* colores */
+/* para los colores use la herramienta https://imagecolorpicker.com para extraerlos en base a la imagen que proporciono */
+.rojo {
+  background-color: #ff0307;
+}
+
+.cafe {
+  background-color: #622211;
+}
+
+.piel {
+  background-color: #e9a34b;
+}
+
+.negro {
+  background-color: #000000;
+}
+
+.azul {
+  background-color: #10447e;
+}
+
+.amarillo {
+  background-color: #f7fd17;
+}
+
+/* Anchos */
+.ancho-1 {
+  width: 40px;
+}
+
+.ancho-2 {
+  width: 80px;
+}
+
+.ancho-3 {
+  width: 120px;
+}
+
+.ancho-4 {
+  width: 160px;
+}
+
+.ancho-5 {
+  width: 200px;
+}
+
+.ancho-6 {
+  width: 240px;
+}
+
+.ancho-7 {
+  width: 280px;
+}
+
+.ancho-8 {
+  width: 320px;
+}
+
+.ancho-9 {
+  width: 360px;
+}
+
+/* Separaciones de la izquierda */
+.margen-izq-1 {
+  margin-left: 40px;
+}
+
+.margen-izq-2 {
+  margin-left: 80px;
+}
+
+.margen-izq-3 {
+  margin-left: 120px;
+}
+
+.margen-izq-4 {
+  margin-left: 160px;
+}
+
+/* Separaciones de la derecha */
+.margen-der-1 {
+  margin-right: 40px;
+}
+
+.margen-der-2 {
+  margin-right: 80px;
+}
+
+.margen-der-3 {
+  margin-right: 120px;
+}
+
+.margen-der-4 {
+  margin-right: 160px;
+}

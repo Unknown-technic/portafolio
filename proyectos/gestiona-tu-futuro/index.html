@@ -1,0 +1,2097 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Roboto+Mono:wght@500;700&amp;family=DM+Sans:wght@500;600;700&amp;family=DM+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: #FAF7FA; }
+    body, input, select, button { font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; }
+    :focus-visible { outline: 2px solid #2F7653; outline-offset: 2px; }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-thumb { background: #D8D3DC; border-radius: 8px; }
+    a { color: #2F7653; }
+    a:hover { color: #1F5A3F; }
+  </style>
+</helmet>
+
+<div style="width:100%; min-height:100vh; background:#FAF7FA; display:flex; align-items:stretch;">
+
+<sc-if value="{{ authed }}" hint-placeholder-val="{{ false }}">
+
+  <!-- ================= AUTHENTICATED APP SHELL ================= -->
+  <div style="display:flex; width:100%; min-height:100vh;">
+
+    <!-- MOBILE DRAWER DIM -->
+    <sc-if value="{{ drawerDimVisible }}" hint-placeholder-val="{{ false }}">
+      <div onClick="{{ closeSidebar }}" style="position:fixed; inset:0; background:rgba(20,20,25,0.4); z-index:85;"></div>
+    </sc-if>
+
+    <!-- SIDEBAR -->
+    <div style="width:264px; flex-shrink:0; background:#FFFFFF; border-right:1px solid #EEEAF1; display:{{ sidebarDisplay }}; flex-direction:column; padding:20px 16px; position:{{ sidebarPos.position }}; top:0; bottom:0; left:0; z-index:90; box-shadow:{{ sidebarPos.shadow }}; overflow:auto;">
+      <div style="display:flex; align-items:center; gap:10px; padding:8px 8px 22px 8px;">
+        <img src="assets/logo2.png" alt="Gestiona Tu Futuro" style="width:38px; height:37px; flex-shrink:0;">
+        <div style="font-weight:700; font-size:14.5px; line-height:1.2; color:#22272E; letter-spacing:0.2px;">GESTIONA<br>TU FUTURO</div>
+      </div>
+
+      <button onClick="{{ openTxModal }}" style="display:flex; align-items:center; gap:8px; background:#2F7653; color:#fff; border:none; border-radius:10px; padding:12px 16px; font-weight:700; font-size:14px; cursor:pointer; margin-bottom:18px;" style-hover="background:#26603F;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 5V19M5 12H19" stroke="#fff" stroke-width="2.4" stroke-linecap="round"></path></svg>
+        Nueva Transacción
+      </button>
+
+      <div style="display:flex; flex-direction:column; gap:4px;">
+        <button onClick="{{ goDashboard }}" style="display:flex; align-items:center; gap:11px; padding:11px 14px; border-radius:10px; border:none; cursor:pointer; text-align:left; font-size:14px; font-weight:600; background:{{ navBg.dashboard }}; color:{{ navFg.dashboard }}; transition:box-shadow 0.15s ease;" style-hover="box-shadow:0 0 0 3px rgba(47,118,83,0.2);">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="9" rx="1.5" stroke="{{ navFg.dashboard }}" stroke-width="2"></rect><rect x="14" y="3" width="7" height="5" rx="1.5" stroke="{{ navFg.dashboard }}" stroke-width="2"></rect><rect x="14" y="12" width="7" height="9" rx="1.5" stroke="{{ navFg.dashboard }}" stroke-width="2"></rect><rect x="3" y="16" width="7" height="5" rx="1.5" stroke="{{ navFg.dashboard }}" stroke-width="2"></rect></svg>
+          Tablero
+        </button>
+        <button onClick="{{ goIngresos }}" style="display:flex; align-items:center; gap:11px; padding:11px 14px; border-radius:10px; border:none; cursor:pointer; text-align:left; font-size:14px; font-weight:600; background:{{ navBg.ingresos }}; color:{{ navFg.ingresos }}; transition:box-shadow 0.15s ease;" style-hover="box-shadow:0 0 0 3px rgba(47,118,83,0.2);">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M3 17L10 10L14 14L21 6" stroke="{{ navFg.ingresos }}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M15 6H21V12" stroke="{{ navFg.ingresos }}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          Ingresos
+        </button>
+        <button onClick="{{ goGastos }}" style="display:flex; align-items:center; gap:11px; padding:11px 14px; border-radius:10px; border:none; cursor:pointer; text-align:left; font-size:14px; font-weight:600; background:{{ navBg.gastos }}; color:{{ navFg.gastos }}; transition:box-shadow 0.15s ease;" style-hover="box-shadow:0 0 0 3px rgba(47,118,83,0.2);">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M3 7L10 14L14 10L21 18" stroke="{{ navFg.gastos }}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M15 18H21V12" stroke="{{ navFg.gastos }}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          Gastos
+        </button>
+        <button onClick="{{ goAhorros }}" style="display:flex; align-items:center; gap:11px; padding:11px 14px; border-radius:10px; border:none; cursor:pointer; text-align:left; font-size:14px; font-weight:600; background:{{ navBg.ahorros }}; color:{{ navFg.ahorros }}; transition:box-shadow 0.15s ease;" style-hover="box-shadow:0 0 0 3px rgba(47,118,83,0.2);">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="13" r="7.5" stroke="{{ navFg.ahorros }}" stroke-width="2"></circle><path d="M9 3.5C9.8 2.7 10.8 2 12 2C13.2 2 14.2 2.7 15 3.5" stroke="{{ navFg.ahorros }}" stroke-width="2" stroke-linecap="round"></path></svg>
+          Ahorros
+        </button>
+        <button onClick="{{ goMovimientos }}" style="display:flex; align-items:center; gap:11px; padding:11px 14px; border-radius:10px; border:none; cursor:pointer; text-align:left; font-size:14px; font-weight:600; background:{{ navBg.movimientos }}; color:{{ navFg.movimientos }}; transition:box-shadow 0.15s ease;" style-hover="box-shadow:0 0 0 3px rgba(47,118,83,0.2);">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M4 6H20M4 12H20M4 18H14" stroke="{{ navFg.movimientos }}" stroke-width="2.2" stroke-linecap="round"></path></svg>
+          Movimientos
+        </button>
+        <button onClick="{{ goPresupuesto }}" style="display:flex; align-items:center; gap:11px; padding:11px 14px; border-radius:10px; border:none; cursor:pointer; text-align:left; font-size:14px; font-weight:600; background:{{ navBg.presupuesto }}; color:{{ navFg.presupuesto }}; transition:box-shadow 0.15s ease;" style-hover="box-shadow:0 0 0 3px rgba(47,118,83,0.2);">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><rect x="3" y="7" width="18" height="13" rx="2" stroke="{{ navFg.presupuesto }}" stroke-width="2"></rect><path d="M3 11H21" stroke="{{ navFg.presupuesto }}" stroke-width="2"></path><path d="M8 4H16" stroke="{{ navFg.presupuesto }}" stroke-width="2" stroke-linecap="round"></path></svg>
+          Presupuesto
+        </button>
+        <button onClick="{{ goRecomendaciones }}" style="display:flex; align-items:center; gap:11px; padding:11px 14px; border-radius:10px; border:none; cursor:pointer; text-align:left; font-size:14px; font-weight:600; background:{{ navBg.recomendaciones }}; color:{{ navFg.recomendaciones }}; transition:box-shadow 0.15s ease;" style-hover="box-shadow:0 0 0 3px rgba(47,118,83,0.2);">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M9 18H15M10 21H14M8 10C8 6.5 9.5 4 12 4C14.5 4 16 6.5 16 10C16 12 15 13 14 14.5C13.6 15.2 13.5 15.6 13.5 16.5H10.5C10.5 15.6 10.4 15.2 10 14.5C9 13 8 12 8 10Z" stroke="{{ navFg.recomendaciones }}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+          Recomendaciones
+        </button>
+      </div>
+
+      <div style="flex:1;"></div>
+
+      <div style="display:flex; flex-direction:column; gap:4px; border-top:1px solid #EEEAF1; padding-top:12px;">
+        <button onClick="{{ goPerfil }}" style="display:flex; align-items:center; gap:11px; padding:11px 14px; border-radius:10px; border:none; cursor:pointer; text-align:left; font-size:14px; font-weight:600; background:{{ navBg.perfil }}; color:{{ navFg.perfil }}; transition:box-shadow 0.15s ease;" style-hover="box-shadow:0 0 0 3px rgba(47,118,83,0.2);">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.5" stroke="{{ navFg.perfil }}" stroke-width="2"></circle><path d="M4.5 20C5.5 16.5 8.3 14.5 12 14.5C15.7 14.5 18.5 16.5 19.5 20" stroke="{{ navFg.perfil }}" stroke-width="2" stroke-linecap="round"></path></svg>
+          Perfil
+        </button>
+        <button onClick="{{ logout }}" style="display:flex; align-items:center; gap:11px; padding:11px 14px; border-radius:10px; border:none; cursor:pointer; text-align:left; font-size:14px; font-weight:600; background:transparent; color:#BA1A1A; transition:background 0.15s ease;" style-hover="background:#FFDAD6; box-shadow:0 0 0 1px #F2B8B5 inset;">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M9 21H5C3.9 21 3 20.1 3 19V5C3 3.9 3.9 3 5 3H9" stroke="#BA1A1A" stroke-width="2" stroke-linecap="round"></path><path d="M16 17L21 12L16 7" stroke="#BA1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M21 12H9" stroke="#BA1A1A" stroke-width="2" stroke-linecap="round"></path></svg>
+          Cerrar Sesión
+        </button>
+        <div style="font-size:9.5px; color:#999; padding:10px 8px 0 8px;">© Todos los derechos reservados</div>
+      </div>
+    </div>
+
+    <!-- MAIN COLUMN -->
+    <div style="flex:1; display:flex; flex-direction:column; min-width:0;">
+      <!-- HEADER -->
+      <div style="height:64px; flex-shrink:0; background:#2A4465; box-shadow:0 4px 4px rgba(0,0,0,0.15); display:flex; align-items:center; justify-content:space-between; padding:0 22px; gap:12px;">
+        <div style="display:flex; align-items:center; gap:12px; min-width:0;">
+          <sc-if value="{{ isNarrow }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ openSidebar }}" aria-label="Abrir menú" style="background:none; border:none; cursor:pointer; padding:6px; display:flex;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 6H20M4 12H20M4 18H20" stroke="#fff" stroke-width="2.2" stroke-linecap="round"></path></svg>
+            </button>
+          </sc-if>
+          <div style="font-weight:700; font-size:19px; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Gestión financiera</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:14px;">
+          <div style="position:relative;">
+            <button title="Ayuda" aria-label="Ayuda" onClick="{{ toggleHelp }}" style="width:34px; height:34px; border-radius:50%; border:none; display:flex; align-items:center; justify-content:center; cursor:pointer; background:{{ helpBtnBg }};">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9.5" stroke="#fff" stroke-width="1.8"></circle><path d="M9.5 9.2C9.8 8 10.8 7.2 12 7.2C13.4 7.2 14.5 8.2 14.5 9.5C14.5 10.7 13.7 11.2 12.9 11.8C12.3 12.2 12 12.6 12 13.4" stroke="#fff" stroke-width="1.8" stroke-linecap="round"></path><circle cx="12" cy="16.3" r="1" fill="#fff"></circle></svg>
+            </button>
+            <sc-if value="{{ helpOpen }}" hint-placeholder-val="{{ false }}">
+              <div style="position:absolute; top:calc(100% + 10px); right:0; z-index:50; width:280px; background:#fff; border-radius:14px; border:1px solid rgba(0,0,0,0.08); box-shadow:0 14px 32px rgba(0,0,0,0.2); padding:18px;">
+                <div style="font-size:14px; font-weight:700; color:#111; margin-bottom:10px;">¿Necesitas ayuda?</div>
+                <div style="display:flex; flex-direction:column; gap:10px; font-size:12.5px; color:#4E555F; line-height:1.5;">
+                  <div><strong style="color:#20242A;">Nueva Transacción</strong> — botón verde en la barra lateral para registrar un ingreso o gasto. Puedes editar o eliminar cualquier movimiento desde su fila.</div>
+                  <div><strong style="color:#20242A;">Calendario</strong> — en Movimientos, Ingresos, Gastos y Presupuesto puedes elegir el mes y año a consultar.</div>
+                  <div><strong style="color:#20242A;">Datos</strong> — este prototipo guarda todo en tu navegador (localStorage). Las contraseñas se guardan con un hash simple; no uses contraseñas reales. Haz respaldos desde Perfil.</div>
+                </div>
+                <button onClick="{{ toggleHelp }}" style="margin-top:14px; width:100%; background:#F5F3F6; border:none; border-radius:8px; padding:9px; font-size:12.5px; font-weight:700; color:#333842; cursor:pointer;" style-hover="background:#EAE7ED;">Cerrar</button>
+              </div>
+            </sc-if>
+          </div>
+          <div style="position:relative;">
+            <button title="Notificaciones" aria-label="Notificaciones" onClick="{{ toggleNotif }}" style="width:34px; height:34px; border-radius:50%; border:none; display:flex; align-items:center; justify-content:center; cursor:pointer; background:{{ notifBtnBg }}; position:relative;">
+              <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="M6 10C6 6.7 8.7 4 12 4C15.3 4 18 6.7 18 10V14L20 17H4L6 14V10Z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"></path><path d="M9.5 20C10 20.8 10.9 21.3 12 21.3C13.1 21.3 14 20.8 14.5 20" stroke="#fff" stroke-width="1.8" stroke-linecap="round"></path></svg>
+              <sc-if value="{{ hasNotifications }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute; top:5px; right:6px; width:8px; height:8px; border-radius:50%; background:#D85040; border:1.5px solid #2A4465;"></div>
+              </sc-if>
+            </button>
+            <sc-if value="{{ notifOpen }}" hint-placeholder-val="{{ false }}">
+              <div style="position:absolute; top:calc(100% + 10px); right:0; z-index:50; width:300px; background:#fff; border-radius:14px; border:1px solid rgba(0,0,0,0.08); box-shadow:0 14px 32px rgba(0,0,0,0.2); padding:8px 0;">
+                <div style="font-size:14px; font-weight:700; color:#111; padding:10px 18px 12px;">Notificaciones</div>
+                <sc-for list="{{ notifications }}" as="n" hint-placeholder-count="3">
+                  <div style="padding:12px 18px; border-top:1px solid #F0EDF1; display:flex; gap:10px; align-items:flex-start;">
+                    <div style="width:7px; height:7px; border-radius:50%; background:{{ n.color }}; margin-top:5px; flex-shrink:0;"></div>
+                    <div>
+                      <div style="font-size:12.5px; font-weight:700; color:#20242A;">{{ n.title }}</div>
+                      <div style="font-size:12px; color:#585A6A; margin-top:2px;">{{ n.detail }}</div>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+          <button onClick="{{ goPerfil }}" aria-label="Perfil" style="width:34px; height:34px; border-radius:50%; border:none; background:#DFF4E4; color:#1F5A3F; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; cursor:pointer; overflow:hidden; padding:0;">
+            {{ avatarImg }}
+            <sc-if value="{{ noPhoto }}" hint-placeholder-val="{{ true }}">
+              {{ userInitial }}
+            </sc-if>
+          </button>
+        </div>
+      </div>
+
+      <!-- CLICK-AWAY OVERLAY FOR POPOVERS -->
+      <sc-if value="{{ anyPopoverOpen }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ closePopovers }}" style="position:fixed; inset:0; z-index:30;"></div>
+      </sc-if>
+
+      <!-- CONTENT -->
+      <div style="flex:1; padding:{{ contentPad }}; overflow:auto;">
+
+        <!-- ============ DASHBOARD ============ -->
+        <sc-if value="{{ isDashboard }}" hint-placeholder-val="{{ true }}">
+          <div data-screen-label="Tablero" style="max-width:1180px;">
+            <div style="font-size:23px; font-weight:700; color:#20242A; margin-bottom:4px;">¡Hola, {{ currentUser.name }}!</div>
+            <div style="font-size:14px; color:#585A6A; margin-bottom:22px;">Resumen de tus finanzas de <strong style="color:#20242A;">{{ dashboardMonthLabel }}</strong>.</div>
+
+            <sc-if value="{{ isEmptyAccount }}" hint-placeholder-val="{{ false }}">
+              <div style="background:#fff; border:1px dashed #C9C2CE; border-radius:16px; padding:48px 30px; text-align:center; margin-bottom:22px;">
+                <div style="font-size:17px; font-weight:700; color:#20242A; margin-bottom:6px;">Aún no tienes movimientos</div>
+                <div style="font-size:13.5px; color:#585A6A; margin-bottom:18px;">Registra tu primer ingreso o gasto para ver tu resumen aquí.</div>
+                <button onClick="{{ openTxModal }}" style="background:#2F7653; color:#fff; border:none; border-radius:10px; padding:12px 22px; font-weight:700; font-size:14px; cursor:pointer;" style-hover="background:#26603F;">Agrega tu primera transacción</button>
+              </div>
+            </sc-if>
+
+            <div style="background:#0A0A0A; border-radius:16px; padding:26px 30px; display:flex; align-items:center; justify-content:space-between; margin-bottom:22px; box-shadow:0 4px 10px rgba(0,0,0,0.2);">
+              <div>
+                <div style="color:#B7B7B7; font-size:13px; margin-bottom:6px;">Balance Total</div>
+                <div style="color:#fff; font-family:'Roboto Mono',monospace; font-weight:700; font-size:34px;">{{ fmtMoney.balance }}</div>
+              </div>
+              <div style="color:#fff; font-size:48px; font-weight:700; opacity:0.9;">$</div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:{{ cardsGridCols }}; gap:18px; margin-bottom:22px;">
+              <div onClick="{{ goIngresos }}" style="background:#fff; border:1px solid #E4DDE4; border-radius:14px; padding:20px; cursor:pointer; transition:box-shadow 0.15s ease;" style-hover="box-shadow:0 0 0 2px rgba(47,118,83,0.18);">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:20px;">
+                  <div style="width:38px; height:38px; border-radius:50%; background:#DFF4E4; display:flex; align-items:center; justify-content:center;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M3 17L10 10L14 14L21 6" stroke="#2F7653" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M6 18L18 6M18 6H9M18 6V15" stroke="#2F7653" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                </div>
+                <div style="font-size:13px; color:#585A6A; margin-bottom:6px;">Ingresos de {{ dashboardMonthShort }}</div>
+                <div style="font-family:'Roboto Mono',monospace; font-weight:700; font-size:24px; color:#111;">{{ fmtMoney.incomeMonth }}</div>
+              </div>
+              <div onClick="{{ goGastos }}" style="background:#fff; border:1px solid #E4DDE4; border-radius:14px; padding:20px; cursor:pointer; transition:box-shadow 0.15s ease;" style-hover="box-shadow:0 0 0 2px rgba(216,80,64,0.2);">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:20px;">
+                  <div style="width:38px; height:38px; border-radius:50%; background:#FFDAD6; display:flex; align-items:center; justify-content:center;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M3 7L10 14L14 10L21 18" stroke="#D85040" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M6 6L18 18M18 18H9M18 18V9" stroke="#D85040" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                </div>
+                <div style="font-size:13px; color:#585A6A; margin-bottom:6px;">Gastos de {{ dashboardMonthShort }}</div>
+                <div style="font-family:'Roboto Mono',monospace; font-weight:700; font-size:24px; color:#111;">{{ fmtMoney.expenseMonth }}</div>
+              </div>
+              <div onClick="{{ goAhorros }}" style="background:#fff; border:1px solid #E4DDE4; border-radius:14px; padding:20px; cursor:pointer; transition:box-shadow 0.15s ease;" style-hover="box-shadow:0 0 0 2px rgba(49,135,241,0.2);">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:14px;">
+                  <div style="width:38px; height:38px; border-radius:50%; background:#DCEBFF; display:flex; align-items:center; justify-content:center;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="13" r="7.5" stroke="#3187F1" stroke-width="2"></circle></svg></div>
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M3 15L9 9L13 13L21 5" stroke="#3187F1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                </div>
+                <div style="font-size:13px; color:#585A6A; margin-bottom:6px;">Ahorros</div>
+                <div style="font-family:'Roboto Mono',monospace; font-weight:700; font-size:24px; color:#111; margin-bottom:8px;">{{ fmtMoney.savingsCurrent }}</div>
+                <div style="font-size:11px; color:#3187F1; margin-bottom:5px;">Meta: {{ fmtMoney.savingsGoal }}</div>
+                <div style="width:100%; height:6px; border-radius:4px; background:#EEF3FB;"><div style="height:100%; border-radius:4px; background:#3187F1; width:{{ savingsPct }}%;"></div></div>
+              </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:{{ chartsGridCols }}; gap:18px;">
+              <div style="background:#fff; border:1px solid #E4DDE4; border-radius:14px; padding:22px;">
+                <div style="font-size:16px; font-weight:700; color:#111; margin-bottom:18px;">Ingresos vs Gastos (últimos 6 meses)</div>
+                <div style="display:flex; align-items:flex-end; gap:18px; height:180px; padding:0 6px; border-bottom:1px solid #E4DDE4;">
+                  <sc-for list="{{ trendMonths }}" as="tm" hint-placeholder-count="6">
+                    <div title="{{ tm.tooltip }}" style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%; gap:4px; cursor:default;">
+                      <div style="display:flex; align-items:flex-end; gap:4px; height:100%;">
+                        <div style="width:14px; border-radius:3px 3px 0 0; background:#2F7653; height:{{ tm.incomeH }}px;"></div>
+                        <div style="width:14px; border-radius:3px 3px 0 0; background:#D85040; height:{{ tm.expenseH }}px;"></div>
+                      </div>
+                      <div style="font-size:11px; color:#585A6A; margin-top:6px; white-space:nowrap;">{{ tm.label }}</div>
+                    </div>
+                  </sc-for>
+                </div>
+                <div style="display:flex; gap:20px; margin-top:16px;">
+                  <div style="display:flex; align-items:center; gap:6px; font-size:12px; font-weight:700; color:#20242A;"><div style="width:9px; height:9px; border-radius:50%; background:#2F7653;"></div>Ingresos</div>
+                  <div style="display:flex; align-items:center; gap:6px; font-size:12px; font-weight:700; color:#20242A;"><div style="width:9px; height:9px; border-radius:50%; background:#D85040;"></div>Gastos</div>
+                </div>
+              </div>
+
+              <div style="background:#fff; border:1px solid #E4DDE4; border-radius:14px; padding:22px;">
+                <div style="font-size:16px; font-weight:700; color:#111; margin-bottom:18px;">Gastos por Categoría</div>
+                <div style="display:flex; justify-content:center; margin-bottom:20px;">
+                  <div style="width:150px; height:150px; border-radius:50%; background:{{ donutGradient }}; display:flex; align-items:center; justify-content:center;">
+                    <div style="width:96px; height:96px; border-radius:50%; background:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+                      <div style="font-size:10px; font-weight:700; color:#4B4F56;">Total Mes</div>
+                      <div style="font-family:'Roboto Mono',monospace; font-weight:700; font-size:17px; color:#111;">{{ fmtMoney.expenseMonth }}</div>
+                    </div>
+                  </div>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:10px;">
+                  <sc-for list="{{ categoryBreakdown }}" as="cat" hint-placeholder-count="4">
+                    <div title="{{ cat.tooltip }}" style="display:flex; align-items:center; justify-content:space-between; font-size:12.5px;">
+                      <div style="display:flex; align-items:center; gap:8px;"><div style="width:9px; height:9px; border-radius:50%; background:{{ cat.color }};"></div><span style="color:#4B4F56;">{{ cat.name }}</span></div>
+                      <span style="font-family:'Roboto Mono',monospace; font-weight:700; color:#111;">{{ cat.pct }}%</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============ MOVIMIENTOS / INGRESOS / GASTOS ============ -->
+        <sc-if value="{{ isLedgerScreen }}" hint-placeholder-val="{{ false }}">
+          <div data-screen-label="{{ ledgerTitle }}" style="max-width:1180px;">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:18px; gap:12px; flex-wrap:wrap;">
+              <div>
+                <div style="font-size:20px; font-weight:700; color:#111;">{{ ledgerTitle }}</div>
+                <div style="font-size:13px; color:#4E555F; margin-top:4px;">{{ ledgerSubtitle }}</div>
+              </div>
+              <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                <button onClick="{{ toggleCalendarStyle }}" style="background:#fff; border:1px solid #E0DDE4; border-radius:8px; padding:8px 12px; font-size:11.5px; font-weight:600; color:#585A6A; cursor:pointer; transition:box-shadow 0.15s ease, background 0.15s ease;" style-hover="background:#F5F3F6; box-shadow:0 0 0 2px rgba(0,0,0,0.1);">Estilo calendario: {{ calendarStyleLabel }}</button>
+                <button onClick="{{ exportCSV }}" style="display:flex; align-items:center; gap:7px; background:#fff; border:1px solid #E0DDE4; border-radius:8px; padding:9px 16px; font-size:12.5px; font-weight:700; color:#111; cursor:pointer; transition:box-shadow 0.15s ease, background 0.15s ease;" style-hover="background:#F5F3F6; box-shadow:0 0 0 2px rgba(0,0,0,0.1);">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 3V15M12 15L8 11M12 15L16 11" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M4 17V19C4 20.1 4.9 21 6 21H18C19.1 21 20 20.1 20 19V17" stroke="#111" stroke-width="2" stroke-linecap="round"></path></svg>
+                  Exportar CSV
+                </button>
+              </div>
+            </div>
+
+            <div style="display:flex; gap:14px; align-items:center; margin-bottom:16px; flex-wrap:wrap;">
+              <sc-if value="{{ showTypeFilter }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex; gap:8px;">
+                  <button onClick="{{ setFilterTodos }}" style="border-radius:8px; border:1px solid #E0DDE4; padding:8px 16px; font-size:12.5px; font-weight:600; cursor:pointer; background:{{ filterBg.todos }}; color:#333842;" style-hover="box-shadow:0 0 0 2px rgba(0,0,0,0.14) inset;">Todos</button>
+                  <button onClick="{{ setFilterIngresos }}" style="border-radius:8px; border:1px solid #E0DDE4; padding:8px 16px; font-size:12.5px; font-weight:600; cursor:pointer; background:{{ filterBg.ingresos }}; color:#333842;" style-hover="box-shadow:0 0 0 2px rgba(0,0,0,0.14) inset;">Ingresos</button>
+                  <button onClick="{{ setFilterGastos }}" style="border-radius:8px; border:1px solid #E0DDE4; padding:8px 16px; font-size:12.5px; font-weight:600; cursor:pointer; background:{{ filterBg.gastos }}; color:#333842;" style-hover="box-shadow:0 0 0 2px rgba(0,0,0,0.14) inset;">Gastos</button>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ calendarIsPopup }}" hint-placeholder-val="{{ true }}">
+                <div style="position:relative;">
+                  <button onClick="{{ toggleCalendarOpen }}" style="display:flex; align-items:center; gap:8px; background:#fff; border:1px solid rgba(0,0,0,0.12); border-radius:10px; padding:10px 18px; box-shadow:0 1px 3px rgba(0,0,0,0.1); font-family:'DM Sans',sans-serif; font-weight:500; font-size:13px; color:#0A0A0A; cursor:pointer;" style-hover="background:#F5F3F6;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="2" stroke="#0A0A0A" stroke-width="1.8"></rect><path d="M3 10H21" stroke="#0A0A0A" stroke-width="1.8"></path><path d="M8 3V7M16 3V7" stroke="#0A0A0A" stroke-width="1.8" stroke-linecap="round"></path></svg>
+                    {{ filterMonthLabel }}
+                  </button>
+                  <sc-if value="{{ calendarOpen }}" hint-placeholder-val="{{ false }}">
+                    <div style="position:absolute; top:calc(100% + 8px); left:0; z-index:50; background:#fff; border-radius:14px; border:1px solid rgba(0,0,0,0.1); box-shadow:0 12px 28px rgba(0,0,0,0.16); padding:16px; width:270px;">
+                      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+                        <button onClick="{{ prevCalYear }}" aria-label="Año anterior" style="background:none; border:none; cursor:pointer; padding:4px; opacity:{{ prevYearOpacity }};" style-hover="background:#F0EDF1;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M15 6L9 12L15 18" stroke="#585A6A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+                        <div style="font-family:'DM Sans',sans-serif; font-weight:600; font-size:15px; color:#0A0A0A;">{{ calendarViewYear }}</div>
+                        <button onClick="{{ nextCalYear }}" aria-label="Año siguiente" style="background:none; border:none; cursor:pointer; padding:4px; opacity:{{ nextYearOpacity }};" style-hover="background:#F0EDF1;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 6L15 12L9 18" stroke="#585A6A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+                      </div>
+                      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px;">
+                        <sc-for list="{{ monthGrid }}" as="mo" hint-placeholder-count="12">
+                          <button onClick="{{ mo.pick }}" style="border-radius:8px; border:none; padding:9px 0; font-size:12.5px; font-weight:600; cursor:pointer; background:{{ mo.bg }}; color:{{ mo.fg }};" style-hover="box-shadow:0 0 0 2px rgba(0,0,0,0.14) inset;">{{ mo.label }}</button>
+                        </sc-for>
+                      </div>
+                      <div style="margin-top:12px; text-align:center; font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.5px; color:#71717F;">Mes completo seleccionado</div>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ calendarIsDropdown }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex; gap:8px;">
+                  <select aria-label="Mes" onChange="{{ onDropdownMonth }}" value="{{ filterMonth.month }}" style="border-radius:8px; border:1px solid #E0DDE4; padding:9px 10px; font-size:12.5px; font-weight:600; color:#333842; background:#fff; cursor:pointer;">
+                    <sc-for list="{{ monthNameOptions }}" as="mn" hint-placeholder-count="12">
+                      <option value="{{ mn.idx }}">{{ mn.name }}</option>
+                    </sc-for>
+                  </select>
+                  <select aria-label="Año" onChange="{{ onDropdownYear }}" value="{{ filterMonth.year }}" style="border-radius:8px; border:1px solid #E0DDE4; padding:9px 10px; font-size:12.5px; font-weight:600; color:#333842; background:#fff; cursor:pointer;">
+                    <sc-for list="{{ yearOptions }}" as="yr" hint-placeholder-count="4">
+                      <option value="{{ yr }}">{{ yr }}</option>
+                    </sc-for>
+                  </select>
+                </div>
+              </sc-if>
+
+              <input value="{{ searchQuery }}" onChange="{{ setSearchQuery }}" placeholder="Buscar descripción…" aria-label="Buscar" style="border:1px solid #E0DDE4; border-radius:8px; padding:9px 12px; font-size:12.5px; width:190px; background:#fff;">
+
+              <sc-if value="{{ showTypeFilter }}" hint-placeholder-val="{{ false }}">
+                <select aria-label="Categoría" onChange="{{ setFilterCategory }}" value="{{ filterCategory }}" style="border-radius:8px; border:1px solid #E0DDE4; padding:9px 10px; font-size:12.5px; font-weight:600; color:#333842; background:#fff; cursor:pointer;">
+                  <sc-for list="{{ categoryFilterOptions }}" as="cf" hint-placeholder-count="5">
+                    <option value="{{ cf }}">{{ cf }}</option>
+                  </sc-for>
+                </select>
+              </sc-if>
+            </div>
+
+            <div style="display:flex; gap:14px; margin-bottom:16px; flex-wrap:wrap;">
+              <div style="background:#fff; border:1px solid #E4DDE4; border-radius:10px; padding:12px 18px; font-size:12px; color:#585A6A;">Ingresos: <span style="font-family:'Roboto Mono',monospace; font-weight:700; color:#2F7653; white-space:nowrap;">{{ fmtMoney.filterIncome }}</span></div>
+              <div style="background:#fff; border:1px solid #E4DDE4; border-radius:10px; padding:12px 18px; font-size:12px; color:#585A6A;">Gastos: <span style="font-family:'Roboto Mono',monospace; font-weight:700; color:#D85040; white-space:nowrap;">{{ fmtMoney.filterExpense }}</span></div>
+              <div style="background:#fff; border:1px solid #E4DDE4; border-radius:10px; padding:12px 18px; font-size:12px; color:#585A6A;">Neto: <span style="font-family:'Roboto Mono',monospace; font-weight:700; color:#111; white-space:nowrap;">{{ fmtMoney.filterNet }}</span></div>
+            </div>
+
+            <div style="background:#fff; border:1px solid #EEEAF1; border-radius:12px; overflow-x:auto;">
+              <div style="min-width:640px;">
+                <div style="display:grid; grid-template-columns:110px 1fr 140px 120px 84px; background:#F5F3F6; padding:12px 20px; font-size:12px; font-weight:700; color:#4E555F;">
+                  <div>Fecha</div><div>Descripción</div><div>Categoría</div><div style="text-align:right;">Monto</div><div></div>
+                </div>
+                <sc-if value="{{ hasRows }}" hint-placeholder-val="{{ true }}">
+                  <sc-for list="{{ filteredTx }}" as="tx" hint-placeholder-count="5">
+                    <div style="display:grid; grid-template-columns:110px 1fr 140px 120px 84px; align-items:center; padding:11px 20px; border-top:1px solid #F0EDF1;">
+                      <div style="font-size:12.5px; color:#20242A;">{{ tx.dateLabel }}</div>
+                      <div style="font-size:13px; font-weight:700; color:#111; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; padding-right:10px;">{{ tx.description }}</div>
+                      <div><span style="display:inline-flex; align-items:center; gap:5px; background:{{ tx.badgeBg }}; color:{{ tx.badgeFg }}; padding:5px 11px; border-radius:20px; font-size:11px; font-weight:700;"><span style="width:6px; height:6px; border-radius:50%; background:{{ tx.badgeFg }};"></span>{{ tx.category }}</span></div>
+                      <div style="text-align:right; font-family:'Roboto Mono',monospace; font-weight:700; font-size:13px; color:{{ tx.amountColor }};">{{ tx.amountLabel }}</div>
+                      <div style="display:flex; gap:4px; justify-content:flex-end;">
+                        <button onClick="{{ tx.onEdit }}" aria-label="Editar" title="Editar" style="width:30px; height:30px; border-radius:8px; border:none; background:transparent; cursor:pointer; display:flex; align-items:center; justify-content:center;" style-hover="background:#F0EDF1;">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M16.5 3.5C17.3 2.7 18.7 2.7 19.5 3.5C20.3 4.3 20.3 5.7 19.5 6.5L7 19L3 20L4 16L16.5 3.5Z" stroke="#585A6A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                        </button>
+                        <button onClick="{{ tx.onDelete }}" aria-label="Eliminar" title="Eliminar" style="width:30px; height:30px; border-radius:8px; border:none; background:transparent; cursor:pointer; display:flex; align-items:center; justify-content:center;" style-hover="background:#FFDAD6;">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M4 6H20M9 6V4H15V6M6 6L7 20H17L18 6M10 10V16M14 10V16" stroke="#BA1A1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                        </button>
+                      </div>
+                    </div>
+                  </sc-for>
+                </sc-if>
+                <sc-if value="{{ noRows }}" hint-placeholder-val="{{ false }}">
+                  <div style="padding:40px 20px; text-align:center;">
+                    <div style="font-size:13px; color:#8A8F9A; margin-bottom:14px;">No hay movimientos que coincidan con este filtro.</div>
+                    <button onClick="{{ openTxModal }}" style="background:#2F7653; color:#fff; border:none; border-radius:9px; padding:10px 18px; font-weight:700; font-size:12.5px; cursor:pointer;" style-hover="background:#26603F;">Nueva transacción</button>
+                  </div>
+                </sc-if>
+                <div style="padding:12px 20px; font-size:12px; color:#4E555F; border-top:1px solid #F0EDF1;">Mostrando {{ filteredTx.length }} movimiento(s) de {{ filterMonthLabel }}</div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============ PRESUPUESTO ============ -->
+        <sc-if value="{{ isPresupuesto }}" hint-placeholder-val="{{ false }}">
+          <div data-screen-label="Presupuesto" style="max-width:1180px;">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:20px; gap:12px; flex-wrap:wrap;">
+              <div>
+                <div style="font-size:20px; font-weight:700; color:#111;">Presupuesto</div>
+                <div style="font-size:13px; color:#4E555F; margin-top:4px;">Configura y monitorea tus límites de gasto para {{ filterMonthLabel }}. Los cambios se confirman al salir del campo.</div>
+              </div>
+              <div style="position:relative;">
+                <button onClick="{{ toggleCalendarOpen }}" style="display:flex; align-items:center; gap:8px; background:#fff; border:1px solid rgba(0,0,0,0.12); border-radius:10px; padding:10px 18px; box-shadow:0 1px 3px rgba(0,0,0,0.1); font-family:'DM Sans',sans-serif; font-weight:500; font-size:13px; color:#0A0A0A; cursor:pointer;" style-hover="background:#F5F3F6;">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="2" stroke="#0A0A0A" stroke-width="1.8"></rect><path d="M3 10H21" stroke="#0A0A0A" stroke-width="1.8"></path><path d="M8 3V7M16 3V7" stroke="#0A0A0A" stroke-width="1.8" stroke-linecap="round"></path></svg>
+                  {{ filterMonthLabel }}
+                </button>
+                <sc-if value="{{ calendarOpen }}" hint-placeholder-val="{{ false }}">
+                  <div style="position:absolute; top:calc(100% + 8px); right:0; z-index:50; background:#fff; border-radius:14px; border:1px solid rgba(0,0,0,0.1); box-shadow:0 12px 28px rgba(0,0,0,0.16); padding:16px; width:270px;">
+                    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+                      <button onClick="{{ prevCalYear }}" aria-label="Año anterior" style="background:none; border:none; cursor:pointer; padding:4px; opacity:{{ prevYearOpacity }};" style-hover="background:#F0EDF1;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M15 6L9 12L15 18" stroke="#585A6A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+                      <div style="font-family:'DM Sans',sans-serif; font-weight:600; font-size:15px; color:#0A0A0A;">{{ calendarViewYear }}</div>
+                      <button onClick="{{ nextCalYear }}" aria-label="Año siguiente" style="background:none; border:none; cursor:pointer; padding:4px; opacity:{{ nextYearOpacity }};" style-hover="background:#F0EDF1;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 6L15 12L9 18" stroke="#585A6A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
+                    </div>
+                    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:8px;">
+                      <sc-for list="{{ monthGrid }}" as="mo" hint-placeholder-count="12">
+                        <button onClick="{{ mo.pick }}" style="border-radius:8px; border:none; padding:9px 0; font-size:12.5px; font-weight:600; cursor:pointer; background:{{ mo.bg }}; color:{{ mo.fg }};" style-hover="box-shadow:0 0 0 2px rgba(0,0,0,0.14) inset;">{{ mo.label }}</button>
+                      </sc-for>
+                    </div>
+                  </div>
+                </sc-if>
+              </div>
+            </div>
+
+            <div style="background:#fff; border:1px solid #E4DDE4; border-radius:14px; padding:8px 4px;">
+              <sc-for list="{{ budgetRows }}" as="b" hint-placeholder-count="4">
+                <div style="padding:18px 24px; border-bottom:1px solid #F0EDF1;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; gap:10px; flex-wrap:wrap;">
+                    <div style="display:flex; align-items:center; gap:9px;"><span style="width:10px; height:10px; border-radius:50%; background:{{ b.color }};"></span><span style="font-size:14px; font-weight:700; color:#111;">{{ b.category }}</span></div>
+                    <div style="display:flex; align-items:center; gap:10px;">
+                      <span style="font-family:'Roboto Mono',monospace; font-size:12.5px; color:{{ b.textColor }};">{{ b.spentLabel }} / {{ b.limitLabel }}</span>
+                      <input type="number" min="0" aria-label="Límite" value="{{ b.limitInputValue }}" onChange="{{ b.onDraftLimit }}" onBlur="{{ b.onCommitLimit }}" placeholder="Sin límite" style="width:96px; border:1px solid #E0DDE4; border-radius:7px; padding:5px 8px; font-size:12px; font-family:'Roboto Mono',monospace;">
+                    </div>
+                  </div>
+                  <div style="width:100%; height:8px; border-radius:4px; background:#F0EDF1;"><div style="height:100%; border-radius:4px; background:{{ b.barColor }}; width:{{ b.pct }}%;"></div></div>
+                  <sc-if value="{{ b.over }}" hint-placeholder-val="{{ false }}">
+                    <div style="font-size:11px; color:#BA1A1A; margin-top:6px;">Excediste el límite en {{ b.overLabel }}</div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============ AHORROS ============ -->
+        <sc-if value="{{ isAhorros }}" hint-placeholder-val="{{ false }}">
+          <div data-screen-label="Ahorros" style="max-width:900px;">
+            <div style="font-size:20px; font-weight:700; color:#111; margin-bottom:4px;">Ahorros</div>
+            <div style="font-size:13px; color:#4E555F; margin-bottom:22px;">Define una meta y sigue tu progreso. Los aportes y retiros se reflejan en tu Balance Total.</div>
+
+            <div style="background:#fff; border:1px solid #E4DDE4; border-radius:16px; padding:28px; margin-bottom:20px;">
+              <div style="display:flex; align-items:center; gap:14px; margin-bottom:20px;">
+                <div style="width:48px; height:48px; border-radius:50%; background:rgba(49,135,241,0.15); display:flex; align-items:center; justify-content:center; flex-shrink:0;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="13" r="7.5" stroke="#3187F1" stroke-width="2"></circle><path d="M9 3.5C9.8 2.7 10.8 2 12 2C13.2 2 14.2 2.7 15 3.5" stroke="#3187F1" stroke-width="2" stroke-linecap="round"></path></svg></div>
+                <div>
+                  <sc-if value="{{ hasGoal }}" hint-placeholder-val="{{ true }}">
+                    <div style="font-size:13px; color:#585A6A;">Meta: {{ fmtMoney.savingsGoal }}</div>
+                  </sc-if>
+                  <sc-if value="{{ noGoal }}" hint-placeholder-val="{{ false }}">
+                    <div style="font-size:13px; color:#585A6A;">Sin meta definida</div>
+                  </sc-if>
+                  <div style="font-family:'Roboto Mono',monospace; font-weight:700; font-size:28px; color:#111;">{{ fmtMoney.savingsCurrent }}</div>
+                </div>
+              </div>
+              <sc-if value="{{ hasGoal }}" hint-placeholder-val="{{ true }}">
+                <div style="width:100%; height:10px; border-radius:6px; background:#EEF3FB; margin-bottom:8px;"><div style="height:100%; border-radius:6px; background:#3187F1; width:{{ savingsPct }}%;"></div></div>
+                <div style="font-size:12px; color:#585A6A; margin-bottom:20px;">{{ savingsPct }}% completado</div>
+              </sc-if>
+              <sc-if value="{{ noGoal }}" hint-placeholder-val="{{ false }}">
+                <div style="font-size:12px; color:#8A8F9A; margin-bottom:20px;">Crea una meta para seguir tu progreso de ahorro.</div>
+              </sc-if>
+              <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <button onClick="{{ openAddFunds }}" style="background:#2F7653; color:#fff; border:none; border-radius:9px; padding:11px 20px; font-size:13px; font-weight:700; cursor:pointer;" style-hover="background:#26603F;">Agregar fondos</button>
+                <sc-if value="{{ hasSavingsBalance }}" hint-placeholder-val="{{ false }}">
+                  <button onClick="{{ openWithdraw }}" style="background:#fff; color:#111; border:1px solid #E0DDE4; border-radius:9px; padding:11px 20px; font-size:13px; font-weight:700; cursor:pointer;" style-hover="background:#F5F3F6;">Retirar fondos</button>
+                </sc-if>
+                <button onClick="{{ openGoalEditor }}" style="background:#fff; color:#111; border:1px solid #E0DDE4; border-radius:9px; padding:11px 20px; font-size:13px; font-weight:700; cursor:pointer;" style-hover="background:#F5F3F6;">{{ goalButtonLabel }}</button>
+                <sc-if value="{{ hasGoal }}" hint-placeholder-val="{{ false }}">
+                  <button onClick="{{ removeGoal }}" style="background:#fff; color:#BA1A1A; border:1px solid #F2B8B5; border-radius:9px; padding:11px 20px; font-size:13px; font-weight:700; cursor:pointer;" style-hover="background:#FFDAD6;">Eliminar meta</button>
+                </sc-if>
+              </div>
+
+              <sc-if value="{{ savingsModal }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top:20px; background:#FAF9FB; border:1px solid #E4DDE4; border-radius:12px; padding:18px;">
+                  <div style="display:flex; gap:10px; align-items:center;">
+                    <input type="number" min="0" placeholder="{{ savingsModalPlaceholder }}" value="{{ savingsDraft }}" onChange="{{ setSavingsDraft }}" style="flex:1; border:1px solid #E0DDE4; border-radius:8px; padding:10px 12px; font-size:13px;">
+                    <button onClick="{{ confirmSavingsModal }}" style="background:#2F7653; color:#fff; border:none; border-radius:8px; padding:10px 18px; font-size:12.5px; font-weight:700; cursor:pointer;" style-hover="background:#26603F;">Guardar</button>
+                    <button onClick="{{ cancelSavingsModal }}" style="background:#fff; color:#585A6A; border:1px solid #E0DDE4; border-radius:8px; padding:10px 18px; font-size:12.5px; font-weight:700; cursor:pointer;" style-hover="background:#F5F3F6;">Cancelar</button>
+                  </div>
+                  <sc-if value="{{ savingsError }}" hint-placeholder-val="{{ false }}">
+                    <div style="font-size:12px; color:#BA1A1A; margin-top:10px;">{{ savingsError }}</div>
+                  </sc-if>
+                </div>
+              </sc-if>
+            </div>
+
+            <div style="font-size:14px; font-weight:700; color:#111; margin-bottom:12px;">Historial de aportes y retiros</div>
+            <div style="background:#fff; border:1px solid #E4DDE4; border-radius:12px; overflow:hidden; margin-bottom:24px;">
+              <sc-if value="{{ hasSavingsRows }}" hint-placeholder-val="{{ true }}">
+                <sc-for list="{{ savingsRows }}" as="s" hint-placeholder-count="3">
+                  <div style="display:flex; justify-content:space-between; padding:14px 20px; border-top:1px solid #F0EDF1;">
+                    <span style="font-size:13px; color:#20242A;">{{ s.label }}</span>
+                    <span style="font-family:'Roboto Mono',monospace; font-weight:700; font-size:13px; color:{{ s.color }};">{{ s.amountLabel }}</span>
+                  </div>
+                </sc-for>
+              </sc-if>
+              <sc-if value="{{ noSavingsRows }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:24px 20px; text-align:center; font-size:13px; color:#8A8F9A;">Aún no has agregado fondos.</div>
+              </sc-if>
+            </div>
+
+            <div style="font-size:14px; font-weight:700; color:#111; margin-bottom:12px;">Historial de metas</div>
+            <div style="background:#fff; border:1px solid #E4DDE4; border-radius:12px; overflow:hidden;">
+              <sc-if value="{{ hasGoalRows }}" hint-placeholder-val="{{ true }}">
+                <sc-for list="{{ savingsGoalRows }}" as="g" hint-placeholder-count="2">
+                  <div style="display:flex; justify-content:space-between; align-items:center; padding:14px 20px; border-top:1px solid #F0EDF1;">
+                    <div>
+                      <div style="font-size:13px; font-weight:600; color:#20242A;">{{ g.actionLabel }}</div>
+                      <div style="font-size:11.5px; color:#8A8F9A; margin-top:2px;">{{ g.dateLabel }}</div>
+                    </div>
+                    <span style="font-family:'Roboto Mono',monospace; font-weight:700; font-size:13px; color:{{ g.color }};">{{ g.amountLabel }}</span>
+                  </div>
+                </sc-for>
+              </sc-if>
+              <sc-if value="{{ noGoalRows }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:24px 20px; text-align:center; font-size:13px; color:#8A8F9A;">Aún no has definido ninguna meta.</div>
+              </sc-if>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============ RECOMENDACIONES ============ -->
+        <sc-if value="{{ isRecomendaciones }}" hint-placeholder-val="{{ false }}">
+          <div data-screen-label="Recomendaciones" style="max-width:900px;">
+            <div style="font-size:20px; font-weight:700; color:#111; margin-bottom:4px;">Recomendaciones</div>
+            <div style="font-size:13px; color:#4E555F; margin-bottom:22px;">Basado en tus hábitos de los últimos meses.</div>
+            <div style="display:flex; flex-direction:column; gap:14px;">
+              <sc-for list="{{ insights }}" as="ins" hint-placeholder-count="3">
+                <div style="background: #fff; border: 1px solid #E4DDE4; border-left: 3px solid {{ ins.color }}; border-radius: 12px; padding: 18px 22px; width: 1040px">
+                  <div style="font-size:14px; font-weight:700; color:#111; margin-bottom:6px;">{{ ins.title }}</div>
+                  <div style="font-size:13px; color:#4E555F; line-height:1.5;">{{ ins.detail }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ============ PERFIL ============ -->
+        <sc-if value="{{ isPerfil }}" hint-placeholder-val="{{ false }}">
+          <div data-screen-label="Perfil" style="max-width:560px;">
+            <div style="font-size:20px; font-weight:700; color:#111; margin-bottom:22px;">Perfil</div>
+            <div style="background:#fff; border:1px solid #E4DDE4; border-radius:14px; padding:26px; margin-bottom:18px;">
+
+              <div style="display:flex; align-items:center; gap:16px; margin-bottom:22px;">
+                <div style="width:72px; height:72px; border-radius:50%; overflow:hidden; flex-shrink:0; background:#DFF4E4; display:flex; align-items:center; justify-content:center; font-size:26px; font-weight:700; color:#1F5A3F;">
+                  {{ profilePhotoImg }}
+                  <sc-if value="{{ noDraftPhoto }}" hint-placeholder-val="{{ true }}">
+                    {{ userInitial }}
+                  </sc-if>
+                </div>
+                <div style="flex:1;">
+                  <div style="font-size:16px; font-weight:700; color:#111;">{{ currentUser.name }}</div>
+                  <div style="font-size:12.5px; color:#585A6A;">{{ currentUser.email }}</div>
+                </div>
+                <sc-if value="{{ isProfileViewing }}" hint-placeholder-val="{{ true }}">
+                  <button onClick="{{ openProfileEdit }}" style="display:flex; align-items:center; gap:7px; background:#F5F3F6; border:none; border-radius:9px; padding:10px 16px; font-size:12.5px; font-weight:700; color:#333842; cursor:pointer; transition:background 0.15s ease;" style-hover="background:#EAE7ED;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M16.5 3.5C17.3 2.7 18.7 2.7 19.5 3.5C20.3 4.3 20.3 5.7 19.5 6.5L7 19L3 20L4 16L16.5 3.5Z" stroke="#333842" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                    Editar
+                  </button>
+                </sc-if>
+              </div>
+
+              <sc-if value="{{ isProfileEditing }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-bottom:18px;">
+                  <div style="font-size:11.5px; font-weight:700; color:#585A6A; margin-bottom:6px;">FOTO DE PERFIL</div>
+                  <input type="file" accept="image/*" onChange="{{ onPhotoFile }}" style="font-size:12px; color:#585A6A;">
+                </div>
+                <div style="display:flex; gap:10px; margin-bottom:22px;">
+                  <button onClick="{{ cancelProfileEdit }}" style="flex:1; background:#fff; border:1px solid #E0DDE4; color:#585A6A; border-radius:9px; padding:11px; font-size:13px; font-weight:700; cursor:pointer;" style-hover="background:#F5F3F6;">Cancelar</button>
+                  <button onClick="{{ saveProfile }}" style="flex:1; background:#2F7653; color:#fff; border:none; border-radius:9px; padding:11px; font-size:13px; font-weight:700; cursor:pointer;" style-hover="background:#26603F;">Guardar cambios</button>
+                </div>
+                <sc-if value="{{ profileError }}" hint-placeholder-val="{{ false }}">
+                  <div style="font-size:12px; color:#BA1A1A; margin-bottom:14px;">{{ profileError }}</div>
+                </sc-if>
+              </sc-if>
+
+              <sc-if value="{{ isProfileViewing }}" hint-placeholder-val="{{ true }}">
+                <div style="display:flex; flex-direction:column; gap:0;">
+                  <div style="display:flex; justify-content:space-between; padding:13px 0; border-top:1px solid #F0EDF1;"><span style="font-size:12.5px; color:#585A6A;">Teléfono</span><span style="font-size:13px; font-weight:600; color:#111;">{{ phoneLabel }}</span></div>
+                  <div style="display:flex; justify-content:space-between; padding:13px 0; border-top:1px solid #F0EDF1;"><span style="font-size:12.5px; color:#585A6A;">Moneda preferida</span><span style="font-size:13px; font-weight:600; color:#111;">{{ currentUser.currency }}</span></div>
+                  <div style="display:flex; justify-content:space-between; padding:13px 0; border-top:1px solid #F0EDF1;"><span style="font-size:12.5px; color:#585A6A;">Notificaciones por correo</span><span style="font-size:13px; font-weight:600; color:#111;">{{ notifyLabel }}</span></div>
+                  <div style="display:flex; justify-content:space-between; padding:13px 0; border-top:1px solid #F0EDF1; border-bottom:1px solid #F0EDF1;"><span style="font-size:12.5px; color:#585A6A;">Miembro desde</span><span style="font-size:13px; font-weight:600; color:#111;">{{ memberSinceLabel }}</span></div>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ isProfileEditing }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex; flex-direction:column; gap:14px;">
+                  <div>
+                    <div style="font-size:11.5px; font-weight:700; color:#585A6A; margin-bottom:6px;">NOMBRE</div>
+                    <input value="{{ profileDraft.name }}" onChange="{{ setProfileName }}" style="width:100%; border:1px solid #E0DDE4; border-radius:9px; padding:11px 13px; font-size:13.5px;">
+                  </div>
+                  <div>
+                    <div style="font-size:11.5px; font-weight:700; color:#585A6A; margin-bottom:6px;">CORREO ELECTRÓNICO</div>
+                    <input value="{{ profileDraft.email }}" onChange="{{ setProfileEmail }}" style="width:100%; border:1px solid #E0DDE4; border-radius:9px; padding:11px 13px; font-size:13.5px;">
+                  </div>
+                  <div>
+                    <div style="font-size:11.5px; font-weight:700; color:#585A6A; margin-bottom:6px;">TELÉFONO</div>
+                    <input value="{{ profileDraft.phone }}" onChange="{{ setProfilePhone }}" placeholder="+52 55 0000 0000" style="width:100%; border:1px solid #E0DDE4; border-radius:9px; padding:11px 13px; font-size:13.5px;">
+                  </div>
+                  <div>
+                    <div style="font-size:11.5px; font-weight:700; color:#585A6A; margin-bottom:6px;">MONEDA PREFERIDA</div>
+                    <select value="{{ profileDraft.currency }}" onChange="{{ setProfileCurrency }}" style="width:100%; border:1px solid #E0DDE4; border-radius:9px; padding:11px 13px; font-size:13.5px; background:#fff;">
+                      <sc-for list="{{ currencyOptions }}" as="cur" hint-placeholder-count="3">
+                        <option value="{{ cur }}">{{ cur }}</option>
+                      </sc-for>
+                    </select>
+                    <div style="font-size:11px; color:#8A8F9A; margin-top:6px;">{{ fxRateNote }}</div>
+                  </div>
+                  <div style="display:flex; align-items:center; justify-content:space-between; background:#FAF9FB; border:1px solid #E4DDE4; border-radius:9px; padding:12px 14px;">
+                    <span style="font-size:13px; font-weight:600; color:#20242A;">Notificaciones por correo</span>
+                    <button onClick="{{ toggleProfileNotify }}" aria-label="Notificaciones por correo" style="width:42px; height:24px; border-radius:14px; border:none; cursor:pointer; background:{{ notifyToggleBg }}; position:relative; transition:background 0.15s ease;">
+                      <div style="position:absolute; top:2px; left:{{ notifyToggleLeft }}px; width:20px; height:20px; border-radius:50%; background:#fff; box-shadow:0 1px 3px rgba(0,0,0,0.3); transition:left 0.15s ease;"></div>
+                    </button>
+                  </div>
+                </div>
+              </sc-if>
+            </div>
+
+            <!-- CHANGE PASSWORD -->
+            <div style="background:#fff; border:1px solid #E4DDE4; border-radius:14px; padding:26px; margin-bottom:18px;">
+              <div style="font-size:15px; font-weight:700; color:#111; margin-bottom:16px;">Cambiar contraseña</div>
+              <div style="display:flex; flex-direction:column; gap:12px;">
+                <div>
+                  <div style="font-size:11.5px; font-weight:700; color:#585A6A; margin-bottom:6px;">CONTRASEÑA ACTUAL</div>
+                  <div style="position:relative;">
+                    <input type="{{ passType.pwc }}" value="{{ pwForm.cur }}" onChange="{{ setPwCur }}" style="width:100%; border:1px solid #E0DDE4; border-radius:9px; padding:11px 40px 11px 13px; font-size:13.5px;">
+                    <button onClick="{{ toggles.pwc }}" aria-label="Mostrar contraseña" style="position:absolute; right:4px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; padding:8px; display:flex;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M2 12C4.5 7.5 8 5.2 12 5.2C16 5.2 19.5 7.5 22 12C19.5 16.5 16 18.8 12 18.8C8 18.8 4.5 16.5 2 12Z" stroke="#8A8F9A" stroke-width="1.8"></path><circle cx="12" cy="12" r="3" stroke="#8A8F9A" stroke-width="1.8"></circle></svg></button>
+                  </div>
+                </div>
+                <div>
+                  <div style="font-size:11.5px; font-weight:700; color:#585A6A; margin-bottom:6px;">NUEVA CONTRASEÑA (8+ CARACTERES)</div>
+                  <div style="position:relative;">
+                    <input type="{{ passType.pw1 }}" value="{{ pwForm.n1 }}" onChange="{{ setPwN1 }}" style="width:100%; border:1px solid #E0DDE4; border-radius:9px; padding:11px 40px 11px 13px; font-size:13.5px;">
+                    <button onClick="{{ toggles.pw1 }}" aria-label="Mostrar contraseña" style="position:absolute; right:4px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; padding:8px; display:flex;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M2 12C4.5 7.5 8 5.2 12 5.2C16 5.2 19.5 7.5 22 12C19.5 16.5 16 18.8 12 18.8C8 18.8 4.5 16.5 2 12Z" stroke="#8A8F9A" stroke-width="1.8"></path><circle cx="12" cy="12" r="3" stroke="#8A8F9A" stroke-width="1.8"></circle></svg></button>
+                  </div>
+                </div>
+                <div>
+                  <div style="font-size:11.5px; font-weight:700; color:#585A6A; margin-bottom:6px;">CONFIRMAR NUEVA CONTRASEÑA</div>
+                  <div style="position:relative;">
+                    <input type="{{ passType.pw2 }}" value="{{ pwForm.n2 }}" onChange="{{ setPwN2 }}" style="width:100%; border:1px solid #E0DDE4; border-radius:9px; padding:11px 40px 11px 13px; font-size:13.5px;">
+                    <button onClick="{{ toggles.pw2 }}" aria-label="Mostrar contraseña" style="position:absolute; right:4px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; padding:8px; display:flex;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M2 12C4.5 7.5 8 5.2 12 5.2C16 5.2 19.5 7.5 22 12C19.5 16.5 16 18.8 12 18.8C8 18.8 4.5 16.5 2 12Z" stroke="#8A8F9A" stroke-width="1.8"></path><circle cx="12" cy="12" r="3" stroke="#8A8F9A" stroke-width="1.8"></circle></svg></button>
+                  </div>
+                </div>
+                <sc-if value="{{ pwError }}" hint-placeholder-val="{{ false }}">
+                  <div style="font-size:12px; color:#BA1A1A;">{{ pwError }}</div>
+                </sc-if>
+                <button onClick="{{ changePassword }}" style="align-self:flex-start; background:#2F7653; color:#fff; border:none; border-radius:9px; padding:11px 20px; font-size:13px; font-weight:700; cursor:pointer;" style-hover="background:#26603F;">Actualizar contraseña</button>
+              </div>
+            </div>
+
+            <!-- DATA BACKUP -->
+            <div style="background:#fff; border:1px solid #E4DDE4; border-radius:14px; padding:26px;">
+              <div style="font-size:15px; font-weight:700; color:#111; margin-bottom:6px;">Respaldo de datos</div>
+              <div style="font-size:12.5px; color:#585A6A; margin-bottom:16px; line-height:1.5;">Tus datos viven en este navegador. Exporta un respaldo JSON o restaura uno anterior.</div>
+              <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                <button onClick="{{ exportJSON }}" style="background:#fff; color:#111; border:1px solid #E0DDE4; border-radius:9px; padding:10px 18px; font-size:12.5px; font-weight:700; cursor:pointer;" style-hover="background:#F5F3F6;">Exportar datos (JSON)</button>
+                <label style="display:inline-flex; align-items:center; gap:8px; font-size:12.5px; font-weight:700; color:#111; cursor:pointer; background:#fff; border:1px solid #E0DDE4; border-radius:9px; padding:10px 18px;">
+                  Importar respaldo
+                  <input type="file" accept=".json,application/json" onChange="{{ onImportFile }}" style="display:none;">
+                </label>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- NUEVA/EDITAR TRANSACCIÓN MODAL -->
+  <sc-if value="{{ txModalOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ txBackdropClick }}" style="position:fixed; inset:0; background:rgba(20,20,25,0.45); display:flex; align-items:center; justify-content:center; z-index:100;">
+      <div onClick="{{ stopProp }}" style="background:#fff; border-radius:16px; width:440px; max-width:92vw; padding:26px; box-shadow:0 20px 50px rgba(0,0,0,0.3);">
+        <div style="font-size:17px; font-weight:700; color:#111; margin-bottom:18px;">{{ txModalTitle }}</div>
+        <div style="display:flex; gap:8px; margin-bottom:16px;">
+          <button onClick="{{ setTxTypeIngreso }}" style="flex:1; padding:10px; border-radius:9px; border:1px solid #E0DDE4; font-size:13px; font-weight:700; cursor:pointer; background:{{ txTypeBg.ingreso }}; color:{{ txTypeFg.ingreso }};" style-hover="box-shadow:0 0 0 2px rgba(0,0,0,0.14) inset;">Ingreso</button>
+          <button onClick="{{ setTxTypeGasto }}" style="flex:1; padding:10px; border-radius:9px; border:1px solid #E0DDE4; font-size:13px; font-weight:700; cursor:pointer; background:{{ txTypeBg.gasto }}; color:{{ txTypeFg.gasto }};" style-hover="box-shadow:0 0 0 2px rgba(0,0,0,0.14) inset;">Gasto</button>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <div>
+            <div style="font-size:11px; font-weight:700; color:#585A6A; margin-bottom:5px;">DESCRIPCIÓN</div>
+            <input value="{{ txForm.description }}" onChange="{{ setTxDescription }}" placeholder="Ej. Supermercado" style="width:100%; border:1px solid #E0DDE4; border-radius:9px; padding:10px 12px; font-size:13.5px;">
+          </div>
+          <div>
+            <div style="font-size:11px; font-weight:700; color:#585A6A; margin-bottom:5px;">CATEGORÍA</div>
+            <select value="{{ txForm.category }}" onChange="{{ setTxCategory }}" style="width:100%; border:1px solid #E0DDE4; border-radius:9px; padding:10px 12px; font-size:13.5px; background:#fff;">
+              <sc-for list="{{ txCategoryOptions }}" as="c" hint-placeholder-count="4">
+                <option value="{{ c }}">{{ c }}</option>
+              </sc-for>
+              <option value="__new__">+ Nueva categoría…</option>
+            </select>
+            <sc-if value="{{ newCatOpen }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:8px; background:#F5F3F6; border:1px solid #E4DDE4; border-radius:9px; padding:10px;">
+                <div style="display:flex; gap:8px;">
+                  <input value="{{ newCatName }}" onChange="{{ setNewCatName }}" onKeyDown="{{ newCatKeyDown }}" placeholder="Nombre de la categoría" style="flex:1; min-width:0; border:1px solid #E0DDE4; border-radius:8px; padding:9px 11px; font-size:13px; background:#fff;">
+                  <button onClick="{{ createNewCat }}" style="background:#2F7653; border:none; color:#fff; border-radius:8px; padding:9px 14px; font-size:12.5px; font-weight:700; cursor:pointer;" style-hover="background:#26603F;">Crear</button>
+                  <button onClick="{{ cancelNewCat }}" aria-label="Cancelar" style="background:#fff; border:1px solid #E0DDE4; color:#585A6A; border-radius:8px; padding:9px 12px; font-size:12.5px; font-weight:700; cursor:pointer;" style-hover="background:#EEEAF1;">✕</button>
+                </div>
+                <sc-if value="{{ newCatError }}" hint-placeholder-val="{{ false }}">
+                  <div style="font-size:11.5px; color:#BA1A1A; margin-top:6px;">{{ newCatError }}</div>
+                </sc-if>
+              </div>
+            </sc-if>
+          </div>
+          <div style="display:flex; gap:12px;">
+            <div style="flex:1;">
+              <div style="font-size:11px; font-weight:700; color:#585A6A; margin-bottom:5px;">MONTO ({{ currentUser.currency }})</div>
+              <input type="number" min="0" step="0.01" value="{{ txForm.amount }}" onChange="{{ setTxAmount }}" placeholder="0.00" style="width:100%; border:1px solid #E0DDE4; border-radius:9px; padding:10px 12px; font-size:13.5px; font-family:'Roboto Mono',monospace;">
+            </div>
+            <div style="flex:1;">
+              <div style="font-size:11px; font-weight:700; color:#585A6A; margin-bottom:5px;">FECHA</div>
+              <input type="date" value="{{ txForm.date }}" max="{{ todayISO }}" onChange="{{ setTxDate }}" style="width:100%; border:1px solid #E0DDE4; border-radius:9px; padding:10px 12px; font-size:13.5px;">
+            </div>
+          </div>
+          <sc-if value="{{ txError }}" hint-placeholder-val="{{ false }}">
+            <div style="font-size:12px; color:#BA1A1A;">{{ txError }}</div>
+          </sc-if>
+        </div>
+        <div style="display:flex; gap:10px; margin-top:22px;">
+          <button onClick="{{ closeTxModal }}" style="flex:1; background:#fff; border:1px solid #E0DDE4; color:#585A6A; border-radius:9px; padding:12px; font-size:13.5px; font-weight:700; cursor:pointer;" style-hover="background:#F5F3F6;">Cancelar</button>
+          <button onClick="{{ submitTx }}" style="flex:1; background:#2F7653; border:none; color:#fff; border-radius:9px; padding:12px; font-size:13.5px; font-weight:700; cursor:pointer;" style-hover="background:#26603F;">{{ txSubmitLabel }}</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- CONFIRM DIALOG -->
+  <sc-if value="{{ confirm }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ confirmCancel }}" style="position:fixed; inset:0; background:rgba(20,20,25,0.5); display:flex; align-items:center; justify-content:center; z-index:300;">
+      <div onClick="{{ stopProp }}" style="background:#fff; border-radius:16px; width:380px; max-width:92vw; padding:26px; box-shadow:0 20px 50px rgba(0,0,0,0.3);">
+        <div style="font-size:16px; font-weight:700; color:#111; margin-bottom:10px;">{{ confirm.title }}</div>
+        <div style="font-size:13.5px; color:#4E555F; line-height:1.55; margin-bottom:22px;">{{ confirm.message }}</div>
+        <div style="display:flex; gap:10px;">
+          <button onClick="{{ confirmCancel }}" style="flex:1; background:#fff; border:1px solid #E0DDE4; color:#585A6A; border-radius:9px; padding:12px; font-size:13.5px; font-weight:700; cursor:pointer;" style-hover="background:#F5F3F6;">Cancelar</button>
+          <button onClick="{{ confirmAccept }}" style="flex:1; background:{{ confirmBtnBg }}; border:none; color:#fff; border-radius:9px; padding:12px; font-size:13.5px; font-weight:700; cursor:pointer;">{{ confirm.confirmLabel }}</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- TOAST -->
+  <sc-if value="{{ toast }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed; bottom:26px; left:50%; transform:translateX(-50%); display:flex; align-items:center; gap:10px; background:{{ toastBg }}; color:#fff; padding:13px 22px; border-radius:11px; font-size:13.5px; font-weight:600; box-shadow:0 10px 28px rgba(0,0,0,0.28); z-index:200; max-width:92vw;">
+      <sc-if value="{{ toastIsSuccess }}" hint-placeholder-val="{{ true }}">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><circle cx="12" cy="12" r="10" fill="rgba(255,255,255,0.22)"></circle><path d="M7.5 12.5L10.5 15.5L16.5 8.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+      </sc-if>
+      <sc-if value="{{ toastIsError }}" hint-placeholder-val="{{ false }}">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><path d="M12 2.5L23 21H1L12 2.5Z" fill="rgba(255,255,255,0.22)" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"></path><path d="M12 9.5V14" stroke="#fff" stroke-width="2.2" stroke-linecap="round"></path><circle cx="12" cy="17.2" r="1.15" fill="#fff"></circle></svg>
+      </sc-if>
+      <span>{{ toast.message }}</span>
+      <sc-if value="{{ toastHasUndo }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ undoLast }}" style="background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.4); color:#fff; border-radius:7px; padding:5px 12px; font-size:12px; font-weight:700; cursor:pointer; margin-left:6px;" style-hover="background:rgba(255,255,255,0.3);">Deshacer</button>
+      </sc-if>
+    </div>
+  </sc-if>
+
+</sc-if>
+
+<!-- ================= AUTH SCREENS ================= -->
+<sc-if value="{{ showAuthScreens }}" hint-placeholder-val="{{ true }}">
+  <div style="width:100%; min-height:100vh; display:flex; align-items:center; justify-content:center; background:#FAF7FA; padding:24px;">
+    <div style="width:400px; max-width:100%; background:#fff; border:1px solid #E4DDE4; border-radius:18px; padding:34px; box-shadow:0 10px 30px rgba(0,0,0,0.06);">
+      <div style="display:flex; flex-direction:column; align-items:center; gap:10px; margin-bottom:24px;">
+        <img src="assets/logo2.png" alt="Gestiona Tu Futuro" style="width:64px; height:62px;">
+        <div style="font-weight:700; font-size:15px; line-height:1.25; color:#22272E; text-align:center; letter-spacing:0.3px;">GESTIONA TU FUTURO</div>
+      </div>
+
+      <!-- LOGIN -->
+      <sc-if value="{{ authIsLogin }}" hint-placeholder-val="{{ true }}">
+        <div style="font-size:19px; font-weight:700; color:#111; margin-bottom:4px; text-align:center;">Iniciar Sesión</div>
+        <sc-if value="{{ showDemoHint }}" hint-placeholder-val="{{ true }}">
+          <div style="font-size:12.5px; color:#585A6A; text-align:center; margin-bottom:20px;">Usa demo@correo.com / demo1234</div>
+        </sc-if>
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <div>
+            <div style="font-size:11px; font-weight:700; color:#585A6A; margin-bottom:5px;">CORREO ELECTRÓNICO</div>
+            <input value="{{ authEmail }}" onChange="{{ setAuthEmail }}" onKeyDown="{{ authKeyDown }}" placeholder="tu@correo.com" style="width:100%; border:1px solid #E0DDE4; border-radius:9px; padding:11px 13px; font-size:13.5px;">
+          </div>
+          <div>
+            <div style="font-size:11px; font-weight:700; color:#585A6A; margin-bottom:5px;">CONTRASEÑA</div>
+            <div style="position:relative;">
+              <input type="{{ passType.login }}" value="{{ authPassword }}" onChange="{{ setAuthPassword }}" onKeyDown="{{ authKeyDown }}" placeholder="••••••••" style="width:100%; border:1px solid #E0DDE4; border-radius:9px; padding:11px 40px 11px 13px; font-size:13.5px;">
+              <button onClick="{{ toggles.login }}" aria-label="Mostrar contraseña" style="position:absolute; right:4px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; padding:8px; display:flex;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M2 12C4.5 7.5 8 5.2 12 5.2C16 5.2 19.5 7.5 22 12C19.5 16.5 16 18.8 12 18.8C8 18.8 4.5 16.5 2 12Z" stroke="#8A8F9A" stroke-width="1.8"></path><circle cx="12" cy="12" r="3" stroke="#8A8F9A" stroke-width="1.8"></circle></svg></button>
+            </div>
+          </div>
+          <sc-if value="{{ authError }}" hint-placeholder-val="{{ false }}">
+            <div style="font-size:12px; color:#BA1A1A;">{{ authError }}</div>
+          </sc-if>
+          <button onClick="{{ doLogin }}" style="background:#2F7653; color:#fff; border:none; border-radius:9px; padding:12px; font-size:13.5px; font-weight:700; cursor:pointer; margin-top:4px;" style-hover="background:#26603F;">Iniciar Sesión</button>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-top:16px; font-size:12.5px;">
+          <a href="#" onClick="{{ goReset }}">¿Olvidaste tu contraseña?</a>
+          <a href="#" onClick="{{ goRegister }}">Regístrate ahora</a>
+        </div>
+      </sc-if>
+
+      <!-- REGISTER -->
+      <sc-if value="{{ authIsRegister }}" hint-placeholder-val="{{ false }}">
+        <div style="font-size:19px; font-weight:700; color:#111; margin-bottom:20px; text-align:center;">Registrarse</div>
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <div>
+            <div style="font-size:11px; font-weight:700; color:#585A6A; margin-bottom:5px;">NOMBRE</div>
+            <input value="{{ regName }}" onChange="{{ setRegName }}" onKeyDown="{{ authKeyDown }}" placeholder="Tu nombre" style="width:100%; border:1px solid #E0DDE4; border-radius:9px; padding:11px 13px; font-size:13.5px;">
+          </div>
+          <div>
+            <div style="font-size:11px; font-weight:700; color:#585A6A; margin-bottom:5px;">CORREO ELECTRÓNICO</div>
+            <input value="{{ regEmail }}" onChange="{{ setRegEmail }}" onKeyDown="{{ authKeyDown }}" placeholder="tu@correo.com" style="width:100%; border:1px solid #E0DDE4; border-radius:9px; padding:11px 13px; font-size:13.5px;">
+          </div>
+          <div>
+            <div style="font-size:11px; font-weight:700; color:#585A6A; margin-bottom:5px;">CONTRASEÑA (8+ CARACTERES)</div>
+            <div style="position:relative;">
+              <input type="{{ passType.reg }}" value="{{ regPassword }}" onChange="{{ setRegPassword }}" onKeyDown="{{ authKeyDown }}" placeholder="••••••••" style="width:100%; border:1px solid #E0DDE4; border-radius:9px; padding:11px 40px 11px 13px; font-size:13.5px;">
+              <button onClick="{{ toggles.reg }}" aria-label="Mostrar contraseña" style="position:absolute; right:4px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; padding:8px; display:flex;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M2 12C4.5 7.5 8 5.2 12 5.2C16 5.2 19.5 7.5 22 12C19.5 16.5 16 18.8 12 18.8C8 18.8 4.5 16.5 2 12Z" stroke="#8A8F9A" stroke-width="1.8"></path><circle cx="12" cy="12" r="3" stroke="#8A8F9A" stroke-width="1.8"></circle></svg></button>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:11px; font-weight:700; color:#585A6A; margin-bottom:5px;">CONFIRMAR CONTRASEÑA</div>
+            <div style="position:relative;">
+              <input type="{{ passType.reg2 }}" value="{{ regPassword2 }}" onChange="{{ setRegPassword2 }}" onKeyDown="{{ authKeyDown }}" placeholder="••••••••" style="width:100%; border:1px solid #E0DDE4; border-radius:9px; padding:11px 40px 11px 13px; font-size:13.5px;">
+              <button onClick="{{ toggles.reg2 }}" aria-label="Mostrar contraseña" style="position:absolute; right:4px; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; padding:8px; display:flex;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M2 12C4.5 7.5 8 5.2 12 5.2C16 5.2 19.5 7.5 22 12C19.5 16.5 16 18.8 12 18.8C8 18.8 4.5 16.5 2 12Z" stroke="#8A8F9A" stroke-width="1.8"></path><circle cx="12" cy="12" r="3" stroke="#8A8F9A" stroke-width="1.8"></circle></svg></button>
+            </div>
+          </div>
+          <sc-if value="{{ regError }}" hint-placeholder-val="{{ false }}">
+            <div style="font-size:12px; color:#BA1A1A;">{{ regError }}</div>
+          </sc-if>
+          <button onClick="{{ doRegister }}" style="background:#2F7653; color:#fff; border:none; border-radius:9px; padding:12px; font-size:13.5px; font-weight:700; cursor:pointer; margin-top:4px;" style-hover="background:#26603F;">Registrarse</button>
+        </div>
+        <div style="text-align:center; margin-top:16px; font-size:12.5px;">
+          ¿Ya tienes cuenta? <a href="#" onClick="{{ goLogin }}">Iniciar Sesión</a>
+        </div>
+      </sc-if>
+
+      <!-- RESET -->
+      <sc-if value="{{ authIsReset }}" hint-placeholder-val="{{ false }}">
+        <div style="font-size:19px; font-weight:700; color:#111; margin-bottom:8px; text-align:center;">Restablece la contraseña</div>
+        <div style="font-size:12.5px; color:#585A6A; text-align:center; margin-bottom:20px;">Demo: esta pantalla no envía correos reales. Si ya iniciaste sesión, cambia tu contraseña desde Perfil.</div>
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <div>
+            <div style="font-size:11px; font-weight:700; color:#585A6A; margin-bottom:5px;">CORREO ELECTRÓNICO</div>
+            <input value="{{ resetEmail }}" onChange="{{ setResetEmail }}" onKeyDown="{{ authKeyDown }}" placeholder="tu@correo.com" style="width:100%; border:1px solid #E0DDE4; border-radius:9px; padding:11px 13px; font-size:13.5px;">
+          </div>
+          <sc-if value="{{ resetError }}" hint-placeholder-val="{{ false }}">
+            <div style="font-size:12px; color:#BA1A1A;">{{ resetError }}</div>
+          </sc-if>
+          <sc-if value="{{ resetSent }}" hint-placeholder-val="{{ false }}">
+            <div style="font-size:12.5px; color:#2F7653; background:#DFF4E4; border-radius:8px; padding:10px 12px;">Si el correo existe, enviaríamos un enlace de recuperación (simulado).</div>
+          </sc-if>
+          <button onClick="{{ doReset }}" style="background:#2F7653; color:#fff; border:none; border-radius:9px; padding:12px; font-size:13.5px; font-weight:700; cursor:pointer; margin-top:4px;" style-hover="background:#26603F;">Enviar enlace</button>
+        </div>
+        <div style="text-align:center; margin-top:16px; font-size:12.5px;">
+          <a href="#" onClick="{{ goLogin }}">Volver a Iniciar Sesión</a>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900},&quot;calendarStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;popup&quot;,&quot;options&quot;:[&quot;popup&quot;,&quot;dropdown&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Calendario&quot;},&quot;showDemoHint&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Login&quot;}}">
+const MONTH_NAMES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+const MONTH_ABBR = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+const CAT_COLOR = { 'Alimentación':'#D85040', 'Vivienda':'#E4C44A', 'Transporte':'#E28B30', 'Entretenimiento':'#8E7CC3', 'Otros':'#4B7FCE', 'Nómina':'#2F7653', 'Freelance':'#1B9C85', 'Otros Ingresos':'#5F9EA0', 'Ahorro':'#3187F1' };
+const EXPENSE_CATS = ['Vivienda','Alimentación','Transporte','Entretenimiento','Otros'];
+const INCOME_CATS = ['Nómina','Freelance','Otros Ingresos'];
+const CUSTOM_CAT_PALETTE = ['#B25690','#4A9B8E','#A2845E','#6B7FD7','#C97B4A','#5E9E5A','#B05A5A','#7A6FA8'];
+const STORE_KEY = 'gtf_finance_app_v2'; // clave nueva: no mezclar con datos del prototipo local (v1)
+const FALLBACK_RATES = { USD:1, MXN:18.5, EUR:0.92 };
+const CUR_SYMBOL = { USD:'$', MXN:'$', EUR:'€' };
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+// ---------- API local (sin servidor ni base de datos) ----------
+// Antes los datos vivían en MySQL detrás de una API REST. Ahora esa misma API
+// (mismas rutas, mismas respuestas) se atiende aquí mismo en el navegador y
+// las "tablas" se guardan en localStorage bajo DB_KEY. Así la app funciona
+// abriendo el HTML con doble clic o desde cualquier hosting estático.
+const DB_KEY = 'gtf_finance_db_v1';
+function dbLoad() {
+  let db = null;
+  try { db = JSON.parse(localStorage.getItem(DB_KEY)); } catch (e) {}
+  if (!db || typeof db !== 'object') db = {};
+  db.users = db.users || []; db.transactions = db.transactions || []; db.budgets = db.budgets || [];
+  db.goals = db.goals || []; db.contributions = db.contributions || [];
+  db.seq = db.seq || { users: 0, transactions: 0, budgets: 0, contributions: 0 };
+  if (!db.seeded && db.users.length === 0) seedDemo(db);
+  return db;
+}
+// Cuenta de demostración (antes venía de backend/seed.sql): demo@correo.com / demo1234
+function seedDemo(db) {
+  db.seeded = true;
+  db.users.push({ id: 1, name: 'Usuario Demo', email: 'demo@correo.com', password_hash: 'simple$' + hashPass('demo1234') });
+  [['ingreso','Nómina quincenal','Nómina',12500,'2026-07-01'], ['ingreso','Proyecto freelance','Freelance',3200,'2026-07-06'],
+   ['gasto','Renta departamento','Vivienda',6500,'2026-07-02'], ['gasto','Supermercado','Alimentación',1350.5,'2026-07-04'],
+   ['gasto','Gasolina','Transporte',800,'2026-07-05'], ['gasto','Cine y cena','Entretenimiento',620,'2026-07-08'],
+   ['gasto','Súper semanal','Alimentación',1180.25,'2026-07-11'], ['gasto','Farmacia','Otros',240,'2026-07-09']]
+    .forEach(([type, description, category, amount, date], i) => db.transactions.push({ id: i + 1, userId: 1, type, description, category, amount, date }));
+  [['Alimentación',4000],['Vivienda',7000],['Transporte',1500],['Entretenimiento',1200],['Otros',1000]]
+    .forEach(([category, monthlyLimit], i) => db.budgets.push({ id: i + 1, userId: 1, category, monthlyLimit }));
+  db.goals.push({ userId: 1, goalAmount: 20000 });
+  db.contributions.push({ id: 1, userId: 1, amount: 1500, date: '2026-07-01', txId: null }, { id: 2, userId: 1, amount: 1000, date: '2026-07-08', txId: null });
+  db.seq = { users: 1, transactions: 8, budgets: 5, contributions: 2 };
+  try { localStorage.setItem(DB_KEY, JSON.stringify(db)); } catch (e) {}
+}
+function dbSave(db) {
+  try { localStorage.setItem(DB_KEY, JSON.stringify(db)); }
+  catch (e) { throw httpErr(500, 'No se pudo guardar en el navegador (¿almacenamiento lleno o bloqueado?)'); }
+}
+function nextId(db, t) { db.seq[t] = (db.seq[t] || 0) + 1; return db.seq[t]; }
+function httpErr(status, msg) { const e = new Error(msg); e.status = status; return e; }
+
+// Validación (igual que la que hacía el servidor)
+function vPosInt(v, campo) { const s = String(v == null ? '' : v).trim(); if (!/^\d+$/.test(s) || Number(s) <= 0) throw httpErr(400, `${campo} debe ser mayor que cero`); return Number(s); }
+function vText(v, campo, max) { const s = v == null ? '' : String(v).trim(); if (!s) throw httpErr(400, `${campo} es obligatorio`); if (s.length > max) throw httpErr(400, `${campo} no puede pasar de ${max} caracteres`); return s; }
+function vEmail(v) { const s = vText(v, 'email', 180).toLowerCase(); if (!EMAIL_RE.test(s)) throw httpErr(400, 'el email no tiene un formato valido'); return s; }
+function vPass(v) { const s = v == null ? '' : String(v); if (s.length < 8) throw httpErr(400, 'la contrasena debe tener al menos 8 caracteres'); if (s.length > 200) throw httpErr(400, 'la contrasena es demasiado larga'); return s; }
+function vAmount(v, campo, allowZero, allowNeg) {
+  const n = Math.round(Number(v) * 100) / 100;
+  if (!isFinite(n) || String(v).trim() === '') throw httpErr(400, `${campo} debe ser un numero`);
+  if (n < 0 && !allowNeg) throw httpErr(400, `${campo} no puede ser negativo`);
+  if (n === 0 && !allowZero) throw httpErr(400, `${campo} debe ser mayor que cero`);
+  if (Math.abs(n) > 99999999.99) throw httpErr(400, `${campo} es demasiado grande`);
+  return n;
+}
+function vDate(v, campo) {
+  const s = String(v == null ? '' : v).trim(); const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s);
+  const d = m && new Date(Date.UTC(+m[1], +m[2] - 1, +m[3]));
+  if (!m || d.getUTCMonth() !== +m[2] - 1 || d.getUTCDate() !== +m[3]) throw httpErr(400, `${campo} debe tener el formato AAAA-MM-DD`);
+  return s;
+}
+function vType(v) { const s = String(v == null ? '' : v).trim().toLowerCase(); if (s !== 'ingreso' && s !== 'gasto') throw httpErr(400, "type debe ser 'ingreso' o 'gasto'"); return s; }
+
+// Contraseñas: PBKDF2-SHA256 con Web Crypto (si el navegador lo permite).
+const b64 = (buf) => btoa(String.fromCharCode(...new Uint8Array(buf)));
+const unb64 = (s) => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+const PBKDF2_IT = 100000;
+async function pbkdf2(pass, salt, it) {
+  const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(pass), 'PBKDF2', false, ['deriveBits']);
+  return crypto.subtle.deriveBits({ name: 'PBKDF2', hash: 'SHA-256', salt, iterations: it }, key, 256);
+}
+async function passHash(pass) {
+  if (!(window.crypto && crypto.subtle)) return 'simple$' + hashPass(pass);
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  return `pbkdf2$${PBKDF2_IT}$${b64(salt)}$${b64(await pbkdf2(pass, salt, PBKDF2_IT))}`;
+}
+async function passCheck(pass, stored) {
+  if (!stored || pass == null) return false;
+  if (stored.startsWith('simple$')) return stored === 'simple$' + hashPass(pass);
+  const p = stored.split('$');
+  if (p.length !== 4 || p[0] !== 'pbkdf2' || !(window.crypto && crypto.subtle)) return false;
+  return b64(await pbkdf2(pass, unb64(p[2]), Number(p[1]))) === p[3];
+}
+
+const txOut = (t) => ({ id: t.id, type: t.type, description: t.description, category: t.category, amount: t.amount, date: t.date });
+const byDateDesc = (a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : b.id - a.id);
+function parseTxBody(b) {
+  return {
+    userId: vPosInt(b.userId, 'userId'), type: vType(b.type || 'gasto'),
+    description: vText(b.description, 'description', 200), category: vText(b.category || 'Otros', 'category', 80),
+    amount: vAmount(b.amount, 'amount', false), date: vDate(b.date || todayISO(), 'date'),
+  };
+}
+function monthPrefix(q) {
+  return `${q.get('year') || new Date().getFullYear()}-${pad(Number(q.get('month') || new Date().getMonth() + 1))}`;
+}
+
+async function localApi(method, path, body) {
+  const u = new URL(path, 'http://local'); const ruta = u.pathname.replace(/\/+$/, ''); const q = u.searchParams; const b = body || {};
+  const db = dbLoad();
+
+  // ----- usuarios -----
+  if (ruta === '/users/register' && method === 'POST') {
+    const name = vText(b.name, 'name', 120), email = vEmail(b.email), pass = vPass(b.password);
+    if (db.users.some(x => x.email === email)) throw httpErr(409, 'ese email ya está registrado');
+    const id = nextId(db, 'users');
+    db.users.push({ id, name, email, password_hash: await passHash(pass) }); dbSave(db);
+    return { id, name, email };
+  }
+  if (ruta === '/users/login' && method === 'POST') {
+    const email = String(b.email || '').trim().toLowerCase();
+    const x = db.users.find(y => y.email === email);
+    if (!x || !(await passCheck(String(b.password || ''), x.password_hash))) throw httpErr(401, 'email o contraseña incorrectos');
+    return { id: x.id, name: x.name, email: x.email };
+  }
+  if (ruta === '/users/password' && method === 'POST') {
+    const id = vPosInt(b.id, 'id'), nueva = vPass(b.new);
+    const x = db.users.find(y => y.id === id);
+    if (!x || !(await passCheck(String(b.current || ''), x.password_hash))) throw httpErr(401, 'la contraseña actual no es correcta');
+    x.password_hash = await passHash(nueva); dbSave(db);
+    return { updated: true };
+  }
+  if (ruta === '/users' && method === 'PUT') {
+    const id = vPosInt(b.id, 'id'), name = vText(b.name, 'name', 120), email = vEmail(b.email);
+    if (db.users.some(y => y.email === email && y.id !== id)) throw httpErr(409, 'ese email ya está registrado');
+    const x = db.users.find(y => y.id === id); if (!x) throw httpErr(404, 'no encontrado');
+    x.name = name; x.email = email; dbSave(db);
+    return { updated: true };
+  }
+  if (ruta === '/users' && method === 'DELETE') {
+    const id = vPosInt(q.get('id'), 'id');
+    const x = db.users.find(y => y.id === id);
+    if (!x || !(await passCheck(q.get('password') || '', x.password_hash))) throw httpErr(401, 'se requiere la contraseña de la cuenta para eliminarla');
+    db.users = db.users.filter(y => y.id !== id);
+    for (const t of ['transactions', 'budgets', 'goals', 'contributions']) db[t] = db[t].filter(r => r.userId !== id);
+    dbSave(db); return { deleted: true };
+  }
+
+  // ----- movimientos -----
+  if (ruta === '/transactions') {
+    if (method === 'GET') {
+      const userId = vPosInt(q.get('userId') || '1', 'userId');
+      let rows = db.transactions.filter(t => t.userId === userId);
+      if (q.has('year') || q.has('month')) { const pre = monthPrefix(q); rows = rows.filter(t => t.date.startsWith(pre)); }
+      return rows.sort(byDateDesc).map(txOut);
+    }
+    if (method === 'POST') {
+      const t = parseTxBody(b); t.id = nextId(db, 'transactions'); db.transactions.push(t); dbSave(db); return txOut(t);
+    }
+    if (method === 'PUT') {
+      const t = parseTxBody(b); t.id = vPosInt(b.id, 'id');
+      const i = db.transactions.findIndex(x => x.id === t.id && x.userId === t.userId);
+      if (i < 0) throw httpErr(404, 'no encontrado');
+      db.transactions[i] = t; dbSave(db); return txOut(t);
+    }
+    if (method === 'DELETE') {
+      const id = vPosInt(q.get('id'), 'id'), userId = vPosInt(q.get('userId'), 'userId');
+      const n = db.transactions.length;
+      db.transactions = db.transactions.filter(x => !(x.id === id && x.userId === userId));
+      if (db.transactions.length === n) throw httpErr(404, 'no encontrado');
+      db.contributions = db.contributions.filter(c => c.txId !== id); // como el ON DELETE CASCADE de antes
+      dbSave(db); return { deleted: true };
+    }
+  }
+
+  // ----- presupuestos -----
+  if (ruta === '/budgets') {
+    if (method === 'GET') {
+      const userId = vPosInt(q.get('userId') || '1', 'userId');
+      return db.budgets.filter(x => x.userId === userId).sort((a, c) => a.category.localeCompare(c.category))
+        .map(x => ({ id: x.id, category: x.category, monthlyLimit: x.monthlyLimit }));
+    }
+    if (method === 'PUT') {
+      const userId = vPosInt(b.userId || '1', 'userId'), category = vText(b.category || 'Otros', 'category', 80);
+      const monthlyLimit = vAmount(b.monthlyLimit == null ? 0 : b.monthlyLimit, 'monthlyLimit', true);
+      const x = db.budgets.find(y => y.userId === userId && y.category === category);
+      if (x) x.monthlyLimit = monthlyLimit; else db.budgets.push({ id: nextId(db, 'budgets'), userId, category, monthlyLimit });
+      dbSave(db); return { userId, category, monthlyLimit };
+    }
+    if (method === 'DELETE') {
+      const userId = vPosInt(q.get('userId'), 'userId'), category = vText(q.get('category'), 'category', 80);
+      const n = db.budgets.length;
+      db.budgets = db.budgets.filter(y => !(y.userId === userId && y.category === category));
+      if (db.budgets.length === n) throw httpErr(404, 'no encontrado');
+      dbSave(db); return { deleted: true };
+    }
+  }
+
+  // ----- ahorro -----
+  if (ruta === '/savings/goal' && method === 'PUT') {
+    const userId = vPosInt(b.userId || '1', 'userId'), goalAmount = vAmount(b.goalAmount == null ? 0 : b.goalAmount, 'goalAmount', true);
+    const g = db.goals.find(y => y.userId === userId);
+    if (g) g.goalAmount = goalAmount; else db.goals.push({ userId, goalAmount });
+    dbSave(db); return { userId, goalAmount };
+  }
+  if (ruta === '/savings/goal' && method === 'DELETE') {
+    const userId = vPosInt(q.get('userId'), 'userId'); const n = db.goals.length;
+    db.goals = db.goals.filter(y => y.userId !== userId);
+    if (db.goals.length === n) throw httpErr(404, 'no encontrado');
+    dbSave(db); return { deleted: true };
+  }
+  if (ruta === '/savings/contributions' && method === 'POST') {
+    const userId = vPosInt(b.userId || '1', 'userId');
+    const amount = vAmount(b.amount, 'amount', false, true); // los retiros llegan en negativo
+    const date = vDate(b.date || todayISO(), 'date');
+    const txId = (b.txId == null || b.txId === '' || b.txId === 'null') ? null : vPosInt(b.txId, 'txId');
+    const id = nextId(db, 'contributions');
+    db.contributions.push({ id, userId, amount, date, txId }); dbSave(db);
+    return { id, amount, date, txId };
+  }
+  if (ruta === '/savings/contributions' && method === 'DELETE') {
+    const id = vPosInt(q.get('id'), 'id'), userId = vPosInt(q.get('userId'), 'userId'); const n = db.contributions.length;
+    db.contributions = db.contributions.filter(c => !(c.id === id && c.userId === userId));
+    if (db.contributions.length === n) throw httpErr(404, 'no encontrado');
+    dbSave(db); return { deleted: true };
+  }
+  if (ruta === '/savings' && method === 'GET') {
+    const userId = vPosInt(q.get('userId') || '1', 'userId');
+    const g = db.goals.find(y => y.userId === userId);
+    const cs = db.contributions.filter(c => c.userId === userId).sort(byDateDesc);
+    return { goalAmount: g ? g.goalAmount : null, totalSaved: Math.round(cs.reduce((s, c) => s + c.amount, 0) * 100) / 100,
+      contributions: cs.map(c => ({ id: c.id, amount: c.amount, date: c.date, txId: c.txId })) };
+  }
+
+  // ----- resumen del mes -----
+  if (ruta === '/summary' && method === 'GET') {
+    const userId = vPosInt(q.get('userId') || '1', 'userId'); const pre = monthPrefix(q);
+    const txs = db.transactions.filter(t => t.userId === userId && t.date.startsWith(pre));
+    const sum = (f) => txs.filter(f).reduce((s, t) => s + t.amount, 0);
+    const ingresos = sum(t => t.type === 'ingreso'), gastos = sum(t => t.type === 'gasto');
+    const byCategory = db.budgets.filter(x => x.userId === userId).sort((a, c) => a.category.localeCompare(c.category)).map(x => {
+      const spent = sum(t => t.type === 'gasto' && t.category === x.category);
+      return { category: x.category, monthlyLimit: x.monthlyLimit, spent, available: x.monthlyLimit - spent };
+    });
+    return { totals: { ingresos, gastos, balance: ingresos - gastos }, byCategory };
+  }
+
+  throw httpErr(404, 'no encontrado');
+}
+
+async function api(path, opts = {}) {
+  // Copia del cuerpo para que se comporte igual que una petición real.
+  const body = opts.body ? JSON.parse(JSON.stringify(opts.body)) : undefined;
+  return localApi(opts.method || 'GET', path, body);
+}
+
+function pad(n){ return String(n).padStart(2,'0'); }
+function iso(y,m,d){ return `${y}-${pad(m+1)}-${pad(d)}`; }
+function todayISO(){ const d = new Date(); return iso(d.getFullYear(), d.getMonth(), d.getDate()); }
+function uid(){ try { return crypto.randomUUID(); } catch(e) { return 'id-' + Date.now() + '-' + Math.random().toString(36).slice(2); } }
+function hashPass(s){ let h = 5381; for (let i=0;i<s.length;i++) { h = ((h * 33) ^ s.charCodeAt(i)) >>> 0; } return 'h' + h.toString(16) + '-' + s.length; }
+function fmtCur(usdAmount, code, rates){
+  const r = (rates && rates[code]) || FALLBACK_RATES[code] || 1;
+  const v = (Number(usdAmount)||0) * r;
+  const sign = v<0 ? '-' : '';
+  const symbol = CUR_SYMBOL[code] || '$';
+  return `${sign}${symbol}${Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})} ${code}`;
+}
+function csvField(v){ return '"' + String(v == null ? '' : v).replace(/"/g,'""') + '"'; }
+
+class Component extends DCLogic {
+  state = {
+    booted: false,
+    authed: false,
+    currentUserId: null,
+    authView: 'login',
+    authEmail: '', authPassword: '', authError: '',
+    regName: '', regEmail: '', regPassword: '', regPassword2: '', regError: '',
+    resetEmail: '', resetSent: false, resetError: '',
+    show: { login:false, reg:false, reg2:false, pwc:false, pw1:false, pw2:false },
+
+    route: 'dashboard',
+    filterType: 'todos',
+    filterMonth: { year: new Date().getFullYear(), month: new Date().getMonth() },
+    calendarOpen: false,
+    calendarViewYear: new Date().getFullYear(),
+    calendarStyle: this.props.calendarStyle || 'popup',
+    searchQuery: '',
+    filterCategory: 'Todas',
+
+    txModalOpen: false,
+    editTxId: null,
+    txForm: { type: 'gasto', description: '', category: 'Alimentación', amount: '', date: todayISO() },
+    txError: '',
+    customCategories: {},
+    newCatOpen: false,
+    newCatName: '',
+    newCatError: '',
+
+    savingsModal: null,
+    savingsDraft: '',
+    savingsError: '',
+
+    budgetDrafts: {},
+
+    profileDraft: { name: '', email: '', phone: '', currency: 'USD', notifyEmail: true, photo: null },
+    profileEditing: false,
+    profileError: '',
+    pwForm: { cur:'', n1:'', n2:'' },
+    pwError: '',
+
+    confirm: null,
+    toast: null,
+    helpOpen: false,
+    notifOpen: false,
+    notifRead: false,
+    isNarrow: false,
+    sidebarOpen: false,
+
+    users: [], transactions: [], budgets: {}, savingsContributions: [], savingsGoalHistory: [],
+    fxRates: null, fxUpdatedAt: null,
+  };
+
+  _toastId = 0;
+  _undoSnap = null;
+  _pendingConfirm = null;
+  _pendingCancel = null;
+  _txFormInitial = '';
+
+  componentDidMount() {
+    this.load();
+    this.loadFxRates();
+    this._mq = window.matchMedia('(max-width: 920px)');
+    this._onMq = () => this.setState({ isNarrow: this._mq.matches, sidebarOpen: false });
+    if (this._mq.addEventListener) this._mq.addEventListener('change', this._onMq); else this._mq.addListener(this._onMq);
+    this.setState({ isNarrow: this._mq.matches });
+    this._onKey = (e) => { if (e.key === 'Escape') this.handleEscape(); };
+    window.addEventListener('keydown', this._onKey);
+    this._onHash = () => {
+      const r = (location.hash || '').slice(1);
+      const valid = ['dashboard','ingresos','gastos','ahorros','movimientos','presupuesto','recomendaciones','perfil'];
+      if (valid.includes(r) && r !== this.state.route) this.nav(r, true);
+    };
+    window.addEventListener('hashchange', this._onHash);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this._onKey);
+    window.removeEventListener('hashchange', this._onHash);
+    if (this._mq) { if (this._mq.removeEventListener) this._mq.removeEventListener('change', this._onMq); else this._mq.removeListener(this._onMq); }
+  }
+
+  handleEscape() {
+    if (this.state.confirm) { this.confirmCancel(); return; }
+    if (this.state.txModalOpen) { this.closeTxModal(); return; }
+    if (this.state.savingsModal) { this.setState({ savingsModal: null, savingsError: '' }); return; }
+    if (this.state.helpOpen || this.state.notifOpen || this.state.calendarOpen || this.state.sidebarOpen) {
+      this.setState({ helpOpen:false, notifOpen:false, calendarOpen:false, sidebarOpen:false });
+    }
+  }
+
+  loadFxRates() {
+    fetch('https://api.frankfurter.app/latest?from=USD&to=MXN,EUR')
+      .then(r => r.ok ? r.json() : null)
+      .then(j => {
+        if (j && j.rates) this.setState({ fxRates: { USD:1, MXN: j.rates.MXN || FALLBACK_RATES.MXN, EUR: j.rates.EUR || FALLBACK_RATES.EUR }, fxUpdatedAt: j.date || null });
+      })
+      .catch(() => {});
+  }
+
+  load() {
+    // localStorage guarda solo extras locales (sesión, moneda, foto, categorías
+    // propias); los datos reales se leen del servidor con syncFromServer().
+    let raw = null;
+    try { raw = JSON.parse(localStorage.getItem(STORE_KEY)); } catch (e) {}
+    if (!raw) raw = { users: [], customCategories: {}, currentUserId: null };
+    // Solo usuarios con id numérico (del servidor); descarta restos del prototipo local
+    raw.users = (raw.users || []).filter(u => /^\d+$/.test(String(u.id))).map(u => ({ ...u, id: Number(u.id) }));
+    const valid = ['dashboard','ingresos','gastos','ahorros','movimientos','presupuesto','recomendaciones','perfil'];
+    const hashRoute = (location.hash || '').slice(1);
+    const sessionId = Number(raw.currentUserId) || null; // ids del servidor son numéricos
+    this.setState({
+      booted: true,
+      users: raw.users || [],
+      customCategories: raw.customCategories || {},
+      route: valid.includes(hashRoute) ? hashRoute : 'dashboard',
+    }, () => {
+      if (!sessionId) return;
+      const cached = (raw.users || []).find(u => u.id === sessionId);
+      this.syncFromServer(cached || { id: sessionId, name: 'Usuario', email: '' })
+        .catch(err => this.setState({ authed: false, currentUserId: null, authError: err.message }));
+    });
+  }
+
+  /** Carga desde la API todos los datos del usuario (SELECTs de queries.sql). */
+  async syncFromServer(serverUser) {
+    const userId = serverUser.id;
+    const [txs, buds, sav] = await Promise.all([
+      api(`/transactions?userId=${userId}`),           // todos los movimientos
+      api(`/budgets?userId=${userId}`),                // presupuestos
+      api(`/savings?userId=${userId}`),                // meta + aportes
+    ]);
+    const transactions = txs.map(t => ({ ...t, userId, amount: Number(t.amount) }));
+    const bmap = {};
+    buds.forEach(b => { bmap[b.category] = Number(b.monthlyLimit); });
+    const savingsContributions = (sav.contributions || []).map(c => ({ id: c.id, userId, date: c.date, amount: Number(c.amount), txId: c.txId != null ? c.txId : null }));
+    const savingsGoalHistory = sav.goalAmount != null
+      ? [{ id: 'goal-' + userId, userId, date: todayISO(), amount: Number(sav.goalAmount), action: 'creada' }]
+      : [];
+    // Combina los datos del servidor (nombre, email) con extras locales (moneda, foto...)
+    const users = [...this.state.users];
+    const i = users.findIndex(u => u.id === userId);
+    const extras = i >= 0 ? users[i] : { phone: '', currency: 'USD', notifyEmail: true, joinedAt: todayISO(), photo: null };
+    const user = { ...extras, id: userId, name: serverUser.name, email: serverUser.email };
+    if (i >= 0) users[i] = user; else users.push(user);
+    return new Promise(resolve => {
+      this.setState({
+        authed: true, currentUserId: userId, users,
+        transactions, budgets: { [userId]: bmap }, savingsContributions, savingsGoalHistory,
+        profileDraft: this.draftFromUser(user),
+      }, () => { this.persist(); resolve(user); });
+    });
+  }
+
+  // Upgrades older stores: (a) attribute ownerless records to the first account,
+  // (b) hash plaintext passwords, (c) move from email-keyed to stable-id-keyed records.
+  migrate(raw) {
+    let changed = false;
+    if (!Array.isArray(raw.users)) raw.users = [];
+
+    const legacyOwnerEmail = raw.currentUserEmail || (raw.users[0] && raw.users[0].email) || null;
+    if (legacyOwnerEmail) {
+      if (Array.isArray(raw.transactions) && raw.transactions.some(t => !t.userEmail && !t.userId)) { raw.transactions = raw.transactions.map(t => (t.userEmail || t.userId) ? t : { ...t, userEmail: legacyOwnerEmail }); changed = true; }
+      if (Array.isArray(raw.savingsContributions) && raw.savingsContributions.some(c => !c.userEmail && !c.userId)) { raw.savingsContributions = raw.savingsContributions.map(c => (c.userEmail || c.userId) ? c : { ...c, userEmail: legacyOwnerEmail }); changed = true; }
+      if (Array.isArray(raw.savingsGoalHistory) && raw.savingsGoalHistory.some(g => !g.userEmail && !g.userId)) { raw.savingsGoalHistory = raw.savingsGoalHistory.map(g => (g.userEmail || g.userId) ? g : { ...g, userEmail: legacyOwnerEmail }); changed = true; }
+      else if (!raw.savingsGoalHistory && typeof raw.savingsGoal === 'number') { raw.savingsGoalHistory = [{ userEmail: legacyOwnerEmail, date: todayISO(), amount: raw.savingsGoal, action: 'creada' }]; changed = true; }
+      if (raw.budgets && !Array.isArray(raw.budgets)) {
+        const looksNested = Object.values(raw.budgets).every(v => v && typeof v === 'object');
+        if (!looksNested && Object.keys(raw.budgets).length) { raw.budgets = { [legacyOwnerEmail]: raw.budgets }; changed = true; }
+      }
+    }
+
+    // Assign stable ids + hash passwords
+    const emailToId = {};
+    raw.users = raw.users.map(u => {
+      let nu = u;
+      if (!nu.id) { nu = { ...nu, id: uid() }; changed = true; }
+      if (nu.password != null) { nu = { ...nu, passHash: hashPass(nu.password) }; delete nu.password; changed = true; }
+      emailToId[(u.email || '').toLowerCase()] = nu.id;
+      return nu;
+    });
+    const idFor = (email) => emailToId[(email || '').toLowerCase()] || null;
+
+    const rekey = (list) => (list || []).map(r => {
+      if (r.userId) return r;
+      const idv = idFor(r.userEmail);
+      if (!idv) return r;
+      const nr = { ...r, userId: idv }; delete nr.userEmail; changed = true; return nr;
+    });
+    raw.transactions = rekey(raw.transactions);
+    raw.savingsContributions = rekey(raw.savingsContributions);
+    raw.savingsGoalHistory = rekey(raw.savingsGoalHistory);
+
+    if (raw.budgets && !Array.isArray(raw.budgets)) {
+      const nb = {};
+      Object.keys(raw.budgets).forEach(k => {
+        const idv = idFor(k);
+        if (idv && idv !== k) { nb[idv] = raw.budgets[k]; changed = true; } else nb[k] = raw.budgets[k];
+      });
+      raw.budgets = nb;
+    }
+
+    if (!raw.currentUserId && raw.currentUserEmail) { raw.currentUserId = idFor(raw.currentUserEmail); delete raw.currentUserEmail; changed = true; }
+
+    if (changed) { try { localStorage.setItem(STORE_KEY, JSON.stringify(raw)); } catch (e) {} }
+    return raw;
+  }
+
+  persist(extra) {
+    // Solo extras locales — los datos reales viven en MySQL vía la API.
+    const data = {
+      users: this.state.users.map(u => ({ id: u.id, name: u.name, email: u.email, phone: u.phone || '', currency: u.currency || 'USD', notifyEmail: u.notifyEmail !== false, joinedAt: u.joinedAt, photo: u.photo || null })),
+      customCategories: this.state.customCategories,
+      currentUserId: this.state.currentUserId, ...extra,
+    };
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(data)); } catch (e) {}
+  }
+
+  seed() {
+    const tx = [];
+    const demoId = 'u-demo';
+    const now = new Date();
+    for (let back = 5; back >= 0; back--) {
+      const d = new Date(now.getFullYear(), now.getMonth() - back, 1);
+      const y = d.getFullYear(), m = d.getMonth();
+      tx.push({ id: uid(), userId: demoId, type:'ingreso', date: iso(y,m,1), description:'Nómina', category:'Nómina', amount:3450 });
+      tx.push({ id: uid(), userId: demoId, type:'gasto', date: iso(y,m,2), description:'Alquiler', category:'Vivienda', amount:1200 });
+      tx.push({ id: uid(), userId: demoId, type:'gasto', date: iso(y,m,5), description:'Supermercado', category:'Alimentación', amount:180+((m*13)%40) });
+      tx.push({ id: uid(), userId: demoId, type:'gasto', date: iso(y,m,10), description:'Gasolina', category:'Transporte', amount:60+((m*7)%20) });
+      tx.push({ id: uid(), userId: demoId, type:'gasto', date: iso(y,m,15), description:'Streaming y salidas', category:'Entretenimiento', amount:45+((m*5)%15) });
+      if (m % 2 === 0) tx.push({ id: uid(), userId: demoId, type:'ingreso', date: iso(y,m,20), description:'Freelance diseño', category:'Freelance', amount:250+((m*11)%100) });
+      tx.push({ id: uid(), userId: demoId, type:'gasto', date: iso(y,m,22), description:'Farmacia', category:'Otros', amount:30+((m*3)%20) });
+    }
+    const joined = new Date(now.getFullYear(), now.getMonth() - 10, 14);
+    const c1 = new Date(now.getFullYear(), now.getMonth() - 4, 5), c2 = new Date(now.getFullYear(), now.getMonth() - 2, 5), c3 = new Date(now.getFullYear(), now.getMonth() - 1, 5);
+    const data = {
+      users: [{ id: demoId, name:'Max Fernández', email:'demo@correo.com', passHash: hashPass('demo1234'), phone:'+52 55 1234 5678', currency:'MXN', notifyEmail:true, joinedAt: iso(joined.getFullYear(), joined.getMonth(), 14), photo: null }],
+      transactions: tx,
+      budgets: { [demoId]: { 'Vivienda':1200, 'Alimentación':500, 'Transporte':250, 'Entretenimiento':150 } },
+      savingsContributions: [
+        { id: uid(), userId: demoId, date: iso(c1.getFullYear(), c1.getMonth(), 5), amount:500 },
+        { id: uid(), userId: demoId, date: iso(c2.getFullYear(), c2.getMonth(), 5), amount:500 },
+        { id: uid(), userId: demoId, date: iso(c3.getFullYear(), c3.getMonth(), 5), amount:750 },
+      ],
+      savingsGoalHistory: [ { id: uid(), userId: demoId, date: iso(joined.getFullYear(), joined.getMonth(), 14), amount:10000, action:'creada' } ],
+      currentUserId: null,
+    };
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(data)); } catch (e) {}
+    return data;
+  }
+
+  getUser() { return this.state.users.find(u => u.id === this.state.currentUserId); }
+  draftFromUser(u) { return { name: u.name, email: u.email, phone: u.phone || '', currency: u.currency || 'USD', notifyEmail: u.notifyEmail !== false, photo: u.photo || null }; }
+  showToast(msg, type, undoSnap) {
+    const id = ++this._toastId;
+    this._undoSnap = undoSnap || null;
+    this.setState({ toast: { message: msg, type: type || 'success', hasUndo: !!undoSnap } });
+    setTimeout(() => { if (this._toastId === id) { this.setState({ toast: null }); this._undoSnap = null; } }, undoSnap ? 5000 : 2600);
+  }
+  snapshot() { return { transactions: this.state.transactions, savingsContributions: this.state.savingsContributions, savingsGoalHistory: this.state.savingsGoalHistory, budgets: this.state.budgets }; }
+  undoLast = () => {
+    if (!this._undoSnap) return;
+    const snap = this._undoSnap; this._undoSnap = null;
+    this.setState({ ...snap, toast: null }, () => { this.persist(); this.showToast('Acción deshecha', 'success'); });
+  };
+  rate(code) { return (this.state.fxRates && this.state.fxRates[code]) || FALLBACK_RATES[code] || 1; }
+  toUSD(amount, code) { return (Number(amount)||0) / this.rate(code); }
+  fromUSD(usdAmount, code) { return (Number(usdAmount)||0) * this.rate(code); }
+
+  // ---------- CONFIRM SYSTEM ----------
+  askConfirm(opts, onOk, onCancel) { this._pendingConfirm = onOk; this._pendingCancel = onCancel || null; this.setState({ confirm: opts }); }
+  confirmAccept = () => { const fn = this._pendingConfirm; this._pendingConfirm = null; this._pendingCancel = null; this.setState({ confirm: null }, () => { if (fn) fn(); }); };
+  confirmCancel = () => { const fn = this._pendingCancel; this._pendingConfirm = null; this._pendingCancel = null; this.setState({ confirm: null }, () => { if (fn) fn(); }); };
+  stopProp = (e) => e.stopPropagation();
+
+  // ---------- AUTH ----------
+  setAuthEmail = (e) => this.setState({ authEmail: e.target.value });
+  setAuthPassword = (e) => this.setState({ authPassword: e.target.value });
+  goRegister = (e) => { e && e.preventDefault(); this.setState({ authView:'register', authError:'', resetSent:false, resetError:'' }); };
+  goReset = (e) => { e && e.preventDefault(); this.setState({ authView:'reset', authError:'', resetSent:false, resetError:'' }); };
+  goLogin = (e) => { e && e.preventDefault(); this.setState({ authView:'login', authError:'', regError:'', resetSent:false, resetError:'' }); };
+  authKeyDown = (e) => {
+    if (e.key !== 'Enter') return;
+    const v = this.state.authView;
+    if (v === 'login') this.doLogin(); else if (v === 'register') this.doRegister(); else this.doReset();
+  };
+
+  doLogin = () => {
+    const email = this.state.authEmail.trim();
+    if (!email || !this.state.authPassword) { this.setState({ authError: 'Escribe tu correo y contraseña.' }); return; }
+    // POST /api/users/login → SELECT ... FROM users WHERE email = ? (UserDao.findByEmail)
+    api('/users/login', { method: 'POST', body: { email, password: this.state.authPassword } })
+      .then(u => this.syncFromServer(u))
+      .then(() => {
+        this.setState({ authError: '', authPassword:'', toast: null, notifRead: false, route: 'dashboard' }, () => { this.persist(); try { location.hash = 'dashboard'; } catch(e){} });
+      })
+      .catch(err => this.setState({ authError: err.status === 401 ? 'Correo o contraseña incorrectos' : err.message }));
+  };
+
+  setRegName = (e) => this.setState({ regName: e.target.value });
+  setRegEmail = (e) => this.setState({ regEmail: e.target.value });
+  setRegPassword = (e) => this.setState({ regPassword: e.target.value });
+  setRegPassword2 = (e) => this.setState({ regPassword2: e.target.value });
+  doRegister = () => {
+    const { regName, regEmail, regPassword, regPassword2, users } = this.state;
+    const email = regEmail.trim();
+    if (!regName.trim()) { this.setState({ regError: 'Escribe tu nombre.' }); return; }
+    if (!EMAIL_RE.test(email)) { this.setState({ regError: 'Escribe un correo válido (ej. tu@correo.com).' }); return; }
+    if (regPassword.length < 8) { this.setState({ regError: 'La contraseña debe tener al menos 8 caracteres.' }); return; }
+    if (regPassword !== regPassword2) { this.setState({ regError: 'Las contraseñas no coinciden.' }); return; }
+    // POST /api/users/register → INSERT INTO users (name, email, password_hash) VALUES (?, ?, ?)
+    api('/users/register', { method: 'POST', body: { name: regName.trim(), email, password: regPassword } })
+      .then(u => this.syncFromServer(u))
+      .then(() => {
+        this.setState({ regError: '', regPassword:'', regPassword2:'', toast: null, notifRead: false, route: 'dashboard' }, () => { this.persist(); try { location.hash = 'dashboard'; } catch(e){} this.showToast('Cuenta creada con éxito', 'success'); });
+      })
+      .catch(err => this.setState({ regError: err.status === 409 ? 'Ya existe una cuenta con ese correo.' : err.message }));
+  };
+
+  setResetEmail = (e) => this.setState({ resetEmail: e.target.value, resetSent: false, resetError: '' });
+  doReset = () => {
+    if (!EMAIL_RE.test(this.state.resetEmail.trim())) { this.setState({ resetError: 'Escribe un correo válido.', resetSent: false }); return; }
+    this.setState({ resetSent: true, resetError: '' });
+  };
+
+  logout = () => {
+    this.askConfirm({ title: 'Cerrar sesión', message: '¿Seguro que quieres cerrar sesión?', confirmLabel: 'Cerrar sesión', danger: true }, () => {
+      this.setState({ authed: false, currentUserId: null, authView:'login', authEmail:'', authPassword:'', toast: null, helpOpen:false, notifOpen:false, sidebarOpen:false, profileEditing:false }, () => { this.persist(); try { history.replaceState(null, '', location.pathname + location.search); } catch(e){} });
+    });
+  };
+
+  // ---------- NAV ----------
+  nav(route, fromHash) {
+    const extra = route==='ingresos' ? { filterType:'ingresos' } : route==='gastos' ? { filterType:'gastos' } : route==='movimientos' ? { filterType:'todos' } : {};
+    this.setState({ route, toast: null, helpOpen:false, notifOpen:false, calendarOpen:false, sidebarOpen:false, searchQuery:'', filterCategory:'Todas', profileError:'', ...extra });
+    if (!fromHash) { try { location.hash = route; } catch(e){} }
+  }
+  toggleHelp = () => this.setState(s => ({ helpOpen: !s.helpOpen, notifOpen: false }));
+  toggleNotif = () => this.setState(s => ({ notifOpen: !s.notifOpen, helpOpen: false, notifRead: true }));
+  closePopovers = () => this.setState({ helpOpen:false, notifOpen:false, calendarOpen:false });
+  openSidebar = () => this.setState({ sidebarOpen: true });
+  closeSidebar = () => this.setState({ sidebarOpen: false });
+
+  goDashboard = () => this.nav('dashboard');
+  goIngresos = () => this.nav('ingresos');
+  goGastos = () => this.nav('gastos');
+  goAhorros = () => this.nav('ahorros');
+  goMovimientos = () => this.nav('movimientos');
+  goPresupuesto = () => this.nav('presupuesto');
+  goRecomendaciones = () => this.nav('recomendaciones');
+  goPerfil = () => this.nav('perfil');
+
+  // ---------- FILTERS / CALENDAR ----------
+  setFilterTodos = () => this.setState({ filterType:'todos' });
+  setFilterIngresos = () => this.setState({ filterType:'ingresos' });
+  setFilterGastos = () => this.setState({ filterType:'gastos' });
+  setSearchQuery = (e) => this.setState({ searchQuery: e.target.value });
+  setFilterCategory = (e) => this.setState({ filterCategory: e.target.value });
+  toggleCalendarOpen = () => this.setState(s => ({ calendarOpen: !s.calendarOpen, calendarViewYear: s.filterMonth.year }));
+  toggleCalendarStyle = () => this.setState(s => ({ calendarStyle: s.calendarStyle === 'popup' ? 'dropdown' : 'popup' }));
+  yearBounds() {
+    const years = this.state.transactions.filter(t => t.userId === this.state.currentUserId).map(t => Number(t.date.split('-')[0]));
+    const cy = new Date().getFullYear();
+    const min = Math.min(cy, ...(years.length ? years : [cy])) - 1;
+    const max = Math.max(cy, ...(years.length ? years : [cy])) + 1;
+    return { min, max };
+  }
+  prevCalYear = () => { const b = this.yearBounds(); this.setState(s => ({ calendarViewYear: Math.max(b.min, s.calendarViewYear - 1) })); };
+  nextCalYear = () => { const b = this.yearBounds(); this.setState(s => ({ calendarViewYear: Math.min(b.max, s.calendarViewYear + 1) })); };
+  pickMonth = (idx) => this.setState(s => ({ filterMonth: { year: s.calendarViewYear, month: idx }, calendarOpen: false }));
+  onDropdownMonth = (e) => this.setState(s => ({ filterMonth: { ...s.filterMonth, month: Number(e.target.value) } }));
+  onDropdownYear = (e) => this.setState(s => ({ filterMonth: { ...s.filterMonth, year: Number(e.target.value) } }));
+
+  // ---------- TX MODAL ----------
+  openTxModal = () => {
+    const form = { type:'gasto', description:'', category: EXPENSE_CATS[0], amount:'', date: todayISO() };
+    this._txFormInitial = JSON.stringify(form);
+    this.setState({ txModalOpen: true, editTxId: null, txError:'', txForm: form, newCatOpen:false, newCatName:'', newCatError:'' });
+  };
+  openEditTx(tx) {
+    if (tx.category === 'Ahorro') { this.showToast('Los movimientos de ahorro se gestionan desde Ahorros', 'error'); return; }
+    const user = this.getUser();
+    const cur = user ? user.currency : 'USD';
+    const form = { type: tx.type, description: tx.description, category: tx.category, amount: String(Math.round(this.fromUSD(tx.amount, cur) * 100) / 100), date: tx.date };
+    this._txFormInitial = JSON.stringify(form);
+    this.setState({ txModalOpen: true, editTxId: tx.id, txError:'', txForm: form, newCatOpen:false, newCatName:'', newCatError:'' });
+  }
+  txIsDirty() { return JSON.stringify(this.state.txForm) !== this._txFormInitial; }
+  closeTxModal = () => {
+    if (this.txIsDirty()) {
+      this.askConfirm({ title: '¿Descartar cambios?', message: 'Tienes cambios sin guardar en esta transacción. Si sales ahora se perderán.', confirmLabel: 'Descartar', danger: true }, () => this.setState({ txModalOpen: false, editTxId: null }));
+      return;
+    }
+    this.setState({ txModalOpen: false, editTxId: null });
+  };
+  txBackdropClick = () => this.closeTxModal();
+  setTxTypeIngreso = () => this.setState(s => ({ txForm: { ...s.txForm, type:'ingreso', category: INCOME_CATS[0] }, newCatOpen:false, newCatError:'' }));
+  setTxTypeGasto = () => this.setState(s => ({ txForm: { ...s.txForm, type:'gasto', category: EXPENSE_CATS[0] }, newCatOpen:false, newCatError:'' }));
+  setTxDescription = (e) => this.setState(s => ({ txForm: { ...s.txForm, description: e.target.value } }));
+  setTxCategory = (e) => {
+    const v = e.target.value;
+    if (v === '__new__') { this.setState({ newCatOpen: true, newCatName: '', newCatError: '' }); return; }
+    this.setState(s => ({ txForm: { ...s.txForm, category: v } }));
+  };
+  setNewCatName = (e) => this.setState({ newCatName: e.target.value, newCatError: '' });
+  newCatKeyDown = (e) => { if (e.key === 'Enter') { e.preventDefault(); this.createNewCat(); } };
+  cancelNewCat = () => this.setState({ newCatOpen: false, newCatName: '', newCatError: '' });
+  createNewCat = () => {
+    const name = this.state.newCatName.trim();
+    const type = this.state.txForm.type;
+    if (!name) { this.setState({ newCatError: 'Escribe un nombre para la categoría' }); return; }
+    if (name.length > 24) { this.setState({ newCatError: 'Máximo 24 caracteres' }); return; }
+    const taken = [...this.catsFor('gasto'), ...this.catsFor('ingreso'), 'Ahorro', 'Todas'].some(c => c.toLowerCase() === name.toLowerCase());
+    if (taken) { this.setState({ newCatError: 'Ya existe una categoría con ese nombre' }); return; }
+    const userId = this.state.currentUserId;
+    const uc = this.state.customCategories[userId] || {};
+    const list = uc[type] || [];
+    const color = CUSTOM_CAT_PALETTE[(list.length + (uc[type==='gasto'?'ingreso':'gasto'] || []).length) % CUSTOM_CAT_PALETTE.length];
+    const customCategories = { ...this.state.customCategories, [userId]: { ...uc, [type]: [...list, { name, color }] } };
+    this.setState(s => ({ customCategories, newCatOpen: false, newCatName: '', newCatError: '', txForm: { ...s.txForm, category: name } }), () => { this.persist(); this.showToast('Categoría "' + name + '" creada', 'success'); });
+  };
+  catsFor(type) {
+    const base = type === 'ingreso' ? INCOME_CATS : EXPENSE_CATS;
+    const uc = this.state.customCategories[this.state.currentUserId] || {};
+    return [...base, ...(uc[type] || []).map(c => c.name)];
+  }
+  catColor(name) {
+    if (CAT_COLOR[name]) return CAT_COLOR[name];
+    const uc = this.state.customCategories[this.state.currentUserId] || {};
+    const found = [...(uc.gasto || []), ...(uc.ingreso || [])].find(c => c.name === name);
+    return found ? found.color : '#999';
+  }
+  setTxAmount = (e) => this.setState(s => ({ txForm: { ...s.txForm, amount: e.target.value } }));
+  setTxDate = (e) => this.setState(s => ({ txForm: { ...s.txForm, date: e.target.value } }));
+  submitTx = () => {
+    const f = this.state.txForm;
+    const amt = Math.round((parseFloat(f.amount) || 0) * 100) / 100;
+    if (!f.description.trim()) { this.setState({ txError: 'Escribe una descripción.' }); return; }
+    if (!amt || amt <= 0) { this.setState({ txError: 'Escribe un monto mayor a 0.' }); return; }
+    if (!f.date) { this.setState({ txError: 'Elige una fecha.' }); return; }
+    if (f.date > todayISO()) { this.setState({ txError: 'La fecha no puede ser futura.' }); return; }
+    const user = this.getUser();
+    const cur = user ? user.currency : 'USD';
+    const isEdit = !!this.state.editTxId;
+    const typeLabel = f.type === 'ingreso' ? 'ingreso' : 'gasto';
+    this.askConfirm({
+      title: isEdit ? 'Guardar cambios' : 'Guardar transacción',
+      message: `¿${isEdit ? 'Guardar los cambios de' : 'Registrar'} este ${typeLabel}: "${f.description.trim()}" por ${CUR_SYMBOL[cur]||'$'}${amt.toFixed(2)} ${cur}?`,
+      confirmLabel: 'Guardar',
+    }, () => {
+      const amountUSD = this.toUSD(amt, cur);
+      const userId = this.state.currentUserId;
+      const payload = { userId, type: f.type, description: f.description.trim(), category: f.category, amount: amountUSD, date: f.date };
+      // POST → INSERT INTO transactions ...; PUT → UPDATE transactions ... WHERE id = ? AND user_id = ?
+      const req = isEdit
+        ? api('/transactions', { method: 'PUT', body: { ...payload, id: this.state.editTxId } })
+        : api('/transactions', { method: 'POST', body: payload });
+      req.then(saved => {
+        const row = { id: saved.id, userId, type: saved.type, date: saved.date, description: saved.description, category: saved.category, amount: Number(saved.amount) };
+        const transactions = isEdit
+          ? this.state.transactions.map(t => t.id === this.state.editTxId ? row : t)
+          : [row, ...this.state.transactions];
+        this.setState({ transactions, txModalOpen: false, editTxId: null }, () => this.showToast(isEdit ? 'Transacción actualizada' : 'Transacción registrada', 'success'));
+      }).catch(err => this.setState({ txError: err.message }));
+    });
+  };
+  deleteTx(tx) {
+    const isSavings = tx.category === 'Ahorro';
+    this.askConfirm({
+      title: 'Eliminar transacción',
+      message: `¿Eliminar "${tx.description}" del ${tx.date}?${isSavings ? ' También se eliminará el aporte/retiro de ahorro vinculado.' : ''} Podrás deshacerlo desde el aviso.`,
+      confirmLabel: 'Eliminar', danger: true,
+    }, () => {
+      // DELETE FROM transactions WHERE id = ? AND user_id = ?
+      // (si es de Ahorro, el aporte vinculado cae en cascada por fk_contrib_tx)
+      api(`/transactions?id=${tx.id}&userId=${this.state.currentUserId}`, { method: 'DELETE' })
+        .then(() => {
+          const transactions = this.state.transactions.filter(t => t.id !== tx.id);
+          const savingsContributions = isSavings ? this.state.savingsContributions.filter(c => c.txId !== tx.id) : this.state.savingsContributions;
+          this.setState({ transactions, savingsContributions }, () => this.showToast('Transacción eliminada', 'success'));
+        })
+        .catch(err => this.showToast(err.message, 'error'));
+    });
+  }
+
+  // ---------- BUDGETS ----------
+  draftBudget(cat, e) { const v = e.target.value; this.setState(s => ({ budgetDrafts: { ...s.budgetDrafts, [cat]: v } })); }
+  commitBudget(cat) {
+    const raw = this.state.budgetDrafts[cat];
+    if (raw == null) return;
+    const clear = () => this.setState(s => { const d = { ...s.budgetDrafts }; delete d[cat]; return { budgetDrafts: d }; });
+    if (String(raw).trim() === '') { clear(); return; }
+    const v = parseFloat(raw);
+    if (isNaN(v) || v < 0) { this.showToast('El límite debe ser un número mayor o igual a 0', 'error'); clear(); return; }
+    const user = this.getUser();
+    const cur = user ? user.currency : 'USD';
+    const vUSD = this.toUSD(v, cur);
+    const current = (this.state.budgets[this.state.currentUserId] || {})[cat] || 0;
+    if (Math.abs(vUSD - current) < 0.005) { clear(); return; }
+    this.askConfirm({
+      title: 'Actualizar presupuesto',
+      message: `¿Cambiar el límite de ${cat} a ${CUR_SYMBOL[cur]||'$'}${v.toFixed(2)} ${cur}?`,
+      confirmLabel: 'Actualizar',
+    }, () => {
+      const uidKey = this.state.currentUserId;
+      // INSERT ... ON DUPLICATE KEY UPDATE monthly_limit = VALUES(monthly_limit) (BudgetDao.upsert)
+      api('/budgets', { method: 'PUT', body: { userId: uidKey, category: cat, monthlyLimit: vUSD } })
+        .then(() => {
+          const budgets = { ...this.state.budgets, [uidKey]: { ...(this.state.budgets[uidKey] || {}), [cat]: vUSD } };
+          this.setState(s => { const d = { ...s.budgetDrafts }; delete d[cat]; return { budgets, budgetDrafts: d }; }, () => this.showToast('Presupuesto actualizado', 'success'));
+        })
+        .catch(err => { this.showToast(err.message, 'error'); clear(); });
+    }, clear);
+  }
+
+  // ---------- SAVINGS ----------
+  getCurrentGoal(userId) {
+    const entry = this.state.savingsGoalHistory.filter(g => g.userId === userId).sort((a,b) => b.date.localeCompare(a.date))[0] || this.state.savingsGoalHistory.find(g => g.userId === userId);
+    const first = this.state.savingsGoalHistory.find(g => g.userId === userId);
+    const e = first; // list is newest-first by construction
+    if (!e || e.action === 'eliminada') return null;
+    return e.amount;
+  }
+  openAddFunds = () => this.setState({ savingsModal: 'add', savingsDraft: '', savingsError: '' });
+  openWithdraw = () => this.setState({ savingsModal: 'withdraw', savingsDraft: '', savingsError: '' });
+  openGoalEditor = () => { const cur = this.getCurrentGoal(this.state.currentUserId); const user = this.getUser(); const curDisplay = cur ? this.fromUSD(cur, user ? user.currency : 'USD') : null; this.setState({ savingsModal: 'goal', savingsDraft: curDisplay ? String(Math.round(curDisplay * 100) / 100) : '', savingsError: '' }); };
+  setSavingsDraft = (e) => this.setState({ savingsDraft: e.target.value, savingsError: '' });
+  cancelSavingsModal = () => this.setState({ savingsModal: null, savingsError: '' });
+  confirmSavingsModal = () => {
+    const mode = this.state.savingsModal;
+    const v = Math.round((parseFloat(this.state.savingsDraft) || 0) * 100) / 100;
+    const userId = this.state.currentUserId;
+    const user = this.getUser();
+    const cur = user ? user.currency : 'USD';
+    const vUSD = this.toUSD(v, cur);
+    if (v <= 0) { this.setState({ savingsError: 'Escribe un monto mayor a 0.' }); return; }
+    const savingsCurrent = this.state.savingsContributions.filter(c => c.userId === userId).reduce((a,c) => a + c.amount, 0);
+    if (mode === 'withdraw' && vUSD > savingsCurrent + 0.005) { this.setState({ savingsError: 'No puedes retirar más de lo que has ahorrado.' }); return; }
+    const amtLabel = `${CUR_SYMBOL[cur]||'$'}${v.toFixed(2)} ${cur}`;
+    const msg = mode === 'add' ? `¿Transferir ${amtLabel} a tus ahorros? Se registrará como un movimiento y tu Balance disminuirá.`
+      : mode === 'withdraw' ? `¿Retirar ${amtLabel} de tus ahorros? Se registrará como un movimiento y tu Balance aumentará.`
+      : `¿${this.getCurrentGoal(userId) ? 'Actualizar' : 'Crear'} tu meta de ahorro a ${amtLabel}?`;
+    this.askConfirm({ title: mode === 'goal' ? 'Meta de ahorro' : mode === 'add' ? 'Agregar fondos' : 'Retirar fondos', message: msg, confirmLabel: 'Confirmar' }, () => {
+      const date = todayISO();
+      if (mode === 'add' || mode === 'withdraw') {
+        const isAdd = mode === 'add';
+        // 1) INSERT INTO transactions (el movimiento 'Ahorro')
+        // 2) INSERT INTO savings_contributions con tx_id vinculado
+        api('/transactions', { method: 'POST', body: { userId, type: isAdd ? 'gasto' : 'ingreso', description: isAdd ? 'Transferencia a ahorros' : 'Retiro de ahorros', category: 'Ahorro', amount: vUSD, date } })
+          .then(tx => api('/savings/contributions', { method: 'POST', body: { userId, amount: isAdd ? vUSD : -vUSD, date, txId: tx.id } })
+            .then(contrib => {
+              const contribution = { id: contrib.id, userId, date, amount: isAdd ? vUSD : -vUSD, txId: tx.id };
+              const row = { id: tx.id, userId, type: tx.type, date: tx.date, description: tx.description, category: tx.category, amount: Number(tx.amount) };
+              this.setState({ savingsContributions: [contribution, ...this.state.savingsContributions], transactions: [row, ...this.state.transactions], savingsModal: null, savingsError:'' }, () => this.showToast(isAdd ? 'Fondos agregados con éxito' : 'Retiro realizado con éxito', 'success'));
+            }))
+          .catch(err => this.setState({ savingsError: err.message }));
+      } else {
+        // INSERT INTO savings_goals ... ON DUPLICATE KEY UPDATE goal_amount (SavingsDao.upsertGoal)
+        const action = this.getCurrentGoal(userId) ? 'actualizada' : 'creada';
+        api('/savings/goal', { method: 'PUT', body: { userId, goalAmount: vUSD } })
+          .then(() => {
+            const savingsGoalHistory = [{ id: uid(), userId, date, amount: vUSD, action }, ...this.state.savingsGoalHistory];
+            this.setState({ savingsGoalHistory, savingsModal: null, savingsError:'' }, () => this.showToast(`Meta ${action} con éxito`, 'success'));
+          })
+          .catch(err => this.setState({ savingsError: err.message }));
+      }
+    });
+  };
+  removeGoal = () => {
+    const userId = this.state.currentUserId;
+    const cur = this.getCurrentGoal(userId);
+    if (!cur) return;
+    this.askConfirm({ title: 'Eliminar meta', message: '¿Seguro que quieres eliminar tu meta de ahorro? Tus fondos ahorrados no cambian.', confirmLabel: 'Eliminar', danger: true }, () => {
+      // DELETE FROM savings_goals WHERE user_id = ? (SavingsDao.deleteGoal)
+      api(`/savings/goal?userId=${userId}`, { method: 'DELETE' })
+        .then(() => {
+          const savingsGoalHistory = [{ id: uid(), userId, date: todayISO(), amount: cur, action: 'eliminada' }, ...this.state.savingsGoalHistory];
+          this.setState({ savingsGoalHistory, savingsModal: null }, () => this.showToast('Meta eliminada', 'success'));
+        })
+        .catch(err => this.showToast(err.message, 'error'));
+    });
+  };
+
+  // ---------- PROFILE ----------
+  openProfileEdit = () => { const u = this.getUser(); this.setState({ profileEditing: true, profileError:'', profileDraft: this.draftFromUser(u) }); };
+  cancelProfileEdit = () => {
+    const u = this.getUser();
+    const dirty = JSON.stringify(this.state.profileDraft) !== JSON.stringify(this.draftFromUser(u));
+    const doCancel = () => this.setState({ profileEditing: false, profileError:'', profileDraft: this.draftFromUser(u) });
+    if (dirty) this.askConfirm({ title: '¿Descartar cambios?', message: 'Tienes cambios sin guardar en tu perfil.', confirmLabel: 'Descartar', danger: true }, doCancel);
+    else doCancel();
+  };
+  setProfileName = (e) => this.setState(s => ({ profileDraft: { ...s.profileDraft, name: e.target.value } }));
+  setProfileEmail = (e) => this.setState(s => ({ profileDraft: { ...s.profileDraft, email: e.target.value } }));
+  setProfilePhone = (e) => this.setState(s => ({ profileDraft: { ...s.profileDraft, phone: e.target.value } }));
+  setProfileCurrency = (e) => this.setState(s => ({ profileDraft: { ...s.profileDraft, currency: e.target.value } }));
+  toggleProfileNotify = () => this.setState(s => ({ profileDraft: { ...s.profileDraft, notifyEmail: !s.profileDraft.notifyEmail } }));
+  onPhotoFile = (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        const size = 128;
+        const c = document.createElement('canvas'); c.width = size; c.height = size;
+        const ctx = c.getContext('2d');
+        const min = Math.min(img.width, img.height);
+        ctx.drawImage(img, (img.width-min)/2, (img.height-min)/2, min, min, 0, 0, size, size);
+        const dataUrl = c.toDataURL('image/jpeg', 0.85);
+        this.setState(s => ({ profileDraft: { ...s.profileDraft, photo: dataUrl } }));
+      };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  };
+  saveProfile = () => {
+    const d = this.state.profileDraft;
+    const email = d.email.trim();
+    if (!d.name.trim()) { this.setState({ profileError: 'El nombre no puede estar vacío.' }); return; }
+    if (!EMAIL_RE.test(email)) { this.setState({ profileError: 'Escribe un correo válido.' }); return; }
+    if (this.state.users.some(u => u.id !== this.state.currentUserId && u.email.toLowerCase() === email.toLowerCase())) { this.setState({ profileError: 'Ese correo ya está en uso por otra cuenta.' }); return; }
+    this.askConfirm({ title: 'Guardar perfil', message: '¿Guardar los cambios de tu perfil?', confirmLabel: 'Guardar' }, () => {
+      // UPDATE users SET name = ?, email = ? WHERE id = ? (UserDao.update);
+      // teléfono, moneda y foto son extras locales (no están en la tabla users)
+      api('/users', { method: 'PUT', body: { id: this.state.currentUserId, name: d.name.trim(), email } })
+        .then(() => {
+          const users = this.state.users.map(u => u.id === this.state.currentUserId ? { ...u, name: d.name.trim(), email, phone: d.phone.trim(), currency: d.currency, notifyEmail: d.notifyEmail, photo: d.photo || null } : u);
+          this.setState({ users, profileEditing: false, profileError:'' }, () => { this.persist(); this.showToast('Perfil actualizado con éxito', 'success'); });
+        })
+        .catch(err => this.setState({ profileError: /duplicate/i.test(err.message) ? 'Ese correo ya está en uso por otra cuenta.' : err.message }));
+    });
+  };
+  setPwCur = (e) => this.setState(s => ({ pwForm: { ...s.pwForm, cur: e.target.value }, pwError:'' }));
+  setPwN1 = (e) => this.setState(s => ({ pwForm: { ...s.pwForm, n1: e.target.value }, pwError:'' }));
+  setPwN2 = (e) => this.setState(s => ({ pwForm: { ...s.pwForm, n2: e.target.value }, pwError:'' }));
+  changePassword = () => {
+    const { cur, n1, n2 } = this.state.pwForm;
+    if (n1.length < 8) { this.setState({ pwError: 'La nueva contraseña debe tener al menos 8 caracteres.' }); return; }
+    if (n1 !== n2) { this.setState({ pwError: 'Las contraseñas nuevas no coinciden.' }); return; }
+    this.askConfirm({ title: 'Cambiar contraseña', message: '¿Actualizar tu contraseña de acceso?', confirmLabel: 'Actualizar' }, () => {
+      // El servidor verifica la contraseña actual y hace
+      // UPDATE users SET password_hash = ? WHERE id = ? (UserDao.updatePassword)
+      api('/users/password', { method: 'POST', body: { id: this.state.currentUserId, current: cur, new: n1 } })
+        .then(() => this.setState({ pwForm: { cur:'', n1:'', n2:'' }, pwError:'' }, () => this.showToast('Contraseña actualizada', 'success')))
+        .catch(err => this.setState({ pwError: err.status === 401 ? 'La contraseña actual no es correcta.' : err.message }));
+    });
+  };
+
+  // ---------- BACKUP ----------
+  exportJSON = () => {
+    const data = { localDb: dbLoad(), users: this.state.users, transactions: this.state.transactions, budgets: this.state.budgets, savingsContributions: this.state.savingsContributions, savingsGoalHistory: this.state.savingsGoalHistory, customCategories: this.state.customCategories, currentUserId: this.state.currentUserId };
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type:'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = `gestiona-tu-futuro-respaldo-${todayISO()}.json`; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+    this.showToast('Respaldo exportado', 'success');
+  };
+  onImportFile = (e) => {
+    const file = e.target.files && e.target.files[0];
+    e.target.value = '';
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      let data = null;
+      try { data = JSON.parse(reader.result); } catch (err) {}
+      if (!data || !Array.isArray(data.users) || !Array.isArray(data.transactions)) { this.showToast('El archivo no es un respaldo válido', 'error'); return; }
+      this.askConfirm({ title: 'Importar respaldo', message: 'Esto reemplazará TODOS los datos actuales de la app con los del respaldo. ¿Continuar?', confirmLabel: 'Importar', danger: true }, () => {
+        try {
+          if (data.localDb) localStorage.setItem(DB_KEY, JSON.stringify(data.localDb));
+          const { localDb, ...extras } = data;
+          localStorage.setItem(STORE_KEY, JSON.stringify(extras));
+        } catch (err) {}
+        this.load();
+        this.showToast('Respaldo importado con éxito', 'success');
+      });
+    };
+    reader.readAsText(file);
+  };
+
+  // ---------- CSV ----------
+  exportCSV(rows, cur, screenSlug, monthLabel) {
+    if (!rows.length) { this.showToast('No hay movimientos para exportar en este mes', 'error'); return; }
+    const header = ['Fecha','Descripcion','Categoria','Tipo','Monto','Moneda'].map(csvField).join(',') + '\n';
+    const body = rows.map(r => [r.date, r.description, r.category, r.type, this.fromUSD(r.amount, cur).toFixed(2), cur].map(csvField).join(',')).join('\n');
+    const blob = new Blob(['\ufeff' + header + body], { type:'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = `${screenSlug}-${monthLabel}.csv`; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+    this.showToast('CSV exportado con éxito', 'success');
+  }
+
+  renderVals() {
+    const s = this.state;
+    const user = this.getUser() || { name: 'Usuario', email: '', currency: 'USD' };
+    const route = s.route;
+    const cur = user.currency || 'USD';
+    const rates = s.fxRates;
+    const money = (usd) => fmtCur(usd, cur, rates);
+    const rd = new Date();
+    const realY = rd.getFullYear(), realM = rd.getMonth();
+
+    const navKeys = ['dashboard','ingresos','gastos','ahorros','movimientos','presupuesto','recomendaciones','perfil'];
+    const navBg = {}; const navFg = {};
+    navKeys.forEach(k => { const active = route === k; navBg[k] = active ? '#EAF5EC' : 'transparent'; navFg[k] = active ? '#1F5A3F' : '#4E555F'; });
+
+    const myTx = s.transactions.filter(t => t.userId === s.currentUserId);
+    const monthTx = (y,m) => myTx.filter(t => { const [ty,tm] = t.date.split('-').map(Number); return ty===y && (tm-1)===m; });
+    const sumType = (list,type) => list.filter(t=>t.type===type).reduce((a,t)=>a+t.amount,0);
+
+    // Dashboard: ALWAYS real current month
+    const dashTx = monthTx(realY, realM);
+    const incomeMonth = sumType(dashTx,'ingreso');
+    const expenseMonth = sumType(dashTx,'gasto');
+    const mySavingsContributions = s.savingsContributions.filter(c => c.userId === s.currentUserId);
+    const myGoalHistory = s.savingsGoalHistory.filter(g => g.userId === s.currentUserId);
+    const currentGoal = this.getCurrentGoal(s.currentUserId);
+    const savingsCurrent = mySavingsContributions.reduce((a,c)=>a+c.amount,0);
+    const balance = myTx.reduce((a,t)=> a + (t.type==='ingreso'? t.amount : -t.amount), 0);
+    const hasGoal = currentGoal != null;
+    const savingsPct = hasGoal ? Math.min(100, Math.round((savingsCurrent / (currentGoal||1)) * 100)) : 0;
+
+    // trend: last 6 real months
+    const trendMonths = [];
+    let crossesYear = false;
+    for (let i=5;i>=0;i--) {
+      let mm = realM - i; let yy = realY; while (mm < 0) { mm += 12; yy -= 1; }
+      if (yy !== realY) crossesYear = true;
+      const list = monthTx(yy, mm);
+      const inc = sumType(list,'ingreso'); const exp = sumType(list,'gasto');
+      trendMonths.push({ mm, yy, inc, exp });
+    }
+    const maxVal = Math.max(1, ...trendMonths.map(t=>Math.max(t.inc,t.exp)));
+    const trendOut = trendMonths.map(t => ({
+      label: crossesYear ? `${MONTH_ABBR[t.mm]} ${String(t.yy).slice(2)}` : MONTH_ABBR[t.mm],
+      incomeH: Math.max(2, Math.round((t.inc/maxVal)*150)),
+      expenseH: Math.max(2, Math.round((t.exp/maxVal)*150)),
+      tooltip: `${MONTH_NAMES[t.mm]} ${t.yy}: ingresos ${money(t.inc)} · gastos ${money(t.exp)}`,
+    }));
+
+    // donut: real-month expenses, exact fractions
+    const catTotals = {};
+    dashTx.filter(t=>t.type==='gasto').forEach(t => { catTotals[t.category] = (catTotals[t.category]||0) + t.amount; });
+    const catSum = Object.values(catTotals).reduce((a,b)=>a+b,0) || 1;
+    const categoryBreakdown = Object.keys(catTotals).map(name => ({ name, color: this.catColor(name), amount: catTotals[name], frac: catTotals[name]/catSum, pct: Math.round((catTotals[name]/catSum)*100) })).sort((a,b)=>b.amount-a.amount);
+    let acc = 0; const gradParts = categoryBreakdown.map((c, i) => { const start = acc * 100; acc += c.frac; const end = i === categoryBreakdown.length-1 ? 100 : acc * 100; return `${c.color} ${start.toFixed(2)}% ${end.toFixed(2)}%`; });
+    const donutGradient = gradParts.length ? `conic-gradient(${gradParts.join(',')})` : '#EEEAF1';
+    categoryBreakdown.forEach(c => { c.tooltip = `${c.name}: ${money(c.amount)}`; });
+
+    // ---- ledger (filterMonth-scoped) ----
+    const isLedgerScreen = route==='movimientos' || route==='ingresos' || route==='gastos';
+    const ledgerTitle = route==='movimientos' ? 'Movimientos' : route==='ingresos' ? 'Ingresos' : 'Gastos';
+    const ledgerSubtitle = route==='movimientos' ? 'Revisa, edita o elimina tus transacciones.' : route==='ingresos' ? 'Todas tus entradas de dinero registradas.' : 'Todas tus salidas de dinero registradas.';
+    const showTypeFilter = route==='movimientos';
+
+    const filterTx = monthTx(s.filterMonth.year, s.filterMonth.month);
+    let ledgerList = filterTx;
+    if (route==='ingresos') ledgerList = ledgerList.filter(t=>t.type==='ingreso');
+    else if (route==='gastos') ledgerList = ledgerList.filter(t=>t.type==='gasto');
+    else if (s.filterType==='ingresos') ledgerList = ledgerList.filter(t=>t.type==='ingreso');
+    else if (s.filterType==='gastos') ledgerList = ledgerList.filter(t=>t.type==='gasto');
+    const q = s.searchQuery.trim().toLowerCase();
+    if (q) ledgerList = ledgerList.filter(t => t.description.toLowerCase().includes(q));
+    if (showTypeFilter && s.filterCategory !== 'Todas') ledgerList = ledgerList.filter(t => t.category === s.filterCategory);
+    ledgerList = [...ledgerList].sort((a,b)=> b.date.localeCompare(a.date));
+
+    const filteredTx = ledgerList.map(t => {
+      const [yy,mm,dd] = t.date.split('-').map(Number);
+      return {
+        ...t,
+        dateLabel: `${dd} ${MONTH_ABBR[mm-1]}, ${yy}`,
+        badgeBg: t.category==='Ahorro' ? '#DCEBFF' : t.type==='ingreso' ? '#DFF4E4' : '#FFDAD6',
+        badgeFg: t.category==='Ahorro' ? '#1D5FAE' : t.type==='ingreso' ? '#2F7653' : '#BA1A1A',
+        amountColor: t.type==='ingreso' ? '#2F7653' : '#D85040',
+        amountLabel: (t.type==='ingreso'?'+':'-') + money(t.amount),
+        onEdit: () => this.openEditTx(t),
+        onDelete: () => this.deleteTx(t),
+      };
+    });
+
+    const filterBg = { todos: s.filterType==='todos'?'#EAF5EC':'#fff', ingresos: s.filterType==='ingresos'?'#EAF5EC':'#fff', gastos: s.filterType==='gastos'?'#EAF5EC':'#fff' };
+
+    const bounds = this.yearBounds();
+    const monthGrid = MONTH_ABBR.map((label, idx) => {
+      const selected = s.filterMonth.year === s.calendarViewYear && s.filterMonth.month === idx;
+      return { idx, label, bg: selected ? '#2F7653' : '#F5F3F6', fg: selected ? '#fff' : '#333842', pick: () => this.pickMonth(idx) };
+    });
+    const monthNameOptions = MONTH_NAMES.map((name,idx)=>({ idx, name }));
+    const yearOptions = []; for (let y = bounds.min; y <= bounds.max; y++) yearOptions.push(y);
+    const filterMonthLabel = `${MONTH_NAMES[s.filterMonth.month]} ${s.filterMonth.year}`;
+
+    // budgets (filterMonth)
+    const filterCatTotals = {};
+    filterTx.filter(t=>t.type==='gasto').forEach(t => { filterCatTotals[t.category] = (filterCatTotals[t.category]||0) + t.amount; });
+    const userBudgets = s.budgets[s.currentUserId] || {};
+    const budgetRows = this.catsFor('gasto').map(cat => {
+      const limit = userBudgets[cat] || 0;
+      const spent = filterCatTotals[cat] || 0;
+      const pct = limit>0 ? Math.min(100, Math.round((spent/limit)*100)) : 0;
+      const over = limit>0 && spent > limit;
+      const draft = s.budgetDrafts[cat];
+      return {
+        category: cat, color: this.catColor(cat), limit, spent,
+        limitInputValue: draft != null ? draft : (limit ? String(Math.round(this.fromUSD(limit, cur) * 100) / 100) : ''),
+        limitLabel: limit ? money(limit) : 'Sin límite', spentLabel: money(spent),
+        pct, over, overLabel: money(spent-limit),
+        rawPct: limit>0 ? spent/limit : 0,
+        barColor: over ? '#BA1A1A' : this.catColor(cat),
+        textColor: over ? '#BA1A1A' : '#585A6A',
+        onDraftLimit: (e) => this.draftBudget(cat, e),
+        onCommitLimit: () => this.commitBudget(cat),
+      };
+    });
+
+    // savings rows
+    const savingsRows = [...mySavingsContributions].sort((a,b)=>b.date.localeCompare(a.date)).map(c => {
+      const [yy,mm,dd] = c.date.split('-').map(Number);
+      const isW = c.amount < 0;
+      return { label: `${dd} ${MONTH_ABBR[mm-1]}, ${yy}${isW ? ' · Retiro' : ' · Aporte'}`, amountLabel: (isW?'−':'+') + money(Math.abs(c.amount)), color: isW ? '#BA1A1A' : '#2F7653' };
+    });
+
+    const GOAL_ACTION_LABEL = { creada: 'Meta creada', actualizada: 'Meta actualizada', eliminada: 'Meta eliminada' };
+    const savingsGoalRows = [...myGoalHistory].map(g => {
+      const [yy,mm,dd] = g.date.split('-').map(Number);
+      return { dateLabel: `${dd} ${MONTH_ABBR[mm-1]}, ${yy}`, actionLabel: GOAL_ACTION_LABEL[g.action] || 'Meta actualizada', amountLabel: g.action === 'eliminada' ? `−${money(g.amount)}` : money(g.amount), color: g.action === 'eliminada' ? '#BA1A1A' : '#111' };
+    });
+
+    // insights (real month)
+    const nonSavingsBreakdown = categoryBreakdown.filter(c => c.name !== 'Ahorro');
+    const topCat = nonSavingsBreakdown[0];
+    const netFlow = incomeMonth - expenseMonth;
+    const netPct = incomeMonth>0 ? Math.round((netFlow/incomeMonth)*100) : 0;
+    const monthSavings = mySavingsContributions.filter(c => { const [yy,mm] = c.date.split('-').map(Number); return yy===realY && (mm-1)===realM; }).reduce((a,c)=>a+c.amount,0);
+    const overBudgetReal = this.catsFor('gasto').map(cat => { const limit = userBudgets[cat]||0; const spent = catTotals[cat]||0; return { cat, limit, spent, over: limit>0 && spent>limit, warn: limit>0 && spent>=limit*0.8 && spent<=limit }; });
+    const overList = overBudgetReal.filter(b=>b.over);
+    const warnList = overBudgetReal.filter(b=>b.warn);
+    const insights = [];
+    if (topCat) insights.push({ title:`Tu mayor gasto este mes es ${topCat.name}`, detail:`Representa el ${topCat.pct}% de tus gastos (${money(topCat.amount)}). Revisa si puedes ajustar este rubro.`, color: topCat.color });
+    if (incomeMonth > 0) insights.push({ title: netFlow >= 0 ? 'Flujo neto positivo' : 'Flujo neto negativo', detail: `Este mes tu flujo neto (ingresos menos gastos) es ${money(netFlow)} (${netPct}% de tus ingresos).${monthSavings > 0 ? ` Además transferiste ${money(monthSavings)} a tus ahorros.` : ''}`, color:'#3187F1' });
+    if (overList.length) insights.push({ title:`Excediste el presupuesto en ${overList.length} categoría(s)`, detail: overList.map(b=>`${b.cat} (+${money(b.spent-b.limit)})`).join(', '), color:'#BA1A1A' });
+    else insights.push({ title:'Presupuestos bajo control', detail:'Ninguna categoría superó su límite este mes. ¡Buen trabajo!', color:'#2F7653' });
+
+    // notifications
+    const notifications = [];
+    overList.forEach(b => notifications.push({ title: `Límite excedido: ${b.cat}`, detail: `Superaste tu presupuesto por ${money(b.spent-b.limit)} este mes.`, color:'#BA1A1A' }));
+    warnList.forEach(b => notifications.push({ title: `Cerca del límite: ${b.cat}`, detail: `Llevas ${money(b.spent)} de ${money(b.limit)} (${Math.round((b.spent/b.limit)*100)}%).`, color:'#E28B30' }));
+    if (hasGoal && savingsPct >= 100) notifications.push({ title:'¡Meta de ahorro alcanzada!', detail:`Llegaste a ${money(currentGoal)}.`, color:'#3187F1' });
+    const actionableCount = notifications.length;
+    notifications.push({ title:'Resumen del mes', detail:`Ingresos ${money(incomeMonth)} · Gastos ${money(expenseMonth)}.`, color:'#2F7653' });
+
+    const screenSlug = route==='ingresos' ? 'ingresos' : route==='gastos' ? 'gastos' : 'movimientos';
+    const csvMonthLabel = `${s.filterMonth.year}-${pad(s.filterMonth.month+1)}`;
+
+    const isNarrow = s.isNarrow;
+    const sidebarVisible = !isNarrow || s.sidebarOpen;
+    const photoSrc = user.photo || null;
+
+    return {
+      authed: s.authed,
+      showAuthScreens: !s.authed,
+      showDemoHint: this.props.showDemoHint !== false,
+      authIsLogin: s.authView==='login', authIsRegister: s.authView==='register', authIsReset: s.authView==='reset',
+      authEmail: s.authEmail, authPassword: s.authPassword, authError: s.authError,
+      setAuthEmail: this.setAuthEmail, setAuthPassword: this.setAuthPassword, doLogin: this.doLogin, goRegister: this.goRegister, goReset: this.goReset, goLogin: this.goLogin,
+      authKeyDown: this.authKeyDown,
+      regName: s.regName, regEmail: s.regEmail, regPassword: s.regPassword, regPassword2: s.regPassword2, regError: s.regError,
+      setRegName: this.setRegName, setRegEmail: this.setRegEmail, setRegPassword: this.setRegPassword, setRegPassword2: this.setRegPassword2, doRegister: this.doRegister,
+      resetEmail: s.resetEmail, resetSent: s.resetSent, resetError: s.resetError, setResetEmail: this.setResetEmail, doReset: this.doReset,
+      passType: { login: s.show.login?'text':'password', reg: s.show.reg?'text':'password', reg2: s.show.reg2?'text':'password', pwc: s.show.pwc?'text':'password', pw1: s.show.pw1?'text':'password', pw2: s.show.pw2?'text':'password' },
+      toggles: {
+        login: () => this.setState(st => ({ show: { ...st.show, login: !st.show.login } })),
+        reg: () => this.setState(st => ({ show: { ...st.show, reg: !st.show.reg } })),
+        reg2: () => this.setState(st => ({ show: { ...st.show, reg2: !st.show.reg2 } })),
+        pwc: () => this.setState(st => ({ show: { ...st.show, pwc: !st.show.pwc } })),
+        pw1: () => this.setState(st => ({ show: { ...st.show, pw1: !st.show.pw1 } })),
+        pw2: () => this.setState(st => ({ show: { ...st.show, pw2: !st.show.pw2 } })),
+      },
+
+      currentUser: user, userInitial: (user.name||'U').charAt(0).toUpperCase(),
+      hasPhoto: !!photoSrc, noPhoto: !photoSrc,
+      avatarImg: photoSrc ? React.createElement('img', { src: photoSrc, alt: 'Foto de perfil', style: { width: 34, height: 34, objectFit: 'cover' } }) : null,
+      logout: this.logout,
+      navBg, navFg,
+      goDashboard: this.goDashboard, goIngresos: this.goIngresos, goGastos: this.goGastos, goAhorros: this.goAhorros, goMovimientos: this.goMovimientos, goPresupuesto: this.goPresupuesto, goRecomendaciones: this.goRecomendaciones, goPerfil: this.goPerfil,
+
+      isNarrow, sidebarDisplay: sidebarVisible ? 'flex' : 'none',
+      sidebarPos: { position: isNarrow ? 'fixed' : 'static', shadow: (isNarrow && s.sidebarOpen) ? '0 10px 40px rgba(0,0,0,0.3)' : 'none' },
+      drawerDimVisible: isNarrow && s.sidebarOpen,
+      openSidebar: this.openSidebar, closeSidebar: this.closeSidebar,
+      contentPad: isNarrow ? '20px 16px 60px 16px' : '32px 40px 60px 40px',
+      cardsGridCols: isNarrow ? '1fr' : 'repeat(3,1fr)',
+      chartsGridCols: isNarrow ? '1fr' : '1.3fr 1fr',
+
+      isDashboard: route==='dashboard',
+      dashboardMonthLabel: `${MONTH_NAMES[realM]} ${realY}`,
+      dashboardMonthShort: MONTH_ABBR[realM],
+      isEmptyAccount: myTx.length === 0,
+      isLedgerScreen, ledgerTitle, ledgerSubtitle, showTypeFilter,
+      isPresupuesto: route==='presupuesto', isAhorros: route==='ahorros', isRecomendaciones: route==='recomendaciones', isPerfil: route==='perfil',
+
+      fmtMoney: {
+        balance: money(balance), incomeMonth: money(incomeMonth), expenseMonth: money(expenseMonth),
+        savingsCurrent: money(savingsCurrent), savingsGoal: hasGoal ? money(currentGoal) : '—',
+        filterIncome: money(sumType(ledgerList,'ingreso')), filterExpense: money(sumType(ledgerList,'gasto')), filterNet: money(sumType(ledgerList,'ingreso')-sumType(ledgerList,'gasto')),
+      },
+      savingsPct, trendMonths: trendOut, categoryBreakdown, donutGradient,
+
+      filterType: s.filterType, filterBg, setFilterTodos: this.setFilterTodos, setFilterIngresos: this.setFilterIngresos, setFilterGastos: this.setFilterGastos,
+      searchQuery: s.searchQuery, setSearchQuery: this.setSearchQuery,
+      filterCategory: s.filterCategory, setFilterCategory: this.setFilterCategory,
+      categoryFilterOptions: ['Todas', ...this.catsFor('gasto'), ...this.catsFor('ingreso'), 'Ahorro'],
+      calendarStyle: s.calendarStyle, calendarStyleLabel: s.calendarStyle==='popup' ? 'Popup' : 'Lista', toggleCalendarStyle: this.toggleCalendarStyle,
+      calendarIsPopup: s.calendarStyle==='popup', calendarIsDropdown: s.calendarStyle==='dropdown',
+      calendarOpen: s.calendarOpen, toggleCalendarOpen: this.toggleCalendarOpen, calendarViewYear: s.calendarViewYear,
+      prevCalYear: this.prevCalYear, nextCalYear: this.nextCalYear, monthGrid, monthNameOptions, yearOptions,
+      prevYearOpacity: s.calendarViewYear <= bounds.min ? 0.3 : 1,
+      nextYearOpacity: s.calendarViewYear >= bounds.max ? 0.3 : 1,
+      filterMonth: s.filterMonth, filterMonthLabel, onDropdownMonth: this.onDropdownMonth, onDropdownYear: this.onDropdownYear,
+
+      hasRows: filteredTx.length>0, noRows: filteredTx.length===0, filteredTx,
+      exportCSV: () => this.exportCSV(ledgerList, cur, screenSlug, csvMonthLabel),
+
+      budgetRows,
+      savingsRows, hasSavingsRows: savingsRows.length>0, noSavingsRows: savingsRows.length===0,
+      savingsGoalRows, hasGoalRows: savingsGoalRows.length>0, noGoalRows: savingsGoalRows.length===0,
+      hasGoal, noGoal: !hasGoal, goalButtonLabel: hasGoal ? 'Editar meta' : 'Agregar meta', removeGoal: this.removeGoal,
+      hasSavingsBalance: savingsCurrent > 0.005,
+      savingsModal: s.savingsModal, savingsError: s.savingsError,
+      savingsModalPlaceholder: s.savingsModal==='add' ? `Monto a agregar (${cur})` : s.savingsModal==='withdraw' ? `Monto a retirar (${cur})` : `Nueva meta (${cur})`,
+      savingsDraft: s.savingsDraft,
+      openAddFunds: this.openAddFunds, openWithdraw: this.openWithdraw, openGoalEditor: this.openGoalEditor, setSavingsDraft: this.setSavingsDraft, confirmSavingsModal: this.confirmSavingsModal, cancelSavingsModal: this.cancelSavingsModal,
+
+      insights,
+
+      profileDraft: s.profileDraft, setProfileName: this.setProfileName, setProfileEmail: this.setProfileEmail, saveProfile: this.saveProfile,
+      profileError: s.profileError,
+      isProfileViewing: !s.profileEditing, isProfileEditing: s.profileEditing, openProfileEdit: this.openProfileEdit, cancelProfileEdit: this.cancelProfileEdit,
+      setProfilePhone: this.setProfilePhone, setProfileCurrency: this.setProfileCurrency, toggleProfileNotify: this.toggleProfileNotify,
+      onPhotoFile: this.onPhotoFile,
+      noDraftPhoto: s.profileEditing ? !s.profileDraft.photo : !photoSrc,
+      profilePhotoImg: (s.profileEditing ? s.profileDraft.photo : photoSrc) ? React.createElement('img', { src: s.profileEditing ? s.profileDraft.photo : photoSrc, alt: 'Foto de perfil', style: { width: 72, height: 72, objectFit: 'cover' } }) : null,
+      currencyOptions: ['USD','MXN','EUR'],
+      fxRateNote: s.profileDraft.currency === 'USD' ? 'Moneda base (sin conversión).' : `Tasa actual: 1 USD ≈ ${this.rate(s.profileDraft.currency).toFixed(2)} ${s.profileDraft.currency}${s.fxUpdatedAt ? ' · actualizada ' + s.fxUpdatedAt : ' · tasa de referencia'}`,
+      phoneLabel: user.phone || '—',
+      notifyLabel: user.notifyEmail === false ? 'Desactivadas' : 'Activadas',
+      notifyToggleBg: s.profileDraft.notifyEmail ? '#2F7653' : '#D8D3DC',
+      notifyToggleLeft: s.profileDraft.notifyEmail ? 20 : 2,
+      memberSinceLabel: user.joinedAt ? `${MONTH_NAMES[Number(user.joinedAt.split('-')[1])-1]} ${user.joinedAt.split('-')[0]}` : '—',
+      pwForm: s.pwForm, pwError: s.pwError, setPwCur: this.setPwCur, setPwN1: this.setPwN1, setPwN2: this.setPwN2, changePassword: this.changePassword,
+      exportJSON: this.exportJSON, onImportFile: this.onImportFile,
+
+      txModalOpen: s.txModalOpen, openTxModal: this.openTxModal, closeTxModal: this.closeTxModal, txBackdropClick: this.txBackdropClick, txForm: s.txForm, txError: s.txError,
+      txModalTitle: s.editTxId ? 'Editar Transacción' : 'Nueva Transacción',
+      txSubmitLabel: s.editTxId ? 'Guardar cambios' : 'Guardar',
+      todayISO: todayISO(),
+      txTypeBg: { ingreso: s.txForm.type==='ingreso'?'#EAF5EC':'#fff', gasto: s.txForm.type==='gasto'?'#FFF0EE':'#fff' },
+      txTypeFg: { ingreso: s.txForm.type==='ingreso'?'#1F5A3F':'#585A6A', gasto: s.txForm.type==='gasto'?'#BA1A1A':'#585A6A' },
+      setTxTypeIngreso: this.setTxTypeIngreso, setTxTypeGasto: this.setTxTypeGasto,
+      setTxDescription: this.setTxDescription, setTxCategory: this.setTxCategory, setTxAmount: this.setTxAmount, setTxDate: this.setTxDate, submitTx: this.submitTx,
+      txCategoryOptions: this.catsFor(s.txForm.type),
+      newCatOpen: s.newCatOpen, newCatName: s.newCatName, newCatError: s.newCatError,
+      setNewCatName: this.setNewCatName, newCatKeyDown: this.newCatKeyDown, createNewCat: this.createNewCat, cancelNewCat: this.cancelNewCat,
+
+      confirm: s.confirm, confirmAccept: this.confirmAccept, confirmCancel: this.confirmCancel, stopProp: this.stopProp,
+      confirmBtnBg: s.confirm && s.confirm.danger ? '#BA1A1A' : '#2F7653',
+
+      toast: s.toast, toastIsSuccess: !!s.toast && s.toast.type === 'success', toastIsError: !!s.toast && s.toast.type === 'error',
+      toastHasUndo: !!s.toast && !!s.toast.hasUndo, undoLast: this.undoLast,
+      toastBg: s.toast && s.toast.type === 'error' ? '#BA1A1A' : '#1F5A3F',
+
+      helpOpen: s.helpOpen, toggleHelp: this.toggleHelp, helpBtnBg: s.helpOpen ? 'rgba(255,255,255,0.18)' : 'transparent',
+      notifOpen: s.notifOpen, toggleNotif: this.toggleNotif, notifBtnBg: s.notifOpen ? 'rgba(255,255,255,0.18)' : 'transparent',
+      anyPopoverOpen: s.helpOpen || s.notifOpen || s.calendarOpen, closePopovers: this.closePopovers,
+      notifications, hasNotifications: actionableCount > 0 && !s.notifRead,
+    };
+  }
+}
+</script>
+</body>
+</html>

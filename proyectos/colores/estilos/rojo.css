@@ -1,0 +1,11 @@
+body {
+  background-color: #fff5f5;
+}
+
+h1, h2 {
+  color: red;
+}
+
+.imagen {
+  border-color: red;
+}

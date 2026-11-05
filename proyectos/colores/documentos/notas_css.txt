@@ -1,0 +1,53 @@
+/*
+notes
+
+selectores css
+tipo etiqueta: h1 { color: #990000; }
+
+tipo clase: .clase { color: red; }
+
+tipo id: #id { color: #990000; }
+
+
+EXTRAS:
+tipo universal: * { color: #990000; }
+
+tipo atributo: [atributo] { color: #990000; }
+
+tipo pseudo-clase: a:hover { color: #990000; }
+
+tipo pseudo-elemento: p::first-letter { color: #990000; }
+
+tipo combinador: div > p { color: #990000; }
+
+tipo agrupador: h1, h2, h3 { color: #990000; }
+
+tipo descendiente: div p { color: #990000; }
+tipo hijo: div > p { color: #990000; }
+tipo adyacente: div + p { color: #990000; }
+tipo hermano general: div ~ p { color: #990000; }
+tipo atributo con valor: [atributo="valor"] { color: #990000; }
+tipo atributo con valor parcial: [atributo*="valor"] { color: #990000; }
+tipo atributo con valor inicial: [atributo^="valor"] { color: #990000; }
+tipo atributo con valor final: [atributo$="valor"] { color: #990000; }
+tipo atributo con valor de lista: [atributo~="valor"] { color: #990000; }
+tipo atributo con valor de lista exacto: [atributo|="valor"] { color: #990000; }
+tipo pseudo-clase de estado: :checked { color: #990000; }
+tipo pseudo-clase de estructura: :first-child { color: #990000; }
+tipo pseudo-clase de negación: :not(selector) { color: #990000; }
+tipo pseudo-clase de enlace: :link { color: #990000; }
+tipo pseudo-clase de interacción: :hover { color: #990000; }
+tipo pseudo-clase de animación: :active { color: #990000; }
+tipo pseudo-clase de validación: :valid { color: #990000; }
+tipo pseudo-clase de UI: :focus { color: #990000; }
+tipo pseudo-clase de selección: :nth-child(n) { color: #990000; }
+tipo pseudo-clase de contenido: :empty { color: #990000; }
+tipo pseudo-clase de estado de formulario: :disabled { color: #990000; }
+tipo pseudo-clase de estado de enlace: :visited { color: #990000; }
+tipo pseudo-clase de estado de animación: :active { color: #990000; }
+tipo pseudo-clase de estado de validación: :invalid { color: #990000; }
+tipo pseudo-clase de estado de UI: :focus { color: #990000; }
+tipo pseudo-clase de estado de selección: :checked { color: #990000; }
+tipo pseudo-clase de estado de contenido: :empty { color: #990000; }
+tipio pseudo-clase de estado de formulario: :disabled { color: #990000; }
+*/
