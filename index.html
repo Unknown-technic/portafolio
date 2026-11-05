@@ -57,7 +57,7 @@
                 <p class="hero-rol" data-i18n="hero.rol">Desarrollador Web Front-End</p>
                 <p class="hero-desc" data-i18n="hero.desc">Estudiante de Ingeniería en Sistemas Computacionales e Innovación Digital. Creo sitios web que se adaptan a cualquier pantalla y me estoy especializando en ciberseguridad.</p>
                 <div class="hero-acciones">
-                    <a class="boton boton-primario" href="documentos/cv.pdf" download data-i18n="hero.cv">Descargar CV</a>
+                    <a class="boton boton-primario" id="botonCV" href="documentos/cv.pdf" download data-i18n="hero.cv">Descargar CV</a>
                     <a class="boton boton-secundario" href="#contacto" data-i18n="hero.contacto">Contáctame</a>
                 </div>
             </div>
@@ -498,6 +498,8 @@
             document.querySelectorAll("[data-lang]").forEach(boton => {
                 boton.setAttribute("aria-pressed", boton.dataset.lang === idioma);
             });
+            // El CV se descarga en el idioma elegido
+            document.getElementById("botonCV").href = idioma === "es" ? "documentos/cv.pdf" : `documentos/cv-${idioma}.pdf`;
             guardar("idioma", idioma);
         }
 

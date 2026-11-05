@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>CV - Maximilian Benjamin Christen Osuna</title>
+    <!-- Fuente del CV. El PDF (cv.pdf) se genera imprimiendo esta página en tamaño carta. -->
+    <style>
+        @page {
+            size: letter;
+            margin: 0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            font-size: 9.6pt;
+            line-height: 1.45;
+            color: #16222e;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .hoja {
+            width: 8.5in;
+            height: 11in;
+            display: grid;
+            grid-template-columns: 2.45in 1fr;
+            overflow: hidden;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* ===== Columna lateral ===== */
+        .lateral {
+            background-color: #0f1923;
+            color: #e6eef4;
+            padding: 0.4in 0.3in;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .foto {
+            width: 1.15in;
+            height: 1.15in;
+            margin: 0 auto 4px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center 30%;
+            border: 3px solid #2fd0dc;
+        }
+
+        .lateral h2 {
+            font-size: 9pt;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #2fd0dc;
+            border-bottom: 1px solid #2a3d50;
+            padding-bottom: 4px;
+            margin-bottom: 8px;
+        }
+
+        .lateral li {
+            margin-bottom: 4px;
+            word-break: break-word;
+        }
+
+        .dato {
+            display: block;
+            font-size: 7.6pt;
+            color: #9fb2c2;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nivel {
+            font-size: 8pt;
+            color: #9fb2c2;
+            margin: 6px 0 3px;
+        }
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .chips li {
+            margin: 0;
+            padding: 1px 7px;
+            font-size: 8pt;
+            border: 1px solid #2a3d50;
+            border-radius: 999px;
+        }
+
+        /* ===== Columna principal ===== */
+        .principal {
+            padding: 0.45in 0.45in 0.4in;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .principal h1 {
+            font-size: 22pt;
+            line-height: 1.1;
+        }
+
+        .rol {
+            font-size: 11.5pt;
+            font-weight: 600;
+            color: #0a8f9a;
+            margin-top: 4px;
+        }
+
+        .principal h2 {
+            font-size: 10.5pt;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #0a8f9a;
+            border-bottom: 2px solid #d3dee6;
+            padding-bottom: 3px;
+            margin-bottom: 8px;
+        }
+
+        .elemento {
+            margin-bottom: 8px;
+        }
+
+        .elemento:last-child {
+            margin-bottom: 0;
+        }
+
+        .cabecera {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: baseline;
+        }
+
+        .cabecera strong {
+            font-size: 10pt;
+        }
+
+        .fecha {
+            flex-shrink: 0;
+            font-size: 8.5pt;
+            color: #4f6273;
+        }
+
+        .lugar {
+            color: #4f6273;
+        }
+
+        .tec {
+            font-size: 8.3pt;
+            color: #0a8f9a;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="hoja">
+        <aside class="lateral">
+            <img class="foto" src="../imagenes/foto.png" alt="Foto von Maximilian Christen">
+
+            <section>
+                <h2>Kontakt</h2>
+                <ul>
+                    <li><span class="dato">E-Mail</span><a href="mailto:maxchristen72@hotmail.com">maxchristen72@hotmail.com</a></li>
+                    <li><span class="dato">Wohnort</span>Mazatlán, Sinaloa, Mexiko</li>
+                    <li><span class="dato">LinkedIn</span><a href="https://www.linkedin.com/in/maximilian-christen-ba720b340/">linkedin.com/in/maximilian-christen-ba720b340</a></li>
+                    <li><span class="dato">GitHub</span><a href="https://github.com/Unknown-technic">github.com/Unknown-technic</a></li>
+                    <li><span class="dato">Portfolio</span><a href="https://unknown-technic.github.io/portafolio/">unknown-technic.github.io/portafolio</a></li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Programmierung</h2>
+                <p class="nivel">Mittleres Niveau</p>
+                <ul class="chips"><li>HTML</li><li>CSS</li><li>SQL</li><li>C#</li></ul>
+                <p class="nivel">Grundkenntnisse</p>
+                <ul class="chips"><li>JavaScript</li><li>Python</li><li>C</li><li>C++</li></ul>
+            </section>
+
+            <section>
+                <h2>Werkzeuge</h2>
+                <ul class="chips">
+                    <li>VS Code</li><li>Visual Studio</li><li>SQL Server Management Studio</li>
+                    <li>MySQL Workbench</li><li>PyCharm</li><li>Dev-C++</li><li>Git</li><li>GitHub</li>
+                    <li>Netlify</li><li>Cisco Packet Tracer</li><li>Cisco IOS</li><li>Windows</li><li>PowerShell</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Sprachen</h2>
+                <ul>
+                    <li><strong>Spanisch</strong> · Muttersprache</li>
+                    <li><strong>Englisch</strong> · Fortgeschritten (TOEFL ITP)</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Kompetenzen</h2>
+                <ul>
+                    <li>Ausdauer und Ehrgeiz</li>
+                    <li>Selbstständiges Lernen</li>
+                    <li>Problemlösung</li>
+                    <li>Neugier auf Technologie</li>
+                </ul>
+            </section>
+        </aside>
+
+        <main class="principal">
+            <header>
+                <h1>Maximilian Benjamin<br>Christen Osuna</h1>
+                <p class="rol">Front-End-Webentwickler · Cybersicherheit in Ausbildung</p>
+            </header>
+
+            <section>
+                <h2>Profil</h2>
+                <p>Student der Computersystemtechnik und digitalen Innovation mit Erfahrung in der Entwicklung responsiver Websites mit HTML, CSS und JavaScript. Derzeit spezialisiere ich mich auf Cybersicherheit und Netzwerke und habe Cisco-Zertifikate. Ich bringe Programme gern an ihre Grenzen, um zu verstehen, wie sie funktionieren, und höre erst auf, wenn ein Projekt meinen Ansprüchen genügt.</p>
+            </section>
+
+            <section>
+                <h2>Ausbildung</h2>
+                <div class="elemento">
+                    <div class="cabecera">
+                        <strong>Computersystemtechnik und digitale Innovation</strong>
+                        <span class="fecha">Aug. 2025 – heute</span>
+                    </div>
+                    <p class="lugar">Universidad Politécnica de Sinaloa (UPSIN)</p>
+                </div>
+                <div class="elemento">
+                    <div class="cabecera">
+                        <strong>Abitur</strong>
+                    </div>
+                    <p class="lugar">ICO</p>
+                </div>
+            </section>
+
+            <section>
+                <h2>Projekte</h2>
+                <div class="elemento">
+                    <strong>Gestiona Tu Futuro: Finanz-App</strong>
+                    <p>Registrierung und Anmeldung, Einnahmen, Ausgaben, Budgets, Sparziele, Diagramme und Empfehlungen. Daten im Browser gespeichert, Passwörter mit PBKDF2 geschützt.</p>
+                    <p class="tec">JavaScript · React · localStorage · PBKDF2</p>
+                </div>
+                <div class="elemento">
+                    <strong>Huella: Sneaker-Shop</strong>
+                    <p>Dreiseitige Website (Startseite, Katalog und Kontakt) mit einem Warenkorb, der die Produkte beim Seitenwechsel behält. Nach eigenen Wireframes gestaltet.</p>
+                    <p class="tec">HTML · CSS · JavaScript · localStorage</p>
+                </div>
+                <div class="elemento">
+                    <strong>Labyrinth-Animation mit CSS</strong>
+                    <p>Eine Figur löst ein Labyrinth, wechselt ihre Form (Quadrat, Kreis und Stern) und umrundet den Rand in einer Endlosschleife, nur mit CSS.</p>
+                    <p class="tec">HTML · CSS · @keyframes · clip-path</p>
+                </div>
+                <div class="elemento">
+                    <strong>Periodensystem der Elemente</strong>
+                    <p>Vollständiges Periodensystem mit HTML und CSS, mit Farben für jede chemische Familie und eigener Schriftart.</p>
+                    <p class="tec">HTML · CSS · @font-face</p>
+                </div>
+            </section>
+
+            <section>
+                <h2>Zertifikate · Cisco Networking Academy</h2>
+                <p class="lugar elemento">Überprüfbar unter <a href="https://www.credly.com/users/maximilian-christen/badges">credly.com/users/maximilian-christen</a></p>
+                <div class="elemento cabecera"><span>Introduction to Cybersecurity</span><span class="fecha">Aug. 2026</span></div>
+                <div class="elemento cabecera"><span>CCNA: Switching, Routing, and Wireless Essentials</span><span class="fecha">Apr. 2026</span></div>
+                <div class="elemento cabecera"><span>C Essentials 1</span><span class="fecha">Apr. 2026</span></div>
+                <div class="elemento cabecera"><span>CCNA: Introduction to Networks</span><span class="fecha">Dez. 2025</span></div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
